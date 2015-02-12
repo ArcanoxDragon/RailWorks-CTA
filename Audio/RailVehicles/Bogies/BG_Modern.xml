@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kLoud-cProxyControlLoader xmlns:d="http://www.kuju.com/TnT/2003/Delta" d:version="1.0">
+	<ProxyControl>
+		<cGenericAudioControl xmlns:d="http://www.kuju.com/TnT/2003/Delta" d:version="1.0">
+			<ActivationDistance d:type="sFloat32">1000.000000</ActivationDistance>
+			<Sound>
+				<kLoud-cSingleSampleSound d:id="60191744">
+					<Name d:type="cDeltaString">Flange</Name>
+					<IsLooped d:type="bool">1</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">1.000000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.000000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.050000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">20.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleID>
+							<Pathname d:type="cDeltaString">RSC\BrightonMainLine</Pathname>
+							<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Bogies\TRK_FlangeHigh.dav</Filename>
+						</kLoud-cSampleID>
+					</Sample>
+				</kLoud-cSingleSampleSound>
+				<kLoud-cSingleSampleSound d:id="59669568">
+					<Name d:type="cDeltaString">CAB Flange</Name>
+					<IsLooped d:type="bool">1</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">0.400000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.000000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.050000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">20.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleID>
+							<Pathname d:type="cDeltaString">RSC\BrightonMainLine</Pathname>
+							<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Bogies\Cab\TRK_FlangeHigh.dav</Filename>
+						</kLoud-cSampleID>
+					</Sample>
+				</kLoud-cSingleSampleSound>
+				<kLoud-cSingleSampleSound d:id="59768384">
+					<Name d:type="cDeltaString">CAB TRK Joint</Name>
+					<IsLooped d:type="bool">0</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">0.500000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.000000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.000000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">50.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleID>
+							<Pathname d:type="cDeltaString">RSC\BrightonMainLine</Pathname>
+							<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Bogies\Cab\TRK_JointLoopMono.dav</Filename>
+						</kLoud-cSampleID>
+					</Sample>
+				</kLoud-cSingleSampleSound>
+			</Sound>
+			<Curve>
+				<kLoud-cCurve d:id="59825344">
+					<Name d:type="cDeltaString">FlangeSpeed</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="59826112">
+							<X d:type="sFloat32">3.000000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="60070456">
+							<X d:type="sFloat32">4.000000</X>
+							<Y d:type="sFloat32">0.050000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="60071608">
+							<X d:type="sFloat32">6.000000</X>
+							<Y d:type="sFloat32">0.500000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="60072760">
+							<X d:type="sFloat32">120.000000</X>
+							<Y d:type="sFloat32">0.200000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+				<kLoud-cCurve d:id="60073912">
+					<Name d:type="cDeltaString">FlangeCurve</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="60074296">
+							<X d:type="sFloat32">0.001000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="60157744">
+							<X d:type="sFloat32">0.004000</X>
+							<Y d:type="sFloat32">1.000000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+				<kLoud-cCurve d:id="60157232">
+					<Name d:type="cDeltaString">Pitch Curve</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="59606720">
+							<X d:type="sFloat32">0.000000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59607872">
+							<X d:type="sFloat32">26.000000</X>
+							<Y d:type="sFloat32">1.400000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59609024">
+							<X d:type="sFloat32">44.000000</X>
+							<Y d:type="sFloat32">1.800000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+				<kLoud-cCurve d:id="59610176">
+					<Name d:type="cDeltaString">Volume Curve</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="59610560">
+							<X d:type="sFloat32">0.000000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59611712">
+							<X d:type="sFloat32">4.400000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59612864">
+							<X d:type="sFloat32">8.900000</X>
+							<Y d:type="sFloat32">0.400000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59614016">
+							<X d:type="sFloat32">26.000000</X>
+							<Y d:type="sFloat32">0.800000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+				<kLoud-cCurve d:id="59956528">
+					<Name d:type="cDeltaString">TRK CW Pit</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="59956912">
+							<X d:type="sFloat32">0.000000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59958064">
+							<X d:type="sFloat32">26.000000</X>
+							<Y d:type="sFloat32">1.100000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59959216">
+							<X d:type="sFloat32">44.000000</X>
+							<Y d:type="sFloat32">1.500000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+				<kLoud-cCurve d:id="59960368">
+					<Name d:type="cDeltaString">TRK CW Vol</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="59960752">
+							<X d:type="sFloat32">0.000000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59961904">
+							<X d:type="sFloat32">26.000000</X>
+							<Y d:type="sFloat32">1.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="59963056">
+							<X d:type="sFloat32">44.000000</X>
+							<Y d:type="sFloat32">1.000000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+			</Curve>
+			<ModifierChain>
+				<kLoud-cModifierChain d:id="59823680">
+					<Name d:type="cDeltaString">Flange</Name>
+					<Modifier>
+						<kLoud-cVolumeCurveModifier d:id="59821376">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+							<Curve d:type="ref">59825344</Curve>
+						</kLoud-cVolumeCurveModifier>
+						<kLoud-cVolumeCurveModifier d:id="59824704">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">Curvature</ControllerName>
+							<Curve d:type="ref">60073912</Curve>
+						</kLoud-cVolumeCurveModifier>
+					</Modifier>
+				</kLoud-cModifierChain>
+				<kLoud-cModifierChain d:id="60190592">
+					<Name d:type="cDeltaString">Modifier Chain</Name>
+					<Modifier>
+						<kLoud-cPitchCurveModifier d:id="60198272">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+							<Curve d:type="ref">60157232</Curve>
+						</kLoud-cPitchCurveModifier>
+						<kLoud-cVolumeCurveModifier d:id="60195584">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">RPM</ControllerName>
+							<Curve d:type="ref">59610176</Curve>
+						</kLoud-cVolumeCurveModifier>
+					</Modifier>
+				</kLoud-cModifierChain>
+				<kLoud-cModifierChain d:id="60196864">
+					<Name d:type="cDeltaString">TRK CW</Name>
+					<Modifier>
+						<kLoud-cPitchCurveModifier d:id="60194944">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+							<Curve d:type="ref">59956528</Curve>
+						</kLoud-cPitchCurveModifier>
+						<kLoud-cVolumeCurveModifier d:id="60195712">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+							<Curve d:type="ref">59960368</Curve>
+						</kLoud-cVolumeCurveModifier>
+					</Modifier>
+				</kLoud-cModifierChain>
+			</ModifierChain>
+			<InstanceGroup>
+				<kLoud-cInstanceGroup d:id="59642560">
+					<Name d:type="cDeltaString">RejectNew</Name>
+					<MaximumNumberOfInstances d:type="sUInt32">1</MaximumNumberOfInstances>
+					<InstanceExceededAction d:type="cDeltaString">RejectNew</InstanceExceededAction>
+				</kLoud-cInstanceGroup>
+			</InstanceGroup>
+			<Loop>
+				<kLoud-cControlledLoop d:id="59595712">
+					<PlayState d:type="cDeltaString">OUTSIDE</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">60191744</Sound>
+					<ModifierChain d:type="ref">59823680</ModifierChain>
+					<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+					<LoopCondition d:type="cDeltaString">ValueInRange</LoopCondition>
+					<ActiveRangeStartValue d:type="sFloat32">0.000000</ActiveRangeStartValue>
+					<ActiveRangeEndValue d:type="sFloat32">180.000000</ActiveRangeEndValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cControlledLoop>
+				<kLoud-cControlledLoop d:id="59928208">
+					<PlayState d:type="cDeltaString">INSIDE</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">59669568</Sound>
+					<ModifierChain d:type="ref">59823680</ModifierChain>
+					<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+					<LoopCondition d:type="cDeltaString">ValueInRange</LoopCondition>
+					<ActiveRangeStartValue d:type="sFloat32">0.000000</ActiveRangeStartValue>
+					<ActiveRangeEndValue d:type="sFloat32">160.000000</ActiveRangeEndValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cControlledLoop>
+				<kLoud-cControlledLoop d:id="59937552">
+					<PlayState d:type="cDeltaString">OUTSIDE</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">0</Sound>
+					<ModifierChain d:type="ref">60196864</ModifierChain>
+					<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+					<LoopCondition d:type="cDeltaString">ValueInRange</LoopCondition>
+					<ActiveRangeStartValue d:type="sFloat32">0.010000</ActiveRangeStartValue>
+					<ActiveRangeEndValue d:type="sFloat32">1000.000000</ActiveRangeEndValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cControlledLoop>
+			</Loop>
+			<Oneshot>
+				<kLoud-cTriggeredOneshot d:id="60160048">
+					<PlayState d:type="cDeltaString">INSIDE</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">59768384</Sound>
+					<ModifierChain d:type="ref">60190592</ModifierChain>
+					<ControllerName d:type="cDeltaString">JointCount</ControllerName>
+					<TriggerType d:type="cDeltaString">ValueIsChanging</TriggerType>
+					<TriggerValue d:type="sFloat32">0.800000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">1.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">59642560</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+				<kLoud-cTriggeredOneshot d:id="59598784">
+					<PlayState d:type="cDeltaString">OUTSIDE</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">59768384</Sound>
+					<ModifierChain d:type="ref">60190592</ModifierChain>
+					<ControllerName d:type="cDeltaString">JointCount</ControllerName>
+					<TriggerType d:type="cDeltaString">ValueIsChanging</TriggerType>
+					<TriggerValue d:type="sFloat32">0.800000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">1.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">59642560</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+			</Oneshot>
+		</cGenericAudioControl>
+	</ProxyControl>
+</kLoud-cProxyControlLoader>

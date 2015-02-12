@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kLoud-cProxyControlLoader xmlns:d="http://www.kuju.com/TnT/2003/Delta" d:version="1.0">
+	<ProxyControl>
+		<cGenericAudioControl xmlns:d="http://www.kuju.com/TnT/2003/Delta" d:version="1.0">
+			<ActivationDistance d:type="sFloat32">50.000000</ActivationDistance>
+			<Sound>
+				<kLoud-cSingleSampleSound d:id="57023720">
+					<Name d:type="cDeltaString">Couple</Name>
+					<IsLooped d:type="bool">0</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">0.500000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.000000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.000000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">25.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleID>
+							<Pathname d:type="cDeltaString">RSC\BrightonMainLine</Pathname>
+							<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Coupling\T_Couple.dav</Filename>
+						</kLoud-cSampleID>
+					</Sample>
+				</kLoud-cSingleSampleSound>
+				<kLoud-cSingleSampleSound d:id="57020264">
+					<Name d:type="cDeltaString">DeCouple</Name>
+					<IsLooped d:type="bool">0</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">0.500000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.000000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.000000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">25.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleID>
+							<Pathname d:type="cDeltaString">RSC\BrightonMainLine</Pathname>
+							<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Coupling\T_DeCouple.dav</Filename>
+						</kLoud-cSampleID>
+					</Sample>
+				</kLoud-cSingleSampleSound>
+			</Sound>
+			<Curve/>
+			<ModifierChain/>
+			<InstanceGroup/>
+			<Loop/>
+			<Oneshot>
+				<kLoud-cTriggeredOneshot d:id="58704664">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">57023720</Sound>
+					<ModifierChain d:type="ref">0</ModifierChain>
+					<ControllerName d:type="cDeltaString">CouplingState</ControllerName>
+					<TriggerType d:type="cDeltaString">ValueIncreasePast</TriggerType>
+					<TriggerValue d:type="sFloat32">0.500000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+				<kLoud-cTriggeredOneshot d:id="60442272">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">57020264</Sound>
+					<ModifierChain d:type="ref">0</ModifierChain>
+					<ControllerName d:type="cDeltaString">CouplingState</ControllerName>
+					<TriggerType d:type="cDeltaString">ValueDecreasePast</TriggerType>
+					<TriggerValue d:type="sFloat32">-0.500000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+			</Oneshot>
+		</cGenericAudioControl>
+	</ProxyControl>
+</kLoud-cProxyControlLoader>

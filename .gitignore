@@ -1,0 +1,13 @@
+*.dav
+*.aup
+*.au
+*.bin
+*.proxybin
+*.GeoPcDx
+*.TgPcDx
+*.ban
+**/CTA5000 - Old/**/*
+**/CTA5000 - Old/*
+*.dcsv
+**/Class377/**/*
+**/Class377/*

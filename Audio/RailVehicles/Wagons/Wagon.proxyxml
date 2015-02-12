@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kLoud-cProxyControlLoader xmlns:d="http://www.kuju.com/TnT/2003/Delta" d:version="1.0">
+	<ProxyControl>
+		<cDieselAudioControl xmlns:d="http://www.kuju.com/TnT/2003/Delta" d:version="1.0">
+			<ActivationDistance d:type="sFloat32">200.000000</ActivationDistance>
+			<Sound>
+				<kLoud-cRandomSampleSound d:id="35305816">
+					<Name d:type="cDeltaString">Impact</Name>
+					<IsLooped d:type="bool">0</IsLooped>
+					<Priority d:type="sUInt32">1</Priority>
+					<BaseVolume d:type="sFloat32">0.900000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.100000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">0.950000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.050000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">60.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleWithLikelihood d:id="35308760">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Derailing\BUF_Impact_01.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35324632">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Derailing\BUF_Impact_02.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+					</Sample>
+				</kLoud-cRandomSampleSound>
+				<kLoud-cRandomSampleSound d:id="35307352">
+					<Name d:type="cDeltaString">Random Oneshots</Name>
+					<IsLooped d:type="bool">0</IsLooped>
+					<Priority d:type="sUInt32">89</Priority>
+					<BaseVolume d:type="sFloat32">0.350000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.150000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.400000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">25.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleWithLikelihood d:id="35453016">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_00.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35474520">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_01.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35473496">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_02.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35472472">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_03.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35476440">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_04.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35477208">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_05.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="35478232">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_06.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57983136">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_07.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57979296">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_08.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57990688">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_09.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57988896">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_10.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57980192">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_11.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57979424">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_12.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="57976480">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_13.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="59067152">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_14.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="59076624">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_15.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="59072400">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_16.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="59070096">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_17.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="59073168">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon hits\WG_Hit_18.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+					</Sample>
+				</kLoud-cRandomSampleSound>
+				<kLoud-cRandomSampleSound d:id="59073296">
+					<Name d:type="cDeltaString">Wagon Loops</Name>
+					<IsLooped d:type="bool">1</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">0.100000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.080000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.400000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">30.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleWithLikelihood d:id="62898712">
+							<Likelihood d:type="sFloat32">0.050000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\WG_Rumble_1.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62913304">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\WG_Rumble_2.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62913816">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\WG_Rumble_3.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62914584">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\WG_Rumble_4.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+					</Sample>
+				</kLoud-cRandomSampleSound>
+				<kLoud-cRandomSampleSound d:id="62915352">
+					<Name d:type="cDeltaString">Squeaks</Name>
+					<IsLooped d:type="bool">0</IsLooped>
+					<Priority d:type="sUInt32">50</Priority>
+					<BaseVolume d:type="sFloat32">0.200000</BaseVolume>
+					<VolumeVariation d:type="sFloat32">0.150000</VolumeVariation>
+					<BasePitchShift d:type="sFloat32">1.000000</BasePitchShift>
+					<PitchShiftVariation d:type="sFloat32">0.300000</PitchShiftVariation>
+					<AttenuationStartDist d:type="sFloat32">15.000000</AttenuationStartDist>
+					<NoFutherAttenuationDist d:type="sFloat32">300.000000</NoFutherAttenuationDist>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+					<Sample>
+						<kLoud-cSampleWithLikelihood d:id="62920728">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_01.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62919448">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_02.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62929432">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_03.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62928408">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_04.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62928920">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_05.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62927896">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_06.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62932632">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_07.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62934040">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_08.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62885784">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_09.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62934552">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_10.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62885016">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_11.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62886168">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_12.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+						<kLoud-cSampleWithLikelihood d:id="62905368">
+							<Likelihood d:type="sFloat32">0.500000</Likelihood>
+							<Sample>
+								<kLoud-cSampleID>
+									<Pathname d:type="cDeltaString">RSC\GuildfordDistrict</Pathname>
+									<Filename d:type="cDeltaString">RSC\BrightonMainLine\Audio\RailVehicles\Wagons\Wagon Squeaks\WG_Squeak_13.dav</Filename>
+								</kLoud-cSampleID>
+							</Sample>
+						</kLoud-cSampleWithLikelihood>
+					</Sample>
+				</kLoud-cRandomSampleSound>
+			</Sound>
+			<Curve>
+				<kLoud-cCurve d:id="63126560">
+					<Name d:type="cDeltaString">Wagon Loops</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="63133472">
+							<X d:type="sFloat32">0.000000</X>
+							<Y d:type="sFloat32">0.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="63140000">
+							<X d:type="sFloat32">0.500000</X>
+							<Y d:type="sFloat32">1.000000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+				<kLoud-cCurve d:id="63137824">
+					<Name d:type="cDeltaString">Wagon Pitch</Name>
+					<CurvePoint>
+						<kLoud-cRVector2 d:id="63143584">
+							<X d:type="sFloat32">0.000000</X>
+							<Y d:type="sFloat32">1.000000</Y>
+						</kLoud-cRVector2>
+						<kLoud-cRVector2 d:id="63139232">
+							<X d:type="sFloat32">100.000000</X>
+							<Y d:type="sFloat32">1.500000</Y>
+						</kLoud-cRVector2>
+					</CurvePoint>
+				</kLoud-cCurve>
+			</Curve>
+			<ModifierChain>
+				<kLoud-cModifierChain d:id="63137696">
+					<Name d:type="cDeltaString">Wagon Loops</Name>
+					<Modifier>
+						<kLoud-cVolumeCurveModifier d:id="63135904">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+							<Curve d:type="ref">63126560</Curve>
+						</kLoud-cVolumeCurveModifier>
+						<kLoud-cPitchCurveModifier d:id="63141920">
+							<ControllerIsGlobal d:type="bool">0</ControllerIsGlobal>
+							<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+							<Curve d:type="ref">63137824</Curve>
+						</kLoud-cPitchCurveModifier>
+					</Modifier>
+				</kLoud-cModifierChain>
+			</ModifierChain>
+			<InstanceGroup/>
+			<Loop>
+				<kLoud-cControlledLoop d:id="63127456">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">59073296</Sound>
+					<ModifierChain d:type="ref">63137696</ModifierChain>
+					<ControllerName d:type="cDeltaString">AbsoluteSpeed</ControllerName>
+					<LoopCondition d:type="cDeltaString">ValueInRange</LoopCondition>
+					<ActiveRangeStartValue d:type="sFloat32">0.050000</ActiveRangeStartValue>
+					<ActiveRangeEndValue d:type="sFloat32">1000.000000</ActiveRangeEndValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cControlledLoop>
+			</Loop>
+			<Oneshot>
+				<kLoud-cTriggeredOneshot d:id="62921624">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">35305816</Sound>
+					<ModifierChain d:type="ref">0</ModifierChain>
+					<ControllerName d:type="cDeltaString">ImpactCount</ControllerName>
+					<TriggerType d:type="cDeltaString">ValueIsChanging</TriggerType>
+					<TriggerValue d:type="sFloat32">1.000000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+				<kLoud-cTriggeredOneshot d:id="35309912">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">35307352</Sound>
+					<ModifierChain d:type="ref">0</ModifierChain>
+					<ControllerName d:type="cDeltaString">DistanceTravelled</ControllerName>
+					<TriggerType d:type="cDeltaString">EveryTriggerValueIncreasing</TriggerType>
+					<TriggerValue d:type="sFloat32">191.000000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+				<kLoud-cTriggeredOneshot d:id="35321048">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">35307352</Sound>
+					<ModifierChain d:type="ref">0</ModifierChain>
+					<ControllerName d:type="cDeltaString">DistanceTravelled</ControllerName>
+					<TriggerType d:type="cDeltaString">EveryTriggerValueIncreasing</TriggerType>
+					<TriggerValue d:type="sFloat32">59.000000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+				<kLoud-cTriggeredOneshot d:id="35311576">
+					<PlayState d:type="cDeltaString">BOTH</PlayState>
+					<Name d:type="cDeltaString"></Name>
+					<Sound d:type="ref">62915352</Sound>
+					<ModifierChain d:type="ref">0</ModifierChain>
+					<ControllerName d:type="cDeltaString">DistanceTravelled</ControllerName>
+					<TriggerType d:type="cDeltaString">EveryTriggerValueIncreasing</TriggerType>
+					<TriggerValue d:type="sFloat32">461.000000</TriggerValue>
+					<ValueIsChangingGateTime d:type="sFloat32">0.000000</ValueIsChangingGateTime>
+					<InstanceGroup d:type="ref">0</InstanceGroup>
+				</kLoud-cTriggeredOneshot>
+			</Oneshot>
+		</cDieselAudioControl>
+	</ProxyControl>
+</kLoud-cProxyControlLoader>
