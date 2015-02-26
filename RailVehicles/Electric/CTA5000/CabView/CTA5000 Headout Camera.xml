@@ -23,7 +23,7 @@
 							<Attribute name="PrimarySide">
 								<cHeadOutCameraUpdateBlueprint-eSides>
 									<Element>
-										<Value>Left</Value>
+										<Value>Right</Value>
 									</Element>
 								</cHeadOutCameraUpdateBlueprint-eSides>
 							</Attribute>

@@ -27,21 +27,21 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>0.877</Value>
+														<Value>0.8</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>2.655</Value>
+														<Value>2.7</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>5.55</Value>
+														<Value>6</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -92,21 +92,21 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>0.877</Value>
+														<Value>0.8</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>2.9</Value>
+														<Value>3.05</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>5.65</Value>
+														<Value>6.25</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -167,7 +167,7 @@
 							<Attribute name="MaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.2</Value>
+										<Value>1.5</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -181,49 +181,49 @@
 							<Attribute name="WindowMaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.2</Value>
+										<Value>1.5</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringXCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.12</Value>
+										<Value>0.06</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringYCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.09</Value>
+										<Value>0.12</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.04</Value>
+										<Value>0.09</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="DampingXCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.012</Value>
+										<Value>0.018</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="DampingYCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.016</Value>
+										<Value>0.018</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="DampingZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.015</Value>
+										<Value>0.011</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

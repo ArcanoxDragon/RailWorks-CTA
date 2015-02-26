@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cDLCBlueprint>
+	<Element>
+		<Value>
+			<Attribute name="Name">
+				<cDeltaString>
+					<Element>
+						<Value>Chicago Transit Authority</Value>
+					</Element>
+				</cDeltaString>
+			</Attribute>
+			<Attribute name="DLC">
+				<sInt32>
+					<Element>
+						<Value>0</Value>
+					</Element>
+				</sInt32>
+			</Attribute>
+			<Attribute name="EncryptionKey">
+				<cDeltaString>
+					<Element>
+						<Value />
+					</Element>
+				</cDeltaString>
+			</Attribute>
+			<Attribute name="IBelongTo">
+				<iBlueprintLibrary-cBlueprintSetID>
+					<Element>
+						<Value>
+							<Attribute name="Provider">
+								<cDeltaString>
+									<Element>
+										<Value>briman0094</Value>
+									</Element>
+								</cDeltaString>
+							</Attribute>
+							<Attribute name="Product">
+								<cDeltaString>
+									<Element>
+										<Value>CTA</Value>
+									</Element>
+								</cDeltaString>
+							</Attribute>
+						</Value>
+					</Element>
+				</iBlueprintLibrary-cBlueprintSetID>
+			</Attribute>
+		</Value>
+	</Element>
+</cDLCBlueprint>

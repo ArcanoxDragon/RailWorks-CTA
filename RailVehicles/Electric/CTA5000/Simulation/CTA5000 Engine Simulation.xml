@@ -257,7 +257,7 @@
 																																			<Attribute name="MaxQuickReleaseRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>40</Value>
+																																						<Value>60</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -341,7 +341,7 @@
 																												<Attribute name="MaxReleaseRate">
 																													<sFloat32>
 																														<Element>
-																															<Value>40</Value>
+																															<Value>60</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
