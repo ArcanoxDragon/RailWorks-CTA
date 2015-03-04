@@ -174,14 +174,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>7</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -323,6 +323,204 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
+													<Value>CurrentWhine2</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="IsLooped">
+											<bool>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</bool>
+										</Attribute>
+										<Attribute name="Priority">
+											<sUInt32>
+												<Element>
+													<Value>50</Value>
+												</Element>
+											</sUInt32>
+										</Attribute>
+										<Attribute name="BaseVolume">
+											<sFloat32>
+												<Element>
+													<Value>0.5</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="VolumeVariation">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="BasePitchShift">
+											<sFloat32>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="PitchShiftVariation">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="AttenuationStartDist">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="NoFutherAttenuationDist">
+											<sFloat32>
+												<Element>
+													<Value>7</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="InstanceGroup">
+											<kLoud-cInstanceGroup>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cInstanceGroup>
+										</Attribute>
+										<Attribute name="Sample">
+											<kLoud-cSampleID>
+												<Element>
+													<Value>
+														<Attribute name="Filename">
+															<cDeltaString>
+																<Element>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine2</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cSampleID>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cSingleSampleSound>
+							<kLoud-cSingleSampleSound>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>CurrentWhine2Int</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="IsLooped">
+											<bool>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</bool>
+										</Attribute>
+										<Attribute name="Priority">
+											<sUInt32>
+												<Element>
+													<Value>50</Value>
+												</Element>
+											</sUInt32>
+										</Attribute>
+										<Attribute name="BaseVolume">
+											<sFloat32>
+												<Element>
+													<Value>0.5</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="VolumeVariation">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="BasePitchShift">
+											<sFloat32>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="PitchShiftVariation">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="AttenuationStartDist">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="NoFutherAttenuationDist">
+											<sFloat32>
+												<Element>
+													<Value>7</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="InstanceGroup">
+											<kLoud-cInstanceGroup>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cInstanceGroup>
+										</Attribute>
+										<Attribute name="Sample">
+											<kLoud-cSampleID>
+												<Element>
+													<Value>
+														<Attribute name="Filename">
+															<cDeltaString>
+																<Element>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine2_int</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cSampleID>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cSingleSampleSound>
+							<kLoud-cSingleSampleSound>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
 													<Value>Motor</Value>
 												</Element>
 											</cDeltaString>
@@ -372,14 +570,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>7</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -570,14 +768,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>7</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -966,14 +1164,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>7</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1164,14 +1362,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>7</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1461,14 +1659,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1659,14 +1857,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1857,14 +2055,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>0</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2253,14 +2451,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>20</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>300</Value>
+													<Value>50</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2324,7 +2522,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>1</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2522,7 +2720,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>1</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -3060,6 +3258,167 @@
 																</Value>
 															</Element>
 														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>13.0005</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>13.5</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>1.02</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>19.5</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.5</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>20</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>20.5</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.6</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>30</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.4</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>35</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cRVector2>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cCurve>
+							<kLoud-cCurve>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>CurrentWhine2VolumeSpeed</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="CurvePoint">
+											<__Indexed__kLoud-cRVector2>
+												<Element>
+													<Value>
 														<kLoud-cRVector2>
 															<Element>
 																<Value>
@@ -3812,6 +4171,132 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
+													<Value>CurrentWhine2</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="Modifier">
+											<__Indexed__kLoud-cModifier>
+												<Element>
+													<Value>
+														<kLoud-cVolumeCurveModifier>
+															<Element>
+																<Value>
+																	<Attribute name="ControllerIsGlobal">
+																		<bool>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</bool>
+																	</Attribute>
+																	<Attribute name="ControllerName">
+																		<cDeltaString>
+																			<Element>
+																				<Value>TractionWhine</Value>
+																			</Element>
+																		</cDeltaString>
+																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>CurrentWhineVolumeFromControl</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cVolumeCurveModifier>
+														<kLoud-cVolumeCurveModifier>
+															<Element>
+																<Value>
+																	<Attribute name="ControllerIsGlobal">
+																		<bool>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</bool>
+																	</Attribute>
+																	<Attribute name="ControllerName">
+																		<cDeltaString>
+																			<Element>
+																				<Value>SpeedometerMPH</Value>
+																			</Element>
+																		</cDeltaString>
+																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>CurrentWhine2VolumeSpeed</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cVolumeCurveModifier>
+														<kLoud-cPitchCurveModifier>
+															<Element>
+																<Value>
+																	<Attribute name="ControllerIsGlobal">
+																		<bool>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</bool>
+																	</Attribute>
+																	<Attribute name="ControllerName">
+																		<cDeltaString>
+																			<Element>
+																				<Value>SpeedometerMPH</Value>
+																			</Element>
+																		</cDeltaString>
+																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>CurrentWhinePitch</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cPitchCurveModifier>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cModifier>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cModifierChain>
+							<kLoud-cModifierChain>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
 													<Value>Motor</Value>
 												</Element>
 											</cDeltaString>
@@ -4128,6 +4613,33 @@
 											<kLoud-eInstanceExceededAction>
 												<Element>
 													<Value>StopOldest</Value>
+												</Element>
+											</kLoud-eInstanceExceededAction>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cInstanceGroup>
+							<kLoud-cInstanceGroup>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>CurrentWhine</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="MaximumNumberOfInstances">
+											<sUInt32>
+												<Element>
+													<Value>12</Value>
+												</Element>
+											</sUInt32>
+										</Attribute>
+										<Attribute name="InstanceExceededAction">
+											<kLoud-eInstanceExceededAction>
+												<Element>
+													<Value>RejectNew</Value>
 												</Element>
 											</kLoud-eInstanceExceededAction>
 										</Attribute>

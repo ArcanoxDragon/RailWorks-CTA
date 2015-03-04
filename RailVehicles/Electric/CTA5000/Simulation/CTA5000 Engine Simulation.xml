@@ -257,14 +257,14 @@
 																																			<Attribute name="MaxQuickReleaseRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>60</Value>
+																																						<Value>70</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
 																																			<Attribute name="EmergencyApplicationRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>55</Value>
+																																						<Value>70</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -341,14 +341,14 @@
 																												<Attribute name="MaxReleaseRate">
 																													<sFloat32>
 																														<Element>
-																															<Value>60</Value>
+																															<Value>70</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
 																												<Attribute name="MaxApplicationRate">
 																													<sFloat32>
 																														<Element>
-																															<Value>40</Value>
+																															<Value>70</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -586,7 +586,7 @@
 														<Attribute name="MaxForce">
 															<sFloat32>
 																<Element>
-																	<Value>10</Value>
+																	<Value>5</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -700,7 +700,7 @@
 														<Attribute name="MaxContinuousForce">
 															<sFloat32>
 																<Element>
-																	<Value>10</Value>
+																	<Value>5</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -827,7 +827,7 @@
 																					<Attribute name="MaxForce">
 																						<sFloat32>
 																							<Element>
-																								<Value>7.5</Value>
+																								<Value>44</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -877,7 +877,7 @@
 														<Attribute name="HasPantograph">
 															<eBoolean>
 																<Element>
-																	<Value>eTrue</Value>
+																	<Value>eFalse</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>

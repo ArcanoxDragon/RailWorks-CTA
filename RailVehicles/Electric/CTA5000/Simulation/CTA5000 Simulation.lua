@@ -1,8 +1,15 @@
 --include=..\..\Common\Scripts\CTA ATC.lua
 --include=..\..\Common\Scripts\CTA Util.lua
 
-local NUM_SIGNS = 3
-local FRONT_SIGNS = { "sign_off", "sign_nis", "sign_red_howard" }
+local NUM_SIGNS = 7
+local FRONT_SIGNS = { 	"sign_off",
+						"sign_nis",
+						"sign_express",
+						"sign_red_howard",
+						"sign_red_95th",
+						"sign_brown_loop",
+						"sign_brown_kimball",
+						nil } -- The last "nil" is mainly just for formatting and ease of entry...
 
 ------------------------------------------------------------
 -- Simulation file for the Bombardier CTA 5000-series EMU
@@ -24,8 +31,11 @@ function Setup()
 	gTimeDelta = 0
 	gCurrent = 0
 	gLastReverser = 0
+	gDestSignNext = false
+	gDestSignPrev = false
 	
 	gStoppingTime = 0
+	gTimeSinceWheelslip = 0.0
 	MAX_STOPPING_TIME = 4.0
 	tReg = 0
 	tBrake = 0
@@ -35,16 +45,19 @@ function Setup()
 	BRK_DELTA = 0.45
 	
 	MAX_ACCELERATION = 1.0
-	MIN_ACCELERATION = 0.1
+	MIN_ACCELERATION = 0.125
 	MAX_BRAKING = 1.0
-	MIN_BRAKING = 0.1
+	MIN_BRAKING = 0.2
 	JERK_LIMIT = 0.78
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.685
+	MAX_BRAKE_RELEASE = 0.7
 	MAX_SERVICE_BRAKE = 0.875
+	--MIN_SERVICE_BRAKE = 0.275
+	MIN_SERVICE_BRAKE = 0.0
 	MAX_CORRECTION = 1.0 - MAX_BRAKE_RELEASE
 	DYNAMIC_BRAKE_AMPS = 500.0
+	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to (WTF railworks, you can't do this yourself?)
 	
 -- Propulsion system variables
 	realAccel = 0.0
@@ -61,7 +74,6 @@ function Setup()
 	gAvgAccelTime = 0.0
 	gBrakeRelease = 0.0
 	brkAdjust = 0.0
-	gWhine = 0.0
 	gSign = 0
 
 -- For controlling delayed doors interlocks.
@@ -95,22 +107,32 @@ function Update(interval)
 			TrainSpeed = Call( "*:GetControlValue", "SpeedometerMPH", 0 )
 			BrakeCylBAR = Call( "*:GetControlValue", "TrainBrakeCylinderPressureBAR", 0 )
 			ATCBrakeApplication = Call( "*:GetControlValue", "ATCBrakeApplication", 0 )
+			IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
+			NumCars = Call( "*:GetControlValue", "NumCars", 0 )
 			
-			Call("*:SetControlValue", "DestinationSign", 0, gSign)
-			gSign = gSign + 0.01
-			if (gSign >= 3) then
-				gSign = 0
-			end
+			DestSignNext = Call( "*:GetControlValue", "DestSignNext", 0 ) > 0
+			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
+			DestSign     = Call( "*:GetControlValue", "DestinationSign", 0 )
 			
-	-- LED Destination Signs
-	
-			for i = 1, NUM_SIGNS do
-				if (i - 1 == math.floor(gSign)) then
-					Call("*:ActivateNode", FRONT_SIGNS[i], 1)
-				else
-					Call("*:ActivateNode", FRONT_SIGNS[i], 0)
+			if (DestSignNext and DestSign < NUM_SIGNS - 1) then
+				if (not gDestSignNext) then
+					gDestSignNext = true
+					DestSign = math.floor(DestSign + 1)
 				end
+			else
+				gDestSignNext = false
 			end
+			
+			if (DestSignPrev and DestSign > 0) then
+				if (not gDestSignPrev) then
+					gDestSignPrev = true
+					DestSign = math.floor(DestSign - 1)
+				end
+			else
+				gDestSignPrev = false
+			end
+			
+			Call( "*:SetControlValue", "DestinationSign", 0, DestSign )
 
 	-- Override brake if emergency has been set.
 			
@@ -175,12 +197,26 @@ function Update(interval)
 				else
 					tAccel = tTAccel
 				end
+				
+				if (ATCBrakeApplication > 0) then
+					tAccel = -1
+					tThrottle = -1
+					gSetReg = 0.0
+					gThrottleTime = 1.0
+				end
+				
 				Call( "*:SetControlValue", "TAccel", 0, tAccel)
 				
-				if (math.abs(ReverserLever) < 0.9 or TrackBrake > 0 or ATCBrakeApplication > 0) then
+				if (math.abs(ReverserLever) < 0.9 or TrackBrake > 0) then
 					Call( "*:SetControlValue", "Regulator", 0, 0.0 )
-					Call( "*:SetControlValue", "DynamicBrake", 0, 1.0 )
-					Call( "*:SetControlValue", "TrainBrakeControl", 0, 1.0 )
+					Call( "*:SetControlValue", "DynamicBrake", 0, clamp(NumCars / DYNBRAKE_MAXCARS, 0, 1) )
+					dynEffective = clamp(math.abs(gCurrent) / (DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)), 0, 1)
+					Call( "*:SetControlValue", "TrainBrakeControl", 0, 0.5 + ((1.0 - dynEffective) * 0.5) )
+					if (TrackBrake > 0) then
+						Call( "*:SetControlValue", "Sander", 0, 1 )
+					else
+						Call( "*:SetControlValue", "Sander", 0, 0 )
+					end
 					gSetReg = 0.0
 					gSetDynamic = 0.0
 					gSetBrake = 0.0
@@ -190,6 +226,8 @@ function Update(interval)
 						Call( "*:SetControlValue", "ThrottleAndBrake", 0, -1.0 )
 					end
 				else
+					Call( "*:SetControlValue", "Sander", 0, 0 )
+					
 					if (math.abs(TrainSpeed) < 3.0) then
 						gStoppingTime = gStoppingTime + gTimeDelta
 					else
@@ -255,6 +293,15 @@ function Update(interval)
 								end
 								
 								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001 and gThrottleTime >= 0.25) then
+									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
+										gTimeSinceWheelslip = 0.0
+									end
+									
+									if (gTimeSinceWheelslip < 1.0) then
+										tAccel = math.min(tAccel, 0.75)
+										gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+									end
+								
 									gSetReg = clamp(tAccel, 0.0, 1.0)
 								else
 									gSetReg = 0.0
@@ -270,10 +317,21 @@ function Update(interval)
 								end
 								
 								if (gSetReg < 0.001 and gThrottleTime >= 0.25) then
-									--gSetDynamic = -tAccel
-									gSetDynamic = 0.15
-									dynEffective = -(gCurrent / (DYNAMIC_BRAKE_AMPS * -tAccel))
-									gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - 0.275)) + 0.275
+									dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
+									
+									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
+										gTimeSinceWheelslip = 0.0
+									end
+									
+									if (gTimeSinceWheelslip < 1.0) then
+										tAccel = math.max(tAccel, -0.75)
+										dynEffective = 0.0
+										gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+									end
+								
+									gSetDynamic = -tAccel
+									--gSetDynamic = 0.15
+									gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - MIN_SERVICE_BRAKE)) + MIN_SERVICE_BRAKE
 									if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < 3.0) then
 										gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
 										gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
@@ -293,25 +351,9 @@ function Update(interval)
 					else
 						Call( "*:SetControlValue", "Regulator", 0, gSetReg )
 					end
-					Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic )
+					
+					Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0) )
 					Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
-					--Call( "*:SetControlValue", "TractionWhine", 0, math.max(gSetReg, clamp(gSetDynamic / 2.0, 0.0, 0.5)))
-					--Call( "*:SetControlValue", "TractionWhine", 0, clamp(math.abs(gCurrent) / 500, 0.0, 1.0) )
-					local tWhine = 1.0
-					local dWhine = 1.2 * gTimeDelta
-					if ( math.abs(gCurrent) < 0.0001 and tAccel >= 0.0 ) then
-						tWhine = 0.0
-					end
-					
-					if (gWhine < tWhine - dWhine) then
-						gWhine = gWhine + dWhine
-					elseif (gWhine > tWhine + dWhine) then
-						gWhine = gWhine - dWhine
-					else
-						gWhine = tWhine
-					end
-					
-					Call( "*:SetControlValue", "TractionWhine", 0, clamp(gWhine, 0.0, 1.0) )
 				end
 
 				-- End propulsion system
@@ -324,7 +366,7 @@ function Update(interval)
 				
 				-- End ATC system
 
-				if ( DoorsOpen ~= FALSE ) or (( PantoValue < 0.6 ) and ( ThirdRailValue == 0 )) then
+				if ( DoorsOpen ~= FALSE ) then
 					Call( "*:SetControlValue", "Regulator", 0, 0 )
 				end
 

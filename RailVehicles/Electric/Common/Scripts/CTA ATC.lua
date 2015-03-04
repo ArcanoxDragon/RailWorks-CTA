@@ -1,6 +1,7 @@
 local ATC_TARGET_DECELERATION = 1.0 -- meters/second/second
 local ATC_REACTION_TIME = 2.5 -- seconds
 local MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
+local MPH_TO_MPS = 1.0 / MPS_TO_MPH
 local MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
 local MI_TO_M = 1609.34 -- Miles to Meters
 local M_TO_MI = 1.0 / MI_TO_M -- Meters to Miles
@@ -29,17 +30,21 @@ end
 
 function UpdateATC(interval)
 	local targetSpeed = Call("*:GetCurrentSpeedLimit")
+	local trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
+	local enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
+	
 	local spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
 	if (spdType == 0) then -- End of line...stop the train
-		local spdBuffer = (getBrakingDistance(0.0, targetSpeed, -ATC_TARGET_DECELERATION) + 50)
+		local spdBuffer = (getBrakingDistance(0.0, trainSpeed, -ATC_TARGET_DECELERATION) + 35)
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 		if (spdDist <= spdBuffer) then
-			targetSpeed = math.max(getStoppingSpeed(targetSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 3.0) - spdDist) - clamp(math.abs(TrainSpeed) - 2, 0.0, 3.0), 6)
-			if (spdDist < 5) then targetSpeed = 0 end
+			--targetSpeed = math.max(getStoppingSpeed(targetSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 3.0) - spdDist) - clamp(math.abs(TrainSpeed) - 2, 0.0, 3.0), 6)
+			targetSpeed = 6 * MPH_TO_MPS
+			if (spdDist < 20) then targetSpeed = 0 end
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			local spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 50)
+			local spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 35)
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
@@ -61,23 +66,28 @@ function UpdateATC(interval)
 		gLastSigDist = sigDist
 	end
 	
-	targetSpeed = math.floor((targetSpeed * MPS_TO_MPH * 10) + 0.5) / 10 -- Round to nearest 0.1
+	if enabled then
+		targetSpeed = math.floor((targetSpeed * MPS_TO_MPH * 10) + 0.5) / 10 -- Round to nearest 0.1
+	else
+		targetSpeed = 100
+	end
 	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
-	--debugPrint("ATC update! Target speed: " .. tostring(targetSpeed))
 	
 	-- Following section logic taken from CTA 7000-series RFP spec
+	
+	local throttle = CombinedLever * 2.0 - 1.0
 	
 	if (TrainSpeed >= (targetSpeed + 1) or gBrakeApplication) then
 		gAlertAcknowledged = false
 		if (gBrakeApplication) then
 			Call("*:SetControlValue", "ATCBrakeApplication", 0, 1.0)
 			SetATCWarnMode(ATC_WARN_CONSTANT)
-			if (math.abs(TrainSpeed) < 0.1 and tThrottle <= -0.99) then
+			if (trainSpeed < 0.1 and throttle <= -0.99) then
 				gBrakeApplication = false
 			end
 		else
 			Call("*:SetControlValue", "ATCBrakeApplication", 0, 0.0)
-			if (tThrottle <= -0.9) then -- 90% brake application
+			if (throttle <= -0.9) then -- 90% brake application
 				SetATCWarnMode(ATC_WARN_INTERMITTENT)
 			else
 				gBrakeTime = gBrakeTime + interval
@@ -93,7 +103,7 @@ function UpdateATC(interval)
 		SetATCWarnMode(ATC_WARN_OFF)
 	end
 	
-	if (TrainSpeed < (targetSpeed + 1) and tThrottle <= -0.9) then
+	if (TrainSpeed < (targetSpeed + 1) and throttle <= -0.9) then
 		gAlertAcknowledged = true
 	end
 end

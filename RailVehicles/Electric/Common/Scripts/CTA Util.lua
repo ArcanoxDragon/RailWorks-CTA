@@ -31,3 +31,8 @@ function sign(num)
 	if (num < 0) then return -1 end
 	return 0
 end
+
+function reverseMsgDir(direction)
+	if (direction == 0) then return 1 end
+	return 0
+end
