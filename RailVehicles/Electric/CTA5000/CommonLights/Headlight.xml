@@ -460,7 +460,7 @@
 							<Attribute name="CastShadow">
 								<bool>
 									<Element>
-										<Value>1</Value>
+										<Value>0</Value>
 									</Element>
 								</bool>
 							</Attribute>

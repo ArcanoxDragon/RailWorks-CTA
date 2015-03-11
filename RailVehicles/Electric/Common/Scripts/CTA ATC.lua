@@ -29,13 +29,17 @@ function SetATCWarnMode(mode)
 end
 
 function UpdateATC(interval)
-	local targetSpeed = Call("*:GetCurrentSpeedLimit")
-	local trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
-	local enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
+	local targetSpeed, trainSpeed, enabled, throttle
+	local spdType, spdLimit, spdDist, spdBuffer
+	local sigType, sigState, sigDist, sigAspect
+
+	targetSpeed = Call("*:GetCurrentSpeedLimit")
+	trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
+	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
 	
-	local spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
+	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
 	if (spdType == 0) then -- End of line...stop the train
-		local spdBuffer = (getBrakingDistance(0.0, trainSpeed, -ATC_TARGET_DECELERATION) + 35)
+		spdBuffer = (getBrakingDistance(0.0, trainSpeed, -ATC_TARGET_DECELERATION) + 35)
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 		if (spdDist <= spdBuffer) then
 			--targetSpeed = math.max(getStoppingSpeed(targetSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 3.0) - spdDist) - clamp(math.abs(TrainSpeed) - 2, 0.0, 3.0), 6)
@@ -44,7 +48,7 @@ function UpdateATC(interval)
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			local spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 35)
+			spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 35)
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
@@ -52,7 +56,7 @@ function UpdateATC(interval)
 	end
 	
 	gLastSigDistTime = gLastSigDistTime + interval
-	local sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atcSigDirection)
+	sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atcSigDirection)
 	if (sigDist > gLastSigDist and gLastSigDistTime >= 1.0) then
 		if (atcSigDirection < 0.5) then
 			atcSigDirection = 1
@@ -75,7 +79,7 @@ function UpdateATC(interval)
 	
 	-- Following section logic taken from CTA 7000-series RFP spec
 	
-	local throttle = CombinedLever * 2.0 - 1.0
+	throttle = CombinedLever * 2.0 - 1.0
 	
 	if (TrainSpeed >= (targetSpeed + 1) or gBrakeApplication) then
 		gAlertAcknowledged = false

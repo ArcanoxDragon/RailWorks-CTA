@@ -16,15 +16,26 @@ MSG_ATO_SPEED_LIMIT = 42
 
 CAR_COUNT_TIME = 1.0 -- seconds
 
-local NUM_SIGNS = 7
-local FRONT_SIGNS = { 	"sign_off",
-						"sign_nis",
-						"sign_express",
-						"sign_red_howard",
-						"sign_red_95th",
-						"sign_brown_loop",
-						"sign_brown_kimball",
-						nil } -- The last "nil" is mainly just for formatting and ease of entry...
+local NUM_SIGNS = 0
+local SIGNS = { }
+
+local function addSign(frontName, sideName, lightOn, lightColor)
+	local sign = { }
+	sign.front = frontName
+	sign.side = sideName
+	sign.hasLight = lightOn
+	sign.color = lightColor
+	SIGNS[NUM_SIGNS + 1] = sign
+	NUM_SIGNS = NUM_SIGNS + 1
+end
+
+addSign("sign_off", nil, false, nil)
+addSign("sign_nis", nil, true, { 255, 255, 255 })
+addSign("sign_express", nil, true, { 255, 255, 255 })
+addSign("sign_red_howard", nil, true, { 255, 31, 31 })
+addSign("sign_red_95th", nil, true, { 255, 31, 31 })
+addSign("sign_brown_loop", nil, true, { 165, 95, 35 })
+addSign("sign_brown_kimball", nil, true, { 165, 95, 35 })
 
 function Initialise()
 -- For AWS self test.
@@ -51,6 +62,12 @@ end
 function Update(time)
 
 	if ( Call( "GetIsPlayer" ) == 1 ) then
+		gTimeSinceCarCount = gTimeSinceCarCount + time
+		if (gTimeSinceCarCount >= CAR_COUNT_TIME) then
+			gTimeSinceCarCount = 0
+			CountCars()
+		end
+			
 		local whine = Call("*:GetControlValue", "TractionWhine", 0)
 		local dynamic = Call("*:GetControlValue", "DynamicBrake", 0)
 
@@ -91,13 +108,6 @@ function Update(time)
 			if gDriven ~= 1 then
 				gDriven = 1
 				Call( "*:SetControlValue", "Active", 0, 1 )
-				CountCars()
-			end
-			
-			gTimeSinceCarCount = gTimeSinceCarCount + time
-			if (gTimeSinceCarCount >= CAR_COUNT_TIME) then
-				gTimeSinceCarCount = 0
-				CountCars()
 			end
 		else
 			if gDriven ~= 0 then
@@ -137,14 +147,15 @@ function Update(time)
 	
 	for i = 1, NUM_SIGNS do
 		if ((i - 1 == math.floor(DestSign) and IsEndCar) or (not IsEndCar and i == 1)) then
-			Call("*:ActivateNode", FRONT_SIGNS[i], 1)
+			Call("*:ActivateNode", SIGNS[i].front, 1)
 		else
-			Call("*:ActivateNode", FRONT_SIGNS[i], 0)
+			Call("*:ActivateNode", SIGNS[i].front, 0)
 		end
 	end
 	
-	if (DestSign > 0 and IsEndCar) then
+	if (SIGNS[DestSign + 1].hasLight and IsEndCar) then
 		Call( "SignLightFront:Activate", 1 )
+		Call( "SignLightFront:SetColour", SIGNS[DestSign + 1].color[1] / 255, SIGNS[DestSign + 1].color[2] / 255, SIGNS[DestSign + 1].color[3] / 255 )
 	else
 		Call( "SignLightFront:Activate", 0 )
 	end
@@ -161,11 +172,13 @@ function CountCars()
 		Call("*:SetControlValue", "IsEndCar", 0, 0)
 	end
 	
-	-- Determine the total number of cars in the consist
+	if (Call("*:GetControlValue", "Active", 0) > 0) then
+		-- Determine the total number of cars in the consist
 
-	Call( "*:SetControlValue", "NumCars", 0, 1 )
-	Call( "SendConsistMessage", CARCOUNT_ID, 0, 0 )
-	Call( "SendConsistMessage", CARCOUNT_ID, 0, 1 )
+		Call( "*:SetControlValue", "NumCars", 0, 1 )
+		Call( "SendConsistMessage", CARCOUNT_ID, 0, 0 )
+		Call( "SendConsistMessage", CARCOUNT_ID, 0, 1 )
+	end
 end
 
 function OnConsistMessage ( msg, argument, direction )
@@ -215,6 +228,7 @@ function OnCustomSignalMessage(argument)
 end
 
 function OnControlValueChange ( name, index, value )
+	--debugPrint("Control changed: " .. tostring(name) .. " (to: " .. tostring(value) .. ")")
 
 	if Call( "*:ControlExists", name, index ) then
 		Call( "*:SetControlValue", name, index, value )

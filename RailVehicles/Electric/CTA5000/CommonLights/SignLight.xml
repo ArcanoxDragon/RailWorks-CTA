@@ -403,14 +403,14 @@
 							<Attribute name="Radius">
 								<sFloat32>
 									<Element>
-										<Value>2</Value>
+										<Value>1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="Phi">
 								<sFloat32>
 									<Element>
-										<Value>89</Value>
+										<Value>75</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

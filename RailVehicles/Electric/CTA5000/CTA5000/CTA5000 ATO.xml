@@ -5,7 +5,7 @@
 			<Attribute name="Name">
 				<cDeltaString>
 					<Element>
-						<Value>[CTA] Bombardier 5000-series</Value>
+						<Value>[CTA] Bombardier 5000-series (with ATO)</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Bombardier 5000-series</Value>
+														<Value>[CTA] Bombardier 5000-series (with ATO)</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -893,7 +893,7 @@
 							<Attribute name="EngineName">
 								<cDeltaString>
 									<Element>
-										<Value>[CTA] Bombardier 5000-series</Value>
+										<Value>[CTA] Bombardier 5000-series (with ATO)</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -904,7 +904,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Bombardier 5000-series</Value>
+														<Value>[CTA] Bombardier 5000-series (with ATO)</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -4447,6 +4447,75 @@
 														<Attribute name="ControlName">
 															<cDeltaString>
 																<Element>
+																	<Value>TrueThrottle</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DefaultValue">
+															<sFloat32>
+																<Element>
+																	<Value>-1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MinimumValue">
+															<sFloat32>
+																<Element>
+																	<Value>-1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MaximumValue">
+															<sFloat32>
+																<Element>
+																	<Value>1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="BriefDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DetailedDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="ApplyToConsist">
+															<eBoolean>
+																<Element>
+																	<Value>eFalse</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+														<Attribute name="HUDControlID">
+															<sUInt32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sUInt32>
+														</Attribute>
+														<Attribute name="InterfaceElements">
+															<__Indexed__cControlContainerBlueprint-cElement>
+																<Element>
+																	<Value />
+																</Element>
+															</__Indexed__cControlContainerBlueprint-cElement>
+														</Attribute>
+													</Value>
+												</Element>
+											</cControlContainerBlueprint-cControlValue>
+											<cControlContainerBlueprint-cControlValue>
+												<Element>
+													<Value>
+														<Attribute name="ControlName">
+															<cDeltaString>
+																<Element>
 																	<Value>ATCWarnMode</Value>
 																</Element>
 															</cDeltaString>
@@ -4781,6 +4850,352 @@
 																			</Element>
 																		</cControlContainerBlueprint-cInteriorPushButton>
 																	</Value>
+																</Element>
+															</__Indexed__cControlContainerBlueprint-cElement>
+														</Attribute>
+													</Value>
+												</Element>
+											</cControlContainerBlueprint-cControlValue>
+											<cControlContainerBlueprint-cControlValue>
+												<Element>
+													<Value>
+														<Attribute name="ControlName">
+															<cDeltaString>
+																<Element>
+																	<Value>ATOEnabled</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DefaultValue">
+															<sFloat32>
+																<Element>
+																	<Value>-1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MinimumValue">
+															<sFloat32>
+																<Element>
+																	<Value>-1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MaximumValue">
+															<sFloat32>
+																<Element>
+																	<Value>1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="BriefDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DetailedDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="ApplyToConsist">
+															<eBoolean>
+																<Element>
+																	<Value>eTrue</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+														<Attribute name="HUDControlID">
+															<sUInt32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sUInt32>
+														</Attribute>
+														<Attribute name="InterfaceElements">
+															<__Indexed__cControlContainerBlueprint-cElement>
+																<Element>
+																	<Value>
+																		<cControlContainerBlueprint-cInteriorPushButton>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="PickTransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value />
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="MovementType">
+																						<cControlContainerBlueprint-cInternalInteriorGeometryInput-eMovementType>
+																							<Element>
+																								<Value>PushButton</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInternalInteriorGeometryInput-eMovementType>
+																					</Attribute>
+																					<Attribute name="AnalogInputSensitivity">
+																						<sFloat32>
+																							<Element>
+																								<Value>25</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="DigitalInputSensitivity">
+																						<sFloat32>
+																							<Element>
+																								<Value>25</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="AnimationName">
+																						<cDeltaString>
+																							<Element>
+																								<Value />
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																					<Attribute name="AutoRelease">
+																						<eBoolean>
+																							<Element>
+																								<Value>eFalse</Value>
+																							</Element>
+																						</eBoolean>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorPushButton>
+																	</Value>
+																</Element>
+															</__Indexed__cControlContainerBlueprint-cElement>
+														</Attribute>
+													</Value>
+												</Element>
+											</cControlContainerBlueprint-cControlValue>
+											<cControlContainerBlueprint-cControlValue>
+												<Element>
+													<Value>
+														<Attribute name="ControlName">
+															<cDeltaString>
+																<Element>
+																	<Value>ATOThrottle</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DefaultValue">
+															<sFloat32>
+																<Element>
+																	<Value>-1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MinimumValue">
+															<sFloat32>
+																<Element>
+																	<Value>-1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MaximumValue">
+															<sFloat32>
+																<Element>
+																	<Value>1</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="BriefDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DetailedDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="ApplyToConsist">
+															<eBoolean>
+																<Element>
+																	<Value>eFalse</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+														<Attribute name="HUDControlID">
+															<sUInt32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sUInt32>
+														</Attribute>
+														<Attribute name="InterfaceElements">
+															<__Indexed__cControlContainerBlueprint-cElement>
+																<Element>
+																	<Value />
+																</Element>
+															</__Indexed__cControlContainerBlueprint-cElement>
+														</Attribute>
+													</Value>
+												</Element>
+											</cControlContainerBlueprint-cControlValue>
+											<cControlContainerBlueprint-cControlValue>
+												<Element>
+													<Value>
+														<Attribute name="ControlName">
+															<cDeltaString>
+																<Element>
+																	<Value>ATOTargetSpeed</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DefaultValue">
+															<sFloat32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MinimumValue">
+															<sFloat32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MaximumValue">
+															<sFloat32>
+																<Element>
+																	<Value>100</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="BriefDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DetailedDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="ApplyToConsist">
+															<eBoolean>
+																<Element>
+																	<Value>eFalse</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+														<Attribute name="HUDControlID">
+															<sUInt32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sUInt32>
+														</Attribute>
+														<Attribute name="InterfaceElements">
+															<__Indexed__cControlContainerBlueprint-cElement>
+																<Element>
+																	<Value />
+																</Element>
+															</__Indexed__cControlContainerBlueprint-cElement>
+														</Attribute>
+													</Value>
+												</Element>
+											</cControlContainerBlueprint-cControlValue>
+											<cControlContainerBlueprint-cControlValue>
+												<Element>
+													<Value>
+														<Attribute name="ControlName">
+															<cDeltaString>
+																<Element>
+																	<Value>NextSignalDist</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DefaultValue">
+															<sFloat32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MinimumValue">
+															<sFloat32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MaximumValue">
+															<sFloat32>
+																<Element>
+																	<Value>10000</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="BriefDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DetailedDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="ApplyToConsist">
+															<eBoolean>
+																<Element>
+																	<Value>eFalse</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+														<Attribute name="HUDControlID">
+															<sUInt32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sUInt32>
+														</Attribute>
+														<Attribute name="InterfaceElements">
+															<__Indexed__cControlContainerBlueprint-cElement>
+																<Element>
+																	<Value />
 																</Element>
 															</__Indexed__cControlContainerBlueprint-cElement>
 														</Attribute>

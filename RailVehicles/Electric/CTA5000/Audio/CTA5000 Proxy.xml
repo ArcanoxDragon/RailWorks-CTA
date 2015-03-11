@@ -6012,7 +6012,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleAndBrake</Value>
+													<Value>ThrottleLever</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -6105,7 +6105,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleAndBrake</Value>
+													<Value>ThrottleLever</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -6198,7 +6198,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleAndBrake</Value>
+													<Value>ThrottleLever</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -6291,7 +6291,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleAndBrake</Value>
+													<Value>ThrottleLever</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -6384,7 +6384,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleAndBrake</Value>
+													<Value>ThrottleLever</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>

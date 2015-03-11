@@ -357,7 +357,7 @@
 							<Attribute name="MaxSpeedTolerance">
 								<sUInt32>
 									<Element>
-										<Value>55</Value>
+										<Value>25</Value>
 									</Element>
 								</sUInt32>
 							</Attribute>

@@ -1,15 +1,8 @@
 --include=..\..\Common\Scripts\CTA ATC.lua
+--include=..\..\Common\Scripts\CTA ATO.lua
 --include=..\..\Common\Scripts\CTA Util.lua
 
 local NUM_SIGNS = 7
-local FRONT_SIGNS = { 	"sign_off",
-						"sign_nis",
-						"sign_express",
-						"sign_red_howard",
-						"sign_red_95th",
-						"sign_brown_loop",
-						"sign_brown_kimball",
-						nil } -- The last "nil" is mainly just for formatting and ease of entry...
 
 ------------------------------------------------------------
 -- Simulation file for the Bombardier CTA 5000-series EMU
@@ -109,6 +102,8 @@ function Update(interval)
 			ATCBrakeApplication = Call( "*:GetControlValue", "ATCBrakeApplication", 0 )
 			IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
 			NumCars = Call( "*:GetControlValue", "NumCars", 0 )
+			ATOEnabled = (Call( "*:GetControlValue", "ATOEnabled", 0 ) or -1) > 0.5
+			ATOThrottle = (Call( "*:GetControlValue", "ATOThrottle", 0 ) or -1)
 			
 			DestSignNext = Call( "*:GetControlValue", "DestSignNext", 0 ) > 0
 			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
@@ -160,15 +155,22 @@ function Update(interval)
 				realAccel = (TrainSpeed - gLastSpeed) / gTimeDelta
 				gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
 				gAvgAccelTime = gAvgAccelTime + gTimeDelta
-				if (gAvgAccelTime >= 1.0) then
+				if (gAvgAccelTime >= 0.1) then
 					gAvgAccelTime = 0.0
-					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel, 2) )
+					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / 0.1, 2) )
 					gAvgAccel = 0.0
 				end
 				gCurrent = Call( "*:GetControlValue", "Ammeter", 0 )
 				
-				tThrottle = CombinedLever * 2.0 - 1.0
-				if (math.abs(tThrottle) < 0.1) then
+				if ATOEnabled then
+					tThrottle = ATOThrottle
+					Call( "*:SetControlValue", "ThrottleLever", 0, 0 )
+				else
+					tThrottle = CombinedLever * 2.0 - 1.0
+					Call( "*:SetControlValue", "ThrottleLever", 0, CombinedLever )
+				end
+				
+				if (math.abs(tThrottle) < 0.1 and not ATOEnabled) then
 					tThrottle = 0.0
 				end
 				
@@ -228,7 +230,7 @@ function Update(interval)
 				else
 					Call( "*:SetControlValue", "Sander", 0, 0 )
 					
-					if (math.abs(TrainSpeed) < 3.0) then
+					if (math.abs(TrainSpeed) < 3.0 and not ATOEnabled) then
 						gStoppingTime = gStoppingTime + gTimeDelta
 					else
 						gStoppingTime = 0
@@ -354,6 +356,7 @@ function Update(interval)
 					
 					Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0) )
 					Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
+					Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
 				end
 
 				-- End propulsion system
@@ -362,6 +365,10 @@ function Update(interval)
 				
 				if UpdateATC then
 					UpdateATC(gTimeDelta)
+				end
+				
+				if UpdateATO then
+					UpdateATO(gTimeDelta)
 				end
 				
 				-- End ATC system

@@ -492,7 +492,7 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>1</Value>
+														<Value>0.43</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>

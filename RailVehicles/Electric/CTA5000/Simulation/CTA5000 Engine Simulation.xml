@@ -913,7 +913,7 @@
 							<Attribute name="Name">
 								<cDeltaString>
 									<Element>
-										<Value>RailVehicles\Electric\CTA5000\Simulation\CTA5000 Simulation.lua</Value>
+										<Value>RailVehicles\Electric\CTA5000\Simulation\CTA5000 Simulation</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
