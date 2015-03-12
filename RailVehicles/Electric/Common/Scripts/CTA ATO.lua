@@ -37,11 +37,13 @@ function resetPid(pidName)
 	gSettleTarget[pN] = 0.0
 end
 
-function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr)
+function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr, buffer)
 	local pN = pidName or "default"
-	local e = target - real
 	local mnErr = minErr or -1
 	local mxErr = maxErr or 1
+	local buf = buffer or 0.0
+	
+	local e = math.min(target - real, 0) - math.min(real - (target - buffer), 0)
 	
 	if (gErrorSums[pN] == nil or gLastErrors[pN] == nil or gSettled[pN] == nil or gSettleTarget[pN] == nil or gSettledTime[pN] == nil) then resetPid(pN) end
 	if (gSettled[pN]) then
@@ -79,6 +81,7 @@ end
 
 local gLastATO = 0
 local gLastATC = 0
+local gLastATOThrottle = 0
 atoSigDirection = 0
 atoStopping = 0
 atoMaxSpeed = 100
@@ -124,8 +127,7 @@ function UpdateATO(interval)
 			spdType, spdLimit, spdDist = spdType2, spdLimit2, spdDist2
 		end
 		sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atoSigDirection)
-		doorsLeft = Call("*:GetControlValue", "DoorsOpenCloseLeft", 0) > 0.1
-		doorsRight = Call("*:GetControlValue", "DoorsOpenCloseRight", 0) > 0.1
+		doors = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
 		tThrottle = Call("*:GetControlValue", "TrueThrottle", 0)
 		
 		if (spdType == 0) then -- End of line...stop the train
@@ -188,12 +190,12 @@ function UpdateATO(interval)
 						--debugPrint("Opening doors")
 					end
 					
-					if (doorsLeft or doorsRight) then
+					if (doors) then
 						atoIsStopped = 1
 					end
 					
 					if (atoIsStopped > 0.75) then
-						if (not doorsLeft and not doorsRight) then
+						if (not doors) then
 							atoTimeStopped = atoTimeStopped + interval
 							if (atoTimeStopped >= 2.0) then
 								--Call("*:SetControlValue", "LoadCargo", 0, 0)
@@ -225,13 +227,13 @@ function UpdateATO(interval)
 			if (atoStopping > 0 and atoThrottle < 0) then
 				atoK_P = atoK_P * 2.0 -- Double influence for braking; make sure we're accurate
 			end
-			t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -2.5, 2.5)
-			atoThrottle = clamp(t, -1.0, 1.0)
+			t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -2.5, 2.5, 1.5)
+			atoThrottle = clamp(t, -1.0 - (1/8), 1.0 + (1/8))
 			if (atoStopping > 0) then
 				if (sigDist > 5) then
-					atoThrottle = clamp(atoThrottle, -1.0, 0.25)
+					atoThrottle = clamp(atoThrottle, -1.0 - (1/8), 0.25 + (1/8))
 				else
-					atoThrottle = clamp(atoThrottle, -1.0, 0.0)
+					atoThrottle = clamp(atoThrottle, -1.0 - (1/8),  (1/8))
 				end
 			end
 			Call( "*:SetControlValue", "PID_Settled", 0, gSettled["ato"] and 1 or 0 )
@@ -244,7 +246,7 @@ function UpdateATO(interval)
 			atoThrottle = -1
 		end
 		
-		Call("*:SetControlValue", "ThrottleAndBrake", 0, (atoThrottle + 1) / 2)
+		Call("*:SetControlValue", "ThrottleAndBrake", 0, (Call("*:GetControlValue", "ATOThrottle", 0) + 1) / 2)
 	else
 		if (gLastATO > 0.0) then
 			Call("*:SetControlValue", "ThrottleAndBrake", 0, 0)
@@ -259,7 +261,18 @@ function UpdateATO(interval)
 			resetPid("ato")
 		end
 	end
-	Call("*:SetControlValue", "ATOThrottle", 0, atoThrottle)
+	
+	atoThrottle = atoThrottle * (1 + (1/8))
+	
+	if (atoThrottle >= gLastATOThrottle + (1/8)) then
+		gLastATOThrottle = atoThrottle - (1/8)
+	elseif (atoThrottle <= gLastATOThrottle - (1/8)) then
+		gLastATOThrottle = atoThrottle + (1/8)
+	end
+	
+	gLastATOThrottle = clamp(gLastATOThrottle, -1.0, 1.0)
+	
+	Call("*:SetControlValue", "ATOThrottle", 0, math.floor((math.abs(gLastATOThrottle) * 10) + 0.5) / 10 * sign(gLastATOThrottle))
 	
 	gLastATO = atoActive
 end

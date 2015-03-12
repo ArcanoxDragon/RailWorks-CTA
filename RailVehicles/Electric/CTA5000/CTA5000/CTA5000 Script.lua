@@ -5,7 +5,7 @@
 -- (c) Railsimulator.com 2012
 --
 
---include=..\..\Common\Scripts\CTA Util.lua
+--include=..\..\..\..\Common\Scripts\CTA Util.lua
 
 WHINE_ID = 1715
 DYNAMIC_ID = 1716
@@ -13,18 +13,21 @@ CARCOUNT_ID = 1717
 CARCOUNT_RET_ID = 1718
 
 MSG_ATO_SPEED_LIMIT = 42
+MSG_SIGN_CHANGE = 43
 
 CAR_COUNT_TIME = 1.0 -- seconds
 
 local NUM_SIGNS = 0
 local SIGNS = { }
 
-local function addSign(frontName, sideName, lightOn, lightColor)
+local function addSign(frontName, sideName, lightOn, lightColor, nextSign)
 	local sign = { }
+	local nSign = nextSign or 1 -- "Not In Service" by default
 	sign.front = frontName
 	sign.side = sideName
 	sign.hasLight = lightOn
 	sign.color = lightColor
+	sign.nextSign = nSign
 	SIGNS[NUM_SIGNS + 1] = sign
 	NUM_SIGNS = NUM_SIGNS + 1
 end
@@ -34,7 +37,7 @@ addSign("sign_nis", nil, true, { 255, 255, 255 })
 addSign("sign_express", nil, true, { 255, 255, 255 })
 addSign("sign_red_howard", nil, true, { 255, 31, 31 })
 addSign("sign_red_95th", nil, true, { 255, 31, 31 })
-addSign("sign_brown_loop", nil, true, { 165, 95, 35 })
+addSign("sign_brown_loop", nil, true, { 165, 95, 35 }, 6 --[[ Next sign: Kimball ]])
 addSign("sign_brown_kimball", nil, true, { 165, 95, 35 })
 
 function Initialise()
@@ -221,6 +224,17 @@ function OnCustomSignalMessage(argument)
 			local speedLimit = tonumber(arg)
 			if (speedLimit) then
 				Call("*:SetControlValue", "ATOSpeedLimit", 0, speedLimit)
+			end
+		elseif (tonumber(msg) == MSG_SIGN_CHANGE) then
+			debugPrint("Received sign change command")
+			if (Call("*:GetControlValue", "Active", 0) > 0.5) then
+				local curSignIndex = Call("*:GetControlValue", "DestinationSign", 0)
+				debugPrint("Current sign: " .. tostring(curSignIndex))
+				if (curSignIndex < NUM_SIGNS and curSignIndex >= 0) then
+					local curSign = SIGNS[curSignIndex + 1]
+					debugPrint("Changing to: " .. tostring(curSign.nextSign))
+					Call("*:SetControlValue", "DestinationSign", 0, curSign.nextSign)
+				end
 			end
 		end
 	end

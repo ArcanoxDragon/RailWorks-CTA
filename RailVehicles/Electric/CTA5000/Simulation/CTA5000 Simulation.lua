@@ -1,6 +1,6 @@
 --include=..\..\Common\Scripts\CTA ATC.lua
 --include=..\..\Common\Scripts\CTA ATO.lua
---include=..\..\Common\Scripts\CTA Util.lua
+--include=..\..\..\..\Common\Scripts\CTA Util.lua
 
 local NUM_SIGNS = 7
 
@@ -149,6 +149,8 @@ function Update(interval)
 						DoorsOpen = TRUE
 					end
 				end
+				
+				Call( "*:SetControlValue", "DoorsOpen", 0, math.min(DoorsOpen, 1) )
 			
 				-- Begin propulsion system
 
