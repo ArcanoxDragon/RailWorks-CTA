@@ -96,6 +96,11 @@ function UpdateATO(interval)
 	local spdType2, spdLimit2, spdDist2 -- Second check, to make sure we don't miss a hidden "end-of-track" speed limit
 	local sigType, sigState, sigDist, sigAspect
 	local t, p, i, d
+	
+	local TrackBrake = Call("*:GetControlValue", "TrackBrake", 0)
+	if TrackBrake and TrackBrake > 0.5 then
+		Call("*:SetControlValue", "ATOEnabled", 0, -1)
+	end
 
 	if Call("*:ControlExists", "ATOEnabled", 0) < 0.5 then -- Don't update if we don't have ATO installed on the vehicle
 		return

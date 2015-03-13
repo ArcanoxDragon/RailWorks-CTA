@@ -34,14 +34,14 @@
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>2.7</Value>
+														<Value>2.6</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>6</Value>
+														<Value>5.6</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -99,14 +99,14 @@
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>3.05</Value>
+														<Value>3</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>6.25</Value>
+														<Value>5.8</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -153,7 +153,7 @@
 							<Attribute name="horizontalDirectionalFreedom">
 								<sFloat32>
 									<Element>
-										<Value>1.95</Value>
+										<Value>1.2</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -167,7 +167,7 @@
 							<Attribute name="MaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.5</Value>
+										<Value>1.2</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -181,7 +181,7 @@
 							<Attribute name="WindowMaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.5</Value>
+										<Value>1.2</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -195,14 +195,14 @@
 							<Attribute name="SpringYCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.09</Value>
+										<Value>0.08</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.09</Value>
+										<Value>0.065</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
