@@ -22,7 +22,7 @@ local SIGNS = { }
 
 local function addSign(texName, lightOn, lightColor, nextSign)
 	local sign = { }
-	local nSign = nextSign or 1 -- "Not In Service" by default
+	local nSign = nextSign or NUM_SIGNS -- Same sign by default
 	sign.id = texName
 	sign.hasLight = lightOn
 	sign.color = lightColor
@@ -40,19 +40,19 @@ addSign("e",  true, { 255,  31,  31 })     --[[  4 Red 95th ]]
 addSign("f",  true, { 255,  31,  31 })     --[[  5 Red Roosevelt ]]
 addSign("g",  true, { 255,  31,  31 })     --[[  6 Red 63rd ]]
 addSign("h",  true, { 165,  95,  35 }, 8)  --[[  7 Brown Loop ]]
-addSign("i",  true, { 165,  95,  35 }, 8)  --[[  8 Brown Kimball ]]
-addSign("j",  true, { 165,  95,  35 }, 9)  --[[  9 Brown Belmont ]]
+addSign("i",  true, { 165,  95,  35 })     --[[  8 Brown Kimball ]]
+addSign("j",  true, { 165,  95,  35 })     --[[  9 Brown Belmont ]]
 addSign("k",  true, { 255, 127,  63 }, 11) --[[ 10 Orange Loop ]]
-addSign("l",  true, { 255, 127,  63 }, 11) --[[ 11 Orange Midway ]]
+addSign("l",  true, { 255, 127,  63 })     --[[ 11 Orange Midway ]]
 addSign("m",  true, { 155,   0, 215 }, 14) --[[ 12 Purple Loop ]]
-addSign("n",  true, { 155,   0, 215 }, 13) --[[ 13 Purple Howard ]]
-addSign("o",  true, { 155,   0, 215 }, 14) --[[ 14 Purple Linden ]]
+addSign("n",  true, { 155,   0, 215 })     --[[ 13 Purple Howard ]]
+addSign("o",  true, { 155,   0, 215 })     --[[ 14 Purple Linden ]]
 addSign("p",  true, { 235,  90, 185 }, 16) --[[ 15 Pink Loop ]]
-addSign("q",  true, { 235,  90, 185 }, 16) --[[ 16 Pink 54th/Cermak ]]
-addSign("r",  true, {  31, 255,  31 }, 17) --[[ 17 Green Harlem ]]
-addSign("s",  true, { 191, 255, 191 }, 18) --[[ 18 Green Cottage Grove ]]
-addSign("t",  true, {  31, 255,  31 }, 19) --[[ 19 Green Ashland/63rd ]]
-addSign("u",  true, {  31, 255,  31 }, 20) --[[ 20 Green Roosevelt ]]
+addSign("q",  true, { 235,  90, 185 })     --[[ 16 Pink 54th/Cermak ]]
+addSign("r",  true, {  31, 255,  31 })     --[[ 17 Green Harlem ]]
+addSign("s",  true, { 191, 255, 191 })     --[[ 18 Green Cottage Grove ]]
+addSign("t",  true, {  31, 255,  31 })     --[[ 19 Green Ashland/63rd ]]
+addSign("u",  true, {  31, 255,  31 })     --[[ 20 Green Roosevelt ]]
 addSign("v",  true, {   0,  95, 235 })     --[[ 21 Blue O'Hare ]]
 addSign("w",  true, {   0,  95, 235 })     --[[ 22 Blue Forest Park ]]
 addSign("x",  true, { 191, 191, 255 })     --[[ 23 Blue UIC ]]
