@@ -1155,14 +1155,14 @@
 															<Attribute name="Provider">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>briman0094</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
 															<Attribute name="Product">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>CTA</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -1173,7 +1173,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value />
+														<Value>RailVehicles\Electric\Common\Numbering\CTA Numbering LED.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -5022,7 +5022,7 @@
 														<Attribute name="MaximumValue">
 															<sFloat32>
 																<Element>
-																	<Value>6</Value>
+																	<Value>25</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>

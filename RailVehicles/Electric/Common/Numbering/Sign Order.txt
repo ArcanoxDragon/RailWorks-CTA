@@ -1,0 +1,26 @@
+a -  0 - Off					{   0,   0,   0 }
+b -  1 - NIS					{ 255, 255, 255 }
+c -  2 - Express
+d -  3 - Red Howard				{ 255,  31,  31 }
+e -  4 - Red 95th
+f -  5 - Red Roosevelt
+g -  6 - Red Ashland/63rd
+h -  7 - Brown Loop				{ 165,  95,  35 }
+i -  8 - Brown Kimball
+j -  9 - Brown Belmont
+k - 10 - Orange Loop			{ 255, 127,  63 }
+l - 11 - Orange Midway
+m - 12 - Purple Loop			{ 155,   0, 215 }
+n - 13 - Purple Howard
+o - 14 - Purple Linden
+p - 15 - Pink Loop				{ 235,  90, 185 }
+q - 16 - Pink 54th/Cermak
+r - 17 - Green Harlem			{  31, 255,  31 }
+s - 18 - Green Cottage Grove
+t - 19 - Green Ashland/63rd
+u - 20 - Green Roosevelt
+v - 21 - Blue O'Hare			{   0,  95, 235 }
+w - 22 - Blue Forest Park
+x - 23 - Blue UIC
+y - 24 - Blue Rosemont
+z - 25 - Blue Jefferson Park

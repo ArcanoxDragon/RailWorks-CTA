@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cNamedTextureSetBlueprint>
+	<Element>
+		<Value>
+			<Attribute name="Name">
+				<cDeltaString>
+					<Element>
+						<Value>[CTA] Rail Vehicle LED Digits</Value>
+					</Element>
+				</cDeltaString>
+			</Attribute>
+			<Attribute name="TextureEntry">
+				<__Indexed__cNamedTextureSetBlueprint-sTextureEntry>
+					<Element>
+						<Value>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_0.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_1.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>2</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_2.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>3</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_3.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>4</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_4.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>5</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_5.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>6</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_6.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>7</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_7.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>8</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_8.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>9</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\Common\Numbering\decal_primarynumber_9.ace</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>a</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Off</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>b</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Not_In_Service</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>c</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Express</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>d</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Red_Howard</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>e</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Red_95th</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>f</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Red_Roosevelt</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>g</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Red_Ashland63rd</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>h</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Brown_Loop</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>i</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Brown_Kimball</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>j</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Brown_Belmont</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>k</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Orange_Loop</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>l</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Orange_Midway</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>m</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Purple_Loop</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>n</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Purple_Howard</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>o</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Purple_Linden</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>p</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Pink_Loop</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>q</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Pink_54thCermak</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>r</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Green_Harlem</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>s</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Green_CottageGrove</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>t</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Green_Ashland63rd</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>u</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Green_Roosevelt</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>v</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Blue_OHare</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>w</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Blue_ForestPark</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>x</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Blue_UIC</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>y</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Blue_Rosemont</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>z</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Blue_JeffersonPark</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+						</Value>
+					</Element>
+				</__Indexed__cNamedTextureSetBlueprint-sTextureEntry>
+			</Attribute>
+		</Value>
+	</Element>
+</cNamedTextureSetBlueprint>

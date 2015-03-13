@@ -20,11 +20,10 @@ CAR_COUNT_TIME = 1.0 -- seconds
 local NUM_SIGNS = 0
 local SIGNS = { }
 
-local function addSign(frontName, sideName, lightOn, lightColor, nextSign)
+local function addSign(texName, lightOn, lightColor, nextSign)
 	local sign = { }
 	local nSign = nextSign or 1 -- "Not In Service" by default
-	sign.front = frontName
-	sign.side = sideName
+	sign.id = texName
 	sign.hasLight = lightOn
 	sign.color = lightColor
 	sign.nextSign = nSign
@@ -32,13 +31,33 @@ local function addSign(frontName, sideName, lightOn, lightColor, nextSign)
 	NUM_SIGNS = NUM_SIGNS + 1
 end
 
-addSign("sign_off", nil, false, nil)
-addSign("sign_nis", nil, true, { 255, 255, 255 })
-addSign("sign_express", nil, true, { 255, 255, 255 })
-addSign("sign_red_howard", nil, true, { 255, 31, 31 })
-addSign("sign_red_95th", nil, true, { 255, 31, 31 })
-addSign("sign_brown_loop", nil, true, { 165, 95, 35 }, 6 --[[ Next sign: Kimball ]])
-addSign("sign_brown_kimball", nil, true, { 165, 95, 35 })
+--     ( id, light, lightColor, [ nextSign ] )
+addSign("a", false, nil)                   --[[  0 Off ]]
+addSign("b",  true, { 255, 255, 255 })     --[[  1 NIS ]]
+addSign("c",  true, { 255, 255, 255 })     --[[  2 Express ]]
+addSign("d",  true, { 255,  31,  31 })     --[[  3 Red Howard ]]
+addSign("e",  true, { 255,  31,  31 })     --[[  4 Red 95th ]]
+addSign("f",  true, { 255,  31,  31 })     --[[  5 Red Roosevelt ]]
+addSign("g",  true, { 255,  31,  31 })     --[[  6 Red 63rd ]]
+addSign("h",  true, { 165,  95,  35 }, 8)  --[[  7 Brown Loop ]]
+addSign("i",  true, { 165,  95,  35 }, 8)  --[[  8 Brown Kimball ]]
+addSign("j",  true, { 165,  95,  35 }, 9)  --[[  9 Brown Belmont ]]
+addSign("k",  true, { 255, 127,  63 }, 11) --[[ 10 Orange Loop ]]
+addSign("l",  true, { 255, 127,  63 }, 11) --[[ 11 Orange Midway ]]
+addSign("m",  true, { 155,   0, 215 }, 14) --[[ 12 Purple Loop ]]
+addSign("n",  true, { 155,   0, 215 }, 13) --[[ 13 Purple Howard ]]
+addSign("o",  true, { 155,   0, 215 }, 14) --[[ 14 Purple Linden ]]
+addSign("p",  true, { 235,  90, 185 }, 16) --[[ 15 Pink Loop ]]
+addSign("q",  true, { 235,  90, 185 }, 16) --[[ 16 Pink 54th/Cermak ]]
+addSign("r",  true, {  31, 255,  31 }, 17) --[[ 17 Green Harlem ]]
+addSign("s",  true, { 191, 255, 191 }, 18) --[[ 18 Green Cottage Grove ]]
+addSign("r",  true, {  31, 255,  31 }, 19) --[[ 19 Green Ashland/63rd ]]
+addSign("u",  true, {  31, 255,  31 }, 20) --[[ 20 Green Roosevelt ]]
+addSign("v",  true, {   0,  95, 235 })     --[[ 21 Blue O'Hare ]]
+addSign("w",  true, {   0,  95, 235 })     --[[ 22 Blue Forest Park ]]
+addSign("x",  true, { 191, 191, 255 })     --[[ 23 Blue UIC ]]
+addSign("y",  true, {   0,  95, 235 })     --[[ 24 Blue Rosemont ]]
+addSign("z",  true, {   0,  95, 235 })     --[[ 25 Blue Jefferson Park ]]
 
 function Initialise()
 -- For AWS self test.
@@ -147,19 +166,26 @@ function Update(time)
 	
 	DestSign = Call( "*:GetControlValue", "DestinationSign", 0 )
 	IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
-	
-	for i = 1, NUM_SIGNS do
-		if ((i - 1 == math.floor(DestSign) and IsEndCar) or (not IsEndCar and i == 1)) then
-			Call("*:ActivateNode", SIGNS[i].front, 1)
-		else
-			Call("*:ActivateNode", SIGNS[i].front, 0)
-		end
+	RVNumber = Call("*:GetRVNumber")
+	firstPart = "5001"
+	if (string.len(RVNumber) == 5) then
+		firstPart = string.sub(RVNumber, 1, 4)
+	else
+		Call("*:SetRVNumber", "5001a")
 	end
 	
-	if (SIGNS[DestSign + 1].hasLight and IsEndCar) then
-		Call( "SignLightFront:Activate", 1 )
-		Call( "SignLightFront:SetColour", SIGNS[DestSign + 1].color[1] / 255, SIGNS[DestSign + 1].color[2] / 255, SIGNS[DestSign + 1].color[3] / 255 )
+	if (DestSign >= 0 and DestSign < NUM_SIGNS and SIGNS[DestSign + 1]) then
+		local sign = SIGNS[DestSign + 1]
+		Call("*:SetRVNumber", firstPart .. sign.id)
+		
+		if (SIGNS[DestSign + 1].hasLight and IsEndCar) then
+			Call( "SignLightFront:Activate", 1 )
+			Call( "SignLightFront:SetColour", SIGNS[DestSign + 1].color[1] / 255, SIGNS[DestSign + 1].color[2] / 255, SIGNS[DestSign + 1].color[3] / 255 )
+		else
+			Call( "SignLightFront:Activate", 0 )
+		end
 	else
+		Call("*:SetRVNumber", firstPart .. "a")
 		Call( "SignLightFront:Activate", 0 )
 	end
 end

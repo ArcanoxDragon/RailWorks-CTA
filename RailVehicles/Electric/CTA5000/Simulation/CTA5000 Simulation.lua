@@ -2,8 +2,6 @@
 --include=..\..\Common\Scripts\CTA ATO.lua
 --include=..\..\..\..\Common\Scripts\CTA Util.lua
 
-local NUM_SIGNS = 7
-
 ------------------------------------------------------------
 -- Simulation file for the Bombardier CTA 5000-series EMU
 ------------------------------------------------------------
@@ -109,7 +107,7 @@ function Update(interval)
 			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
 			DestSign     = Call( "*:GetControlValue", "DestinationSign", 0 )
 			
-			if (DestSignNext and DestSign < NUM_SIGNS - 1) then
+			if (DestSignNext and DestSign < Call("*:GetControlMaximum", "DestinationSign", 0)) then
 				if (not gDestSignNext) then
 					gDestSignNext = true
 					DestSign = math.floor(DestSign + 1)
