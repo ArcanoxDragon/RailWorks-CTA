@@ -115,6 +115,10 @@ function Update(time)
 				Call( "HeadlightL:Activate", 0 )
 				Call( "HeadlightR:Activate", 0 )
 			end
+			
+			local realSpeed = Call("*:GetControlValue", "SpeedometerMPH", 0)
+			local cabSpeed = clamp(math.floor(realSpeed), 0, 72)
+			Call("*:SetControlValue", "CabSpeedIndicator", 0, cabSpeed)
 		else
 			Call( "HeadlightL:Activate", 0 )
 			Call( "HeadlightR:Activate", 0 )
@@ -176,7 +180,8 @@ function Update(time)
 	
 	if (DestSign >= 0 and DestSign < NUM_SIGNS and SIGNS[DestSign + 1]) then
 		local sign = SIGNS[DestSign + 1]
-		Call("*:SetRVNumber", firstPart .. sign.id)
+		local frontPart = IsEndCar and sign.id or SIGNS[1].id -- Middle cars are off
+		Call("*:SetRVNumber", firstPart .. frontPart)
 		
 		if (SIGNS[DestSign + 1].hasLight and IsEndCar) then
 			Call( "SignLightFront:Activate", 1 )

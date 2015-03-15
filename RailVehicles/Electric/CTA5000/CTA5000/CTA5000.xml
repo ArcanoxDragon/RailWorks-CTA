@@ -1412,7 +1412,7 @@
 											<Attribute name="InteriorGeometryID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA5000\CTA5000\CTA5000.igs</Value>
+														<Value>RailVehicles\Electric\CTA5000\CabView\CTA5000 Cab</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -1823,6 +1823,152 @@
 															<__Indexed__cControlContainerBlueprint-cElement>
 																<Element>
 																	<Value />
+																</Element>
+															</__Indexed__cControlContainerBlueprint-cElement>
+														</Attribute>
+													</Value>
+												</Element>
+											</cControlContainerBlueprint-cControlValue>
+											<cControlContainerBlueprint-cControlValue>
+												<Element>
+													<Value>
+														<Attribute name="ControlName">
+															<cDeltaString>
+																<Element>
+																	<Value>CabSpeedIndicator</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DefaultValue">
+															<sFloat32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MinimumValue">
+															<sFloat32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="MaximumValue">
+															<sFloat32>
+																<Element>
+																	<Value>72</Value>
+																</Element>
+															</sFloat32>
+														</Attribute>
+														<Attribute name="BriefDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="DetailedDescription">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="ApplyToConsist">
+															<eBoolean>
+																<Element>
+																	<Value>eFalse</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+														<Attribute name="HUDControlID">
+															<sUInt32>
+																<Element>
+																	<Value>0</Value>
+																</Element>
+															</sUInt32>
+														</Attribute>
+														<Attribute name="InterfaceElements">
+															<__Indexed__cControlContainerBlueprint-cElement>
+																<Element>
+																	<Value>
+																		<cControlContainerBlueprint-cInteriorNotchedLever>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="PickTransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>speedindicator</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="MovementType">
+																						<cControlContainerBlueprint-cInternalInteriorGeometryInput-eMovementType>
+																							<Element>
+																								<Value>MoveUpDown</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInternalInteriorGeometryInput-eMovementType>
+																					</Attribute>
+																					<Attribute name="AnalogInputSensitivity">
+																						<sFloat32>
+																							<Element>
+																								<Value>1</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="DigitalInputSensitivity">
+																						<sFloat32>
+																							<Element>
+																								<Value>1</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="AnimationName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>RailVehicles\Electric\CTA5000\CabView\speed_indicator</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																					<Attribute name="RestInNotchedPosition">
+																						<eBoolean>
+																							<Element>
+																								<Value>eTrue</Value>
+																							</Element>
+																						</eBoolean>
+																					</Attribute>
+																					<Attribute name="NumberOfNotches">
+																						<sFloat32>
+																							<Element>
+																								<Value>73</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorNotchedLever>
+																	</Value>
 																</Element>
 															</__Indexed__cControlContainerBlueprint-cElement>
 														</Attribute>
@@ -4675,7 +4821,7 @@
 														<Attribute name="MaximumValue">
 															<sFloat32>
 																<Element>
-																	<Value>100</Value>
+																	<Value>70</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -4710,7 +4856,338 @@
 														<Attribute name="InterfaceElements">
 															<__Indexed__cControlContainerBlueprint-cElement>
 																<Element>
-																	<Value />
+																	<Value>
+																		<cControlContainerBlueprint-cInteriorVisibilityObject>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="LowerVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>15</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="UpperVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="TransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>maxspeed_15</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="ThresholdType">
+																						<cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																							<Element>
+																								<Value>Value</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorVisibilityObject>
+																		<cControlContainerBlueprint-cInteriorVisibilityObject>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="LowerVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>25</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="UpperVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="TransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>maxspeed_25</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="ThresholdType">
+																						<cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																							<Element>
+																								<Value>Value</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorVisibilityObject>
+																		<cControlContainerBlueprint-cInteriorVisibilityObject>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="LowerVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>35</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="UpperVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="TransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>maxspeed_35</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="ThresholdType">
+																						<cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																							<Element>
+																								<Value>Value</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorVisibilityObject>
+																		<cControlContainerBlueprint-cInteriorVisibilityObject>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="LowerVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>45</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="UpperVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="TransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>maxspeed_45</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="ThresholdType">
+																						<cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																							<Element>
+																								<Value>Value</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorVisibilityObject>
+																		<cControlContainerBlueprint-cInteriorVisibilityObject>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="LowerVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>55</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="UpperVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="TransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>maxspeed_55</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="ThresholdType">
+																						<cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																							<Element>
+																								<Value>Value</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorVisibilityObject>
+																		<cControlContainerBlueprint-cInteriorVisibilityObject>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="LowerVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="UpperVisibilityThreshold">
+																						<sFloat32>
+																							<Element>
+																								<Value>70.5</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="TransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>maxspeed_70</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="ThresholdType">
+																						<cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																							<Element>
+																								<Value>Value</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInteriorVisibilityObject-eThresholdType>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorVisibilityObject>
+																	</Value>
 																</Element>
 															</__Indexed__cControlContainerBlueprint-cElement>
 														</Attribute>

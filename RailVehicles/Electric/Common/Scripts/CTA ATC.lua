@@ -75,6 +75,26 @@ function UpdateATC(interval)
 	else
 		targetSpeed = 100
 	end
+	
+	-- Restrict target speed to the valid CTA speed limits
+	if (targetSpeed >= 70) then
+		targetSpeed = 70
+	elseif (targetSpeed >= 55) then
+		targetSpeed = 55
+	elseif (targetSpeed >= 45) then
+		targetSpeed = 45
+	elseif (targetSpeed >= 35) then
+		targetSpeed = 35
+	elseif (targetSpeed >= 25) then
+		targetSpeed = 25
+	elseif (targetSpeed >= 15) then
+		targetSpeed = 15
+	elseif (targetSpeed > 0) then
+		targetSpeed = 6
+	else
+		targetSpeed = 0
+	end
+	
 	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 	
 	-- Following section logic taken from CTA 7000-series RFP spec
