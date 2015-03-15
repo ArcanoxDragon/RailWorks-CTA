@@ -156,8 +156,8 @@ function Update(interval)
 				gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
 				gAvgAccelTime = gAvgAccelTime + gTimeDelta
 				if (gAvgAccelTime >= 0.1) then
+					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / gAvgAccelTime, 2) )
 					gAvgAccelTime = 0.0
-					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / 0.1, 2) )
 					gAvgAccel = 0.0
 				end
 				gCurrent = Call( "*:GetControlValue", "Ammeter", 0 )

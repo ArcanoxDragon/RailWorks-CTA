@@ -245,7 +245,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>1</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -443,7 +443,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>1</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1235,7 +1235,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.35</Value>
+													<Value>0.2</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1433,7 +1433,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.35</Value>
+													<Value>0.2</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -3224,7 +3224,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>1.5</Value>
+																				<Value>2.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3807,7 +3807,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>25.99999</Value>
+																				<Value>19.99999</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3827,7 +3827,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>26</Value>
+																				<Value>20</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3847,7 +3847,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>45</Value>
+																				<Value>38</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>

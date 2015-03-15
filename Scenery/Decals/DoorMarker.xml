@@ -395,21 +395,21 @@
 							<Attribute name="MinimumWidth">
 								<sFloat32>
 									<Element>
-										<Value>1</Value>
+										<Value>0.1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="MinimumHeight">
 								<sFloat32>
 									<Element>
-										<Value>1</Value>
+										<Value>0.1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="MinimumLength">
 								<sFloat32>
 									<Element>
-										<Value>1</Value>
+										<Value>0.1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

@@ -35,20 +35,31 @@ function UpdateATC(interval)
 
 	targetSpeed = Call("*:GetCurrentSpeedLimit")
 	trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
+	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
+	spdType2, spdLimit2, spdDist2 = Call("*:GetNextSpeedLimit", 0, spdDist + 0.1)
 	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
 	
-	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
+	targetSpeed = Call("*:GetCurrentSpeedLimit")
+	trackSpeed = targetSpeed
+	if (spdType2 == 0 and spdType ~= 0) then
+		spdType, spdLimit, spdDist = spdType2, spdLimit2, spdDist2
+	end
+	
 	if (spdType == 0) then -- End of line...stop the train
-		spdBuffer = (getBrakingDistance(0.0, trainSpeed, -ATC_TARGET_DECELERATION) + 35)
+		spdBuffer = (getBrakingDistance(0.0, targetSpeed, -ATC_TARGET_DECELERATION) + 6)
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 		if (spdDist <= spdBuffer) then
-			--targetSpeed = math.max(getStoppingSpeed(targetSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 3.0) - spdDist) - clamp(math.abs(TrainSpeed) - 2, 0.0, 3.0), 6)
-			targetSpeed = 6 * MPH_TO_MPS
-			if (spdDist < 20) then targetSpeed = 0 end
+			targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 3.0) - spdDist) - 0.25, 1.0 * MPH_TO_MPS)
+			if (spdDist <= 50) then
+				targetSpeed = math.min(targetSpeed, 6 * MPH_TO_MPS)
+			end
+			if (spdDist < 10) then
+				targetSpeed = 0
+			end
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 35)
+			spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 6)
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
@@ -97,11 +108,13 @@ function UpdateATC(interval)
 	
 	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 	
+	ATOEnabled = (Call("*:GetControlValue", "ATOEnabled", 0) or -1) > 0.0
+	
 	-- Following section logic taken from CTA 7000-series RFP spec
 	
 	throttle = CombinedLever * 2.0 - 1.0
 	
-	if (TrainSpeed >= (targetSpeed + 1) or gBrakeApplication) then
+	if ((TrainSpeed >= (targetSpeed + 1) or gBrakeApplication) and not ATOEnabled) then
 		gAlertAcknowledged = false
 		if (gBrakeApplication) then
 			Call("*:SetControlValue", "ATCBrakeApplication", 0, 1.0)
