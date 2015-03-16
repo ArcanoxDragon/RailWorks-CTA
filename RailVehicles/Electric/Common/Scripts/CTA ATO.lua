@@ -127,7 +127,8 @@ function UpdateATO(interval)
 		doors = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
 		tThrottle = Call("*:GetControlValue", "TrueThrottle", 0)
 		
-		targetSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0) * MPH_TO_MPS
+		ATCRestrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
+		targetSpeed = ATCRestrictedSpeed * MPH_TO_MPS
 		
 		if ((sigDist > gLastSigDist + 0.5 or trainSpeed < 0.1) and gLastSigDistTime >= 1.0) then
 			if (atoSigDirection < 0.5) then
@@ -218,7 +219,7 @@ function UpdateATO(interval)
 			atoThrottle = -1
 		end
 		
-		if (targetSpeed <= 0.1 and trainSpeed <= 0.1) then
+		if (ATCRestrictedSpeed <= 0.1 and trainSpeed <= 0.1) then
 			Call("*:SetControlValue", "Headlights", 0, 0)
 			Call("*:SetControlValue", "Reverser", 0, 0) -- Park train
 			Call("*:SetControlValue", "DestinationSign", 0, 1) -- "Not In Service"
