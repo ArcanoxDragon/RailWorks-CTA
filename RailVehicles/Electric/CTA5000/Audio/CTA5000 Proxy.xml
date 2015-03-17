@@ -3465,7 +3465,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>19.5</Value>
+																				<Value>16.4</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3485,7 +3485,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>20</Value>
+																				<Value>16.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3505,7 +3505,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>20.5</Value>
+																				<Value>17</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3807,7 +3807,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>19.99999</Value>
+																				<Value>16.49999</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3827,7 +3827,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>20</Value>
+																				<Value>16.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3847,7 +3847,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>38</Value>
+																				<Value>32</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4359,7 +4359,7 @@
 																					<Attribute name="Name">
 																						<cDeltaString>
 																							<Element>
-																								<Value>CurrentWhineVolumeSpeed</Value>
+																								<Value>CurrentWhine2VolumeSpeed</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
