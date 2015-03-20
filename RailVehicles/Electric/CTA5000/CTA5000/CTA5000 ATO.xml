@@ -645,7 +645,7 @@
 							<Attribute name="CollisionWidth">
 								<sFloat32>
 									<Element>
-										<Value>2.88</Value>
+										<Value>2.75</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

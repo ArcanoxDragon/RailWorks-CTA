@@ -3465,7 +3465,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>16.4</Value>
+																				<Value>17.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3485,7 +3485,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>16.5</Value>
+																				<Value>18</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3505,7 +3505,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>17</Value>
+																				<Value>18.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3807,7 +3807,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>16.49999</Value>
+																				<Value>17.99999</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3827,7 +3827,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>16.5</Value>
+																				<Value>18</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3847,7 +3847,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>32</Value>
+																				<Value>30</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
