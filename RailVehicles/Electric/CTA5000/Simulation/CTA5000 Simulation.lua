@@ -83,7 +83,8 @@ end
 
 function Update(interval)
 	local rInterval = round(interval, 5)
-	gTimeDelta = gTimeDelta + rInterval
+	--gTimeDelta = gTimeDelta + rInterval
+	gTimeDelta = interval
 
 	if Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
 
@@ -137,7 +138,7 @@ function Update(interval)
 				end
 			end
 			
-			if (gTimeDelta >= 0.0125) then
+			--if (gTimeDelta >= 0.0125) then
 				-- Allow for delay in closing doors.
 				if ( gLastDoorsOpen == TRUE ) and ( DoorsOpen == FALSE ) then
 					gDoorsDelay = gDoorsDelay - gTimeDelta
@@ -155,7 +156,7 @@ function Update(interval)
 				realAccel = (TrainSpeed - gLastSpeed) / gTimeDelta
 				gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
 				gAvgAccelTime = gAvgAccelTime + gTimeDelta
-				if (gAvgAccelTime >= 0.1) then
+				if (gAvgAccelTime >= (1/30)) then
 					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / gAvgAccelTime, 2) )
 					gAvgAccelTime = 0.0
 					gAvgAccel = 0.0
@@ -216,8 +217,10 @@ function Update(interval)
 					Call( "*:SetControlValue", "TrainBrakeControl", 0, 0.5 + ((1.0 - dynEffective) * 0.5) )
 					if (TrackBrake > 0) then
 						Call( "*:SetControlValue", "Sander", 0, 1 )
+						Call( "*:SetControlValue", "HandBrake", 0, 1 )
 					else
 						Call( "*:SetControlValue", "Sander", 0, 0 )
+						Call( "*:SetControlValue", "HandBrake", 0, 0 )
 					end
 					gSetReg = 0.0
 					gSetDynamic = 0.0
@@ -229,6 +232,7 @@ function Update(interval)
 					end
 				else
 					Call( "*:SetControlValue", "Sander", 0, 0 )
+					Call( "*:SetControlValue", "HandBrake", 0, 0 )
 					
 					if (math.abs(TrainSpeed) < 3.0 and not ATOEnabled) then
 						gStoppingTime = gStoppingTime + gTimeDelta
@@ -308,7 +312,9 @@ function Update(interval)
 								else
 									gSetReg = 0.0
 									tAccel = math.min(tAccel, 0.0)
-									gThrottleTime = gThrottleTime + gTimeDelta
+									if (math.abs(tAccel) < 0.01) then
+										gThrottleTime = gThrottleTime + gTimeDelta
+									end
 								end
 							else
 								if (gSetReg > dReg) then
@@ -342,7 +348,9 @@ function Update(interval)
 									gSetDynamic = 0.0
 									gSetBrake = 0.0
 									tAccel = math.max(tAccel, 0.0)
-									gThrottleTime = gThrottleTime + gTimeDelta
+									if (math.abs(tAccel) < 0.01) then
+										gThrottleTime = gThrottleTime + gTimeDelta
+									end
 								end
 							end
 						end
@@ -380,7 +388,7 @@ function Update(interval)
 				gLastDoorsOpen = DoorsOpen
 				gLastSpeed = TrainSpeed
 				gTimeDelta = 0
-			end
+			--end
 		end
 	else -- trail engine.
 	
