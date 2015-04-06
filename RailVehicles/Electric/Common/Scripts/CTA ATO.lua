@@ -170,6 +170,7 @@ function UpdateATO(interval)
 					statStopSpeedLimit = targetSpeed
 					statStopDistance = sigDist
 					statStopTime = 0
+					atoOverrunDist = 0
 				end
 			
 				atoStopping = 1
@@ -183,7 +184,7 @@ function UpdateATO(interval)
 		if (atoStopping > 0) then
 			statStopTime = statStopTime + interval
 			
-			if (sigDist < 1.2) then
+			if (sigDist < 1.2 or (atoOverrunDist > 0 and atoOverrunDist < 5.0)) then
 				targetSpeed = 0.0
 				if (trainSpeed <= 0.025) then
 					if (atoIsStopped < 0.25) then
@@ -217,6 +218,7 @@ function UpdateATO(interval)
 								statStopSpeedLimit = 0
 								statStopDistance = 0
 								statStopTime = 0
+								atoOverrunDist = 0
 							end
 						else
 							atoTimeStopped = 0.0
@@ -227,7 +229,8 @@ function UpdateATO(interval)
 			
 			if (sigAspect ~= SIGNAL_STATE_STATION or sigDist > spdBuffer + 15) then -- Lost station marker; possibly overshot
 				atoOverrunDist = atoOverrunDist + (trainSpeed * interval)
-				if (atoOverrunDist > 2.5) then -- overshot station by 2.5 meters -- something went wrong; cancel stop
+				targetSpeed = 0.0
+				if (atoOverrunDist > 5.0) then -- overshot station by 2.5 meters -- something went wrong; cancel stop
 					atoOverrunDist = 0
 					atoStopping = 0
 					atoTimeStopped = 0
@@ -243,6 +246,7 @@ function UpdateATO(interval)
 		
 		targetSpeed = math.floor(targetSpeed * MPS_TO_MPH * 10) / 10 -- Round down to nearest 0.1
 		Call("*:SetControlValue", "ATOTargetSpeed", 0, targetSpeed)
+		Call("*:SetControlValue", "ATOOverrun", 0, round(atoOverrunDist * 100.0, 2))
 		if (targetSpeed < 0.25) then
 			atoThrottle = -1.0
 		else
