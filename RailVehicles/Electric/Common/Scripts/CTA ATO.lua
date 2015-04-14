@@ -108,13 +108,12 @@ atoStopping = 0
 atoMaxSpeed = 100
 atoIsStopped = 0
 atoTimeStopped = 0
+atoStartingSpeedBuffer = 0
 
 function UpdateATO(interval)
 	-- Original plan was to allocate these *outside* the function for performance reasons
 	-- But Lua is stupid so that's not going to happen
 	local atoActive, atoThrottle, targetSpeed, trackSpeed, trainSpeed, doorsLeft, doorsRight, tThrottle, distCorrection, spdBuffer, trainSpeedMPH
-	local spdType, spdLimit, spdDist
-	local spdType2, spdLimit2, spdDist2 -- Second check, to make sure we don't miss a hidden "end-of-track" speed limit
 	local sigType, sigState, sigDist, sigAspect
 	local t, p, i, d
 	
@@ -142,14 +141,14 @@ function UpdateATO(interval)
 		
 		trainSpeed = Call("*:GetSpeed")
 		trainSpeedMPH = trainSpeed * MPS_TO_MPH
-		spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
-		spdType2, spdLimit2, spdDist2 = Call("*:GetNextSpeedLimit", 0, spdDist + 0.1)
 		sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atoSigDirection)
 		doors = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
 		tThrottle = Call("*:GetControlValue", "TrueThrottle", 0)
 		
 		ATCRestrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
 		targetSpeed = ATCRestrictedSpeed * MPH_TO_MPS
+		
+		gLastSigDistTime = gLastSigDistTime + interval
 		
 		if ((sigDist > gLastSigDist + 0.5 or trainSpeed < 0.1) and gLastSigDistTime >= 1.0) then
 			if (atoSigDirection < 0.5) then
@@ -159,29 +158,34 @@ function UpdateATO(interval)
 			end
 		end
 		
+		if (gLastSigDistTime >= 1.0) then
+			gLastSigDistTime = 0.0
+			gLastSigDist = sigDist
+		end
+		
 		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0)
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 		Call("*:SetControlValue", "NextSignalDist", 0, round(sigDist * 100.0, 2))
+		Call("*:SetControlValue", "NextSignalAspect", 0, sigAspect)
 		
-		if ((sigAspect == SIGNAL_STATE_STATION and sigDist < spdBuffer + 10) or atoStopping > 0) then
+		if (sigAspect == SIGNAL_STATE_STATION) then
 			if (sigDist <= spdBuffer and sigDist >= 5 --[[ we don't want to stop at stations we're too close to ]] and sigDist < gLastSigDist) then
 				if (atoStopping < 0.25) then
 					statStopStartingSpeed = trainSpeed
 					statStopSpeedLimit = targetSpeed
 					statStopDistance = sigDist
+					atoStartingSpeedBuffer = spdBuffer
 					statStopTime = 0
 					atoOverrunDist = 0
+					atoStopping = 1
 				end
-			
-				atoStopping = 1
-			end
-			if (atoStopping > 0) then
-				local distBuffer = 1.5
-				targetSpeed = math.min(atoMaxSpeed, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - (sigDist - distBuffer)), 1.0 * MPH_TO_MPS))
 			end
 		end
 		
 		if (atoStopping > 0) then
+			local distBuffer = 1.5
+			targetSpeed = math.min(atoMaxSpeed, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - (sigDist - distBuffer)), 1.0 * MPH_TO_MPS))
+				
 			statStopTime = statStopTime + interval
 			
 			if (sigDist < 1.2 or (atoOverrunDist > 0 and atoOverrunDist < 5.0)) then
@@ -227,7 +231,7 @@ function UpdateATO(interval)
 				end
 			end
 			
-			if (sigAspect ~= SIGNAL_STATE_STATION or sigDist > spdBuffer + 15) then -- Lost station marker; possibly overshot
+			if (sigAspect ~= SIGNAL_STATE_STATION or sigDist > atoStartingSpeedBuffer + 15) then -- Lost station marker; possibly overshot
 				atoOverrunDist = atoOverrunDist + (trainSpeed * interval)
 				targetSpeed = 0.0
 				if (atoOverrunDist > 5.0) then -- overshot station by 2.5 meters -- something went wrong; cancel stop
@@ -236,12 +240,6 @@ function UpdateATO(interval)
 					atoTimeStopped = 0
 				end
 			end
-		end
-		
-		gLastSigDistTime = gLastSigDistTime + interval
-		if (gLastSigDistTime >= 1.0) then
-			gLastSigDistTime = 0.0
-			gLastSigDist = sigDist
 		end
 		
 		targetSpeed = math.floor(targetSpeed * MPS_TO_MPH * 10) / 10 -- Round down to nearest 0.1

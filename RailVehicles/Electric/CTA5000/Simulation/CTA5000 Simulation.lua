@@ -42,7 +42,7 @@ function Setup()
 	JERK_LIMIT = 0.78
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.7
+	MAX_BRAKE_RELEASE = 0.755
 	MAX_SERVICE_BRAKE = 0.875
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
@@ -272,6 +272,7 @@ function Update(interval)
 							end
 							
 							brkAdjust = 0.0
+							gThrottleTime = 0.0
 						else
 							if (tThrottle >= 0.0) then
 								if (gSetBrake > dBrk) then
@@ -298,7 +299,7 @@ function Update(interval)
 									end
 								end
 								
-								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001 and gThrottleTime >= 0.25) then
+								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001 and gThrottleTime >= 0.45) then
 									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
 										gTimeSinceWheelslip = 0.0
 									end
@@ -324,7 +325,7 @@ function Update(interval)
 									gSetReg = 0.0
 								end
 								
-								if (gSetReg < 0.001 and gThrottleTime >= 0.25) then
+								if (gSetReg < 0.001 and gThrottleTime >= 0.45) then
 									dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
 									
 									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
@@ -340,7 +341,7 @@ function Update(interval)
 									gSetDynamic = -tAccel
 									--gSetDynamic = 0.15
 									gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - MIN_SERVICE_BRAKE)) + MIN_SERVICE_BRAKE
-									if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < 3.0) then
+									if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < MAX_STOPPING_TIME) then
 										gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
 										gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
 									end
