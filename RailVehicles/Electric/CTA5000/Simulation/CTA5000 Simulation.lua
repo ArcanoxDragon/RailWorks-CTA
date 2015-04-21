@@ -281,7 +281,6 @@ function Update(interval)
 									else
 										gSetBrake = clamp(gSetBrake - dBrk, 0.0, 1.0)
 									end
-									gThrottleTime = 0.0
 								else
 									gSetBrake = 0.0
 								end
@@ -293,65 +292,71 @@ function Update(interval)
 										else
 											gSetDynamic = clamp(gSetDynamic - dDyn, 0.0, 1.0)
 										end
-										gThrottleTime = 0.0
 									else
 										gSetDynamic = 0.0
 									end
 								end
 								
-								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001 and gThrottleTime >= 0.45) then
-									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
-										gTimeSinceWheelslip = 0.0
-									end
+								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001) then
+									if (gThrottleTime >= 0.45) then
+										if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
+											gTimeSinceWheelslip = 0.0
+										end
+										
+										if (gTimeSinceWheelslip < 1.0) then
+											tAccel = math.min(tAccel, 0.75)
+											gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+										end
 									
-									if (gTimeSinceWheelslip < 1.0) then
-										tAccel = math.min(tAccel, 0.75)
-										gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+										gSetReg = clamp(tAccel, 0.0, 1.0)
+									else
+										tAccel = math.min(tAccel, 0.0)									
+										if (math.abs(tAccel) < 0.01) then
+											gThrottleTime = gThrottleTime + gTimeDelta
+										end
 									end
-								
-									gSetReg = clamp(tAccel, 0.0, 1.0)
 								else
 									gSetReg = 0.0
-									tAccel = math.min(tAccel, 0.0)
-									if (math.abs(tAccel) < 0.01) then
-										gThrottleTime = gThrottleTime + gTimeDelta
-									end
+									gThrottleTime = 0.0
 								end
 							else
 								if (gSetReg > dReg) then
 									gSetReg = clamp(gSetReg - dReg, 0.0, 1.0)
-									gThrottleTime = 0.0
 								else
 									gSetReg = 0.0
 								end
 								
-								if (gSetReg < 0.001 and gThrottleTime >= 0.45) then
-									dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
+								if (gSetReg < 0.001) then
+									if (gThrottleTime >= 0.45) then
+										dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
+										
+										if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
+											gTimeSinceWheelslip = 0.0
+										end
+										
+										if (gTimeSinceWheelslip < 1.0) then
+											tAccel = math.max(tAccel, -0.75)
+											dynEffective = 0.0
+											gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+										end
 									
-									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
-										gTimeSinceWheelslip = 0.0
-									end
-									
-									if (gTimeSinceWheelslip < 1.0) then
-										tAccel = math.max(tAccel, -0.75)
-										dynEffective = 0.0
-										gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
-									end
-								
-									gSetDynamic = -tAccel
-									--gSetDynamic = 0.15
-									gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - MIN_SERVICE_BRAKE)) + MIN_SERVICE_BRAKE
-									if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < MAX_STOPPING_TIME) then
-										gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
-										gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
+										gSetDynamic = -tAccel
+										--gSetDynamic = 0.15
+										gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - MIN_SERVICE_BRAKE)) + MIN_SERVICE_BRAKE
+										if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < MAX_STOPPING_TIME) then
+											gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
+											gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
+										end
+									else
+										tAccel = math.max(tAccel, 0.0)
+										if (math.abs(tAccel) < 0.01) then
+											gThrottleTime = gThrottleTime + gTimeDelta
+										end
 									end
 								else
 									gSetDynamic = 0.0
 									gSetBrake = 0.0
-									tAccel = math.max(tAccel, 0.0)
-									if (math.abs(tAccel) < 0.01) then
-										gThrottleTime = gThrottleTime + gTimeDelta
-									end
+									gThrottleTime = 0.0
 								end
 							end
 						end
