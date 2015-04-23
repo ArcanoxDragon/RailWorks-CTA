@@ -86,6 +86,41 @@
 														<Attribute name="Provider">
 															<cDeltaString>
 																<Element>
+																	<Value>briman0094</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="Product">
+															<cDeltaString>
+																<Element>
+																	<Value>CTA</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</iBlueprintLibrary-cBlueprintSetID>
+										</Attribute>
+										<Attribute name="BlueprintID">
+											<cDeltaString>
+												<Element>
+													<Value>RailNetwork\Track\CTA Grade Track.xml</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</iBlueprintLibrary-cAbsoluteBlueprintID>
+							<iBlueprintLibrary-cAbsoluteBlueprintID>
+								<Element>
+									<Value>
+										<Attribute name="BlueprintSetID">
+											<iBlueprintLibrary-cBlueprintSetID>
+												<Element>
+													<Value>
+														<Attribute name="Provider">
+															<cDeltaString>
+																<Element>
 																	<Value>RSC</Value>
 																</Element>
 															</cDeltaString>
