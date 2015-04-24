@@ -298,7 +298,7 @@ function Update(interval)
 								end
 								
 								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001) then
-									if (gThrottleTime >= 0.45) then
+									if (gThrottleTime >= 0.125) then
 										if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
 											gTimeSinceWheelslip = 0.0
 										end
@@ -327,7 +327,7 @@ function Update(interval)
 								end
 								
 								if (gSetReg < 0.001) then
-									if (gThrottleTime >= 0.45) then
+									if (gThrottleTime >= 0.125) then
 										dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
 										
 										if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
