@@ -156,7 +156,7 @@ function Update(interval)
 				realAccel = (TrainSpeed - gLastSpeed) / gTimeDelta
 				gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
 				gAvgAccelTime = gAvgAccelTime + gTimeDelta
-				if (gAvgAccelTime >= (1/30)) then
+				if (gAvgAccelTime >= 1/15) then
 					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / gAvgAccelTime, 2) )
 					gAvgAccelTime = 0.0
 					gAvgAccel = 0.0

@@ -11,6 +11,8 @@ WHINE_ID = 1715
 DYNAMIC_ID = 1716
 CARCOUNT_ID = 1717
 CARCOUNT_RET_ID = 1718
+CARNUM_ID = 1719
+CARNUM_RET_ID = 1720
 
 MSG_ATO_SPEED_LIMIT = 42
 MSG_SIGN_CHANGE = 43
@@ -75,13 +77,46 @@ function Initialise()
 	gPrevWhine = 0
 	gPrevDynamic = 0.0
 	
--- Time variables
+-- Misc variables
 	gTimeSinceCarCount = 0.0
+	gBodyTilt = 0.0
+	gCamInside = false
+	gLastDir = 1
+	gIsBCar = 0 -- Is this an "A" car or a "B" car?
+	
+-- Moving average for acceleration
+	gMovingAvgSize = 50
+	gMovingAvgList = { }
+	gMovingAvgIndex = 0 -- 0 - 9
+	gMovingAvg = 0
 
 	Call( "BeginUpdate" )
 end
 
+function UpdateMovingAverage(value) -- Updates the moving average for acceleration
+	local i = gMovingAvgIndex + 1
+	gMovingAvg = gMovingAvg - (gMovingAvgList[i] or 0)
+	gMovingAvgList[i] = value
+	gMovingAvg = gMovingAvg + value
+	gMovingAvgIndex = mod(gMovingAvgIndex + 1, gMovingAvgSize)
+end
+
+function GetMovingAverage()
+	return gMovingAvg / gMovingAvgSize
+end
+
+function OnCameraEnter(camEnd, carriageCam)
+	gCamInside = true
+end
+
+function OnCameraLeave()
+	gCamInside = false
+end
+
 function Update(time)
+	local trainSpeed = Call("GetSpeed") * MPS_TO_MPH
+	local accel = Call("GetAcceleration") * MPS_TO_MPH
+	local reverser = Call("*:GetControlValue", "Reverser", 0)
 
 	if ( Call( "GetIsPlayer" ) == 1 ) then
 		gTimeSinceCarCount = gTimeSinceCarCount + time
@@ -116,8 +151,7 @@ function Update(time)
 				Call( "HeadlightR:Activate", 0 )
 			end
 			
-			local realSpeed = Call("*:GetControlValue", "SpeedometerMPH", 0)
-			local cabSpeed = clamp(math.floor(realSpeed), 0, 72)
+			local cabSpeed = clamp(math.floor(math.abs(trainSpeed)), 0, 72)
 			Call("*:SetControlValue", "CabSpeedIndicator", 0, cabSpeed)
 		else
 			Call( "HeadlightL:Activate", 0 )
@@ -166,6 +200,48 @@ function Update(time)
 	
 	Call( "*:SetControlValue", "TractionWhine", 0, clamp(gWhine, 0.0, 1.0) )
 	
+	-- Direction
+	local realAccel = Call("*:GetControlValue", "Acceleration", 0)
+	if (math.abs(trainSpeed) > 0.01) then
+		if (sign(accel) == sign(realAccel)) then
+			gLastDir = -1
+		else
+			gLastDir = 1
+		end
+		if (Call("*:GetControlValue", "Active", 0) > 0) then
+			Call("*:SetControlValue", "Direction", 0, sign(trainSpeed))
+		end
+	end
+	
+	Call("*:SetControlValue", "Accel2", 0, round(accel, 2))
+	Call("*:SetControlValue", "Speed2", 0, round(trainSpeed, 2))
+	
+	-- Acceleration tilt
+	
+	UpdateMovingAverage(accel) -- MPH/s
+	local accelAvg = GetMovingAverage() -- Smooth out acceleration
+	accelAvg = accelAvg / 4.0 -- Max accel for animation is 3.25 MPH/s
+	accelAvg = accelAvg * gLastDir
+	accelAvg = accelAvg * Call("*:GetControlValue", "Direction", 0)
+	if (mod(Call("*:GetControlValue", "CarNum", 0), 2) ~= 0) then
+		accelAvg = -accelAvg
+	end
+	tBodyTilt = 1.0 + clamp(accelAvg, -1, 1)
+	dBodyTilt = 0.025 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.3, 1.0)
+	if (gBodyTilt < tBodyTilt - dBodyTilt) then
+		gBodyTilt = gBodyTilt + dBodyTilt
+	elseif (gBodyTilt > tBodyTilt + dBodyTilt) then
+		gBodyTilt = gBodyTilt - dBodyTilt
+	else
+		gBodyTilt = tBodyTilt
+	end
+		
+	if gCamInside then -- Don't animate inside; camera movement already occurs
+		Call("*:SetTime", "body_tilt", 1.0)
+	else
+		Call("*:SetTime", "body_tilt", gBodyTilt)
+	end
+	
 	-- Destination sign
 	
 	DestSign = Call( "*:GetControlValue", "DestinationSign", 0 )
@@ -197,11 +273,13 @@ end
 
 function CountCars()
 	-- Determine if we're the front/back car or a middle car
-	local fwd = Call( "SendConsistMessage", 0, 0, 1 )
-	local rev = Call( "SendConsistMessage", 0, 0, 0 )
+	local rev = Call( "SendConsistMessage", 0, 0, 1 )
+	local fwd = Call( "SendConsistMessage", 0, 0, 0 )
+	local endCar = false
 	
 	if (fwd + rev == 1) then
 		Call("*:SetControlValue", "IsEndCar", 0, 1)
+		endCar = true
 	else
 		Call("*:SetControlValue", "IsEndCar", 0, 0)
 	end
@@ -212,6 +290,15 @@ function CountCars()
 		Call( "*:SetControlValue", "NumCars", 0, 1 )
 		Call( "SendConsistMessage", CARCOUNT_ID, 0, 0 )
 		Call( "SendConsistMessage", CARCOUNT_ID, 0, 1 )
+		
+		-- Set "car ID" of each car
+		--debugPrint("Setting car IDs...this car is " .. (endCar and "an" or "not an") .. " end car")
+		if (endCar) then -- Already at end, send backwards
+			Call( "SendConsistMessage", CARNUM_RET_ID, 0, 1 )
+			Call( "*:SetControlValue", "CarNum", 0, 0 )
+		else -- Not at end, send forwards so it bounces back from the end
+			Call( "SendConsistMessage", CARNUM_ID, 0, 0 )
+		end
 	end
 end
 
@@ -243,6 +330,22 @@ function OnConsistMessage ( msg, argument, direction )
 		end
 	end
 	
+	if (msg == CARNUM_ID and Call("*:GetControlValue", "IsEndCar", 0) > 0) then -- End car, return back down the line
+		Call("*:SetControlValue", "CarNum", 0, 0) -- First car, set to 0
+		--debugPrint("CARNUM: Sending 0 to " .. reverseMsgDir(direction))
+		Call("SendConsistMessage", CARNUM_RET_ID, 0, reverseMsgDir(direction)) -- Send return ID back down line
+		cancel = true
+	end
+	
+	if (msg == CARNUM_RET_ID) then
+		local carNum = argument + 1
+		--direction = reverseMsgDir(direction)
+		Call("*:SetControlValue", "CarNum", 0, carNum)
+		--debugPrint("CARNUM_RET: Sending " .. carNum .. " to " .. direction)
+		Call("SendConsistMessage", CARNUM_RET_ID, carNum, direction)
+		cancel = true
+	end
+	
 	if not cancel then
 		-- Pass message along in same direction.
 		Call( "SendConsistMessage", msg, argument, direction )
@@ -257,13 +360,13 @@ function OnCustomSignalMessage(argument)
 				Call("*:SetControlValue", "ATOSpeedLimit", 0, speedLimit)
 			end
 		elseif (tonumber(msg) == MSG_SIGN_CHANGE) then
-			debugPrint("Received sign change command")
+			--debugPrint("Received sign change command")
 			if (Call("*:GetControlValue", "Active", 0) > 0.5) then
 				local curSignIndex = Call("*:GetControlValue", "DestinationSign", 0)
-				debugPrint("Current sign: " .. tostring(curSignIndex))
+				--debugPrint("Current sign: " .. tostring(curSignIndex))
 				if (curSignIndex < NUM_SIGNS and curSignIndex >= 0) then
 					local curSign = SIGNS[curSignIndex + 1]
-					debugPrint("Changing to: " .. tostring(curSign.nextSign))
+					--debugPrint("Changing to: " .. tostring(curSign.nextSign))
 					Call("*:SetControlValue", "DestinationSign", 0, curSign.nextSign)
 				end
 			end

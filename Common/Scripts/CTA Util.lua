@@ -1,5 +1,8 @@
 local debugFile = io.open("lua_debug.log", "w+")
-local pi = 3.14159265
+MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
+MPH_TO_MPS = 1.0 / MPS_TO_MPH
+MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
+pi = 3.14159265
 
 -- Why RailWorks defined these, I have no clue, but I'm keeping them defined anyways...
 TRUE = 1
@@ -30,6 +33,10 @@ function sign(num)
 	if (num > 0) then return 1 end
 	if (num < 0) then return -1 end
 	return 0
+end
+
+function mod(a, b)
+	return a - math.floor(a / b) * b
 end
 
 function reverseMsgDir(direction)

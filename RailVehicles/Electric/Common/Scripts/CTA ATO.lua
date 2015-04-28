@@ -1,6 +1,3 @@
-local MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
-local MPH_TO_MPS = 1.0 / MPS_TO_MPH
-local MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
 local MI_TO_M = 1609.34 -- Miles to Meters
 local M_TO_MI = 1.0 / MI_TO_M -- Meters to Miles
 local SIGNAL_STATE_SPEED = 20
