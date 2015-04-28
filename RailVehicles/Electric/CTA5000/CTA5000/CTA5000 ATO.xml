@@ -1341,7 +1341,62 @@
 							<Attribute name="AnimSet">
 								<__Indexed__iAnimObjectRenderBlueprint-cAnimation>
 									<Element>
-										<Value />
+										<Value>
+											<iAnimObjectRenderBlueprint-cAnimation>
+												<Element>
+													<Value>
+														<Attribute name="AnimationID">
+															<cDeltaString>
+																<Element>
+																	<Value>doors_left</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="AnimationName">
+															<cDeltaString>
+																<Element>
+																	<Value>RailVehicles\Electric\CTA5000\CTA5000\doors_left.ia</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="AnimateInEditor">
+															<eBoolean>
+																<Element>
+																	<Value>eTrue</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+													</Value>
+												</Element>
+											</iAnimObjectRenderBlueprint-cAnimation>
+											<iAnimObjectRenderBlueprint-cAnimation>
+												<Element>
+													<Value>
+														<Attribute name="AnimationID">
+															<cDeltaString>
+																<Element>
+																	<Value>doors_right</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="AnimationName">
+															<cDeltaString>
+																<Element>
+																	<Value>RailVehicles\Electric\CTA5000\CTA5000\doors_right.ia</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="AnimateInEditor">
+															<eBoolean>
+																<Element>
+																	<Value>eTrue</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+													</Value>
+												</Element>
+											</iAnimObjectRenderBlueprint-cAnimation>
+										</Value>
 									</Element>
 								</__Indexed__iAnimObjectRenderBlueprint-cAnimation>
 							</Attribute>
@@ -4191,7 +4246,7 @@
 																					<Attribute name="AnimationID">
 																						<cDeltaString>
 																							<Element>
-																								<Value>doors_l</Value>
+																								<Value>doors_left</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
@@ -4295,7 +4350,7 @@
 																					<Attribute name="AnimationID">
 																						<cDeltaString>
 																							<Element>
-																								<Value>doors_r</Value>
+																								<Value>doors_right</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
