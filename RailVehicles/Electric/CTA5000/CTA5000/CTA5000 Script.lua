@@ -79,6 +79,7 @@ function Initialise()
 	
 -- Misc variables
 	gTimeSinceCarCount = 0.0
+	gDoorsOpenTime = 0.0
 	gBodyTilt = 0.0
 	gCamInside = false
 	gLastDir = 1
@@ -216,6 +217,19 @@ function Update(time)
 	Call("*:SetControlValue", "Accel2", 0, round(accel, 2))
 	Call("*:SetControlValue", "Speed2", 0, round(trainSpeed, 2))
 	
+	-- Fix door animation
+	local doorsLeft = Call("*:GetControlValue", "DoorsOpenCloseLeft", 0) > 0
+	local doorsRight = Call("*:GetControlValue", "DoorsOpenCloseRight", 0) > 0
+	if (doorsLeft or doorsRight) then
+		local doorSide = doorsLeft and "doors_left" or "doors_right"
+		gDoorsOpenTime = gDoorsOpenTime + time
+		if (gDoorsOpenTime >= 2.5) then -- 2.5 seconds; doors fully open
+			Call("*:SetTime", doorSide, 8.0) -- 8.0 is fully animated; animation won't glitch if doors close too soon
+		end
+	else
+		gDoorsOpenTime = 0.0
+	end
+	
 	-- Acceleration tilt
 	
 	UpdateMovingAverage(accel) -- MPH/s
@@ -227,7 +241,7 @@ function Update(time)
 		accelAvg = -accelAvg
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg, -1, 1)
-	dBodyTilt = 3.5 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.3, 1.0)
+	dBodyTilt = 5.75 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.3, 1.0)
 	dBodyTilt = dBodyTilt * time
 	if (gBodyTilt < tBodyTilt - dBodyTilt) then
 		gBodyTilt = gBodyTilt + dBodyTilt

@@ -68,7 +68,7 @@ function Setup()
 	gSign = 0
 
 -- For controlling delayed doors interlocks.
-	DOORDELAYTIME = 5 -- seconds.
+	DOORDELAYTIME = 9 -- seconds.
 	gDoorsDelay = DOORDELAYTIME
 end
 
