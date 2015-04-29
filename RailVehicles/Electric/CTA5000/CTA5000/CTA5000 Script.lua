@@ -220,14 +220,15 @@ function Update(time)
 	
 	UpdateMovingAverage(accel) -- MPH/s
 	local accelAvg = GetMovingAverage() -- Smooth out acceleration
-	accelAvg = accelAvg / 4.0 -- Max accel for animation is 3.25 MPH/s
+	accelAvg = accelAvg / 3.7 -- Max accel for animation is 3.25 MPH/s
 	accelAvg = accelAvg * gLastDir
 	accelAvg = accelAvg * Call("*:GetControlValue", "Direction", 0)
 	if (mod(Call("*:GetControlValue", "CarNum", 0), 2) ~= 0) then
 		accelAvg = -accelAvg
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg, -1, 1)
-	dBodyTilt = 0.025 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.3, 1.0)
+	dBodyTilt = 3.5 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.3, 1.0)
+	dBodyTilt = dBodyTilt * time
 	if (gBodyTilt < tBodyTilt - dBodyTilt) then
 		gBodyTilt = gBodyTilt + dBodyTilt
 	elseif (gBodyTilt > tBodyTilt + dBodyTilt) then
