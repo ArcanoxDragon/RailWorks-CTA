@@ -6516,7 +6516,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0</Value>
+																								<Value>1.769513E-08</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6531,7 +6531,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0</Value>
+																								<Value>-1.769513E-08</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6546,17 +6546,17 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>-0.7249756</Value>
+																								<Value>-1.984982</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>1.8</Value>
+																								<Value>-1.744977</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>6.546689</Value>
+																								<Value>1.202038</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6575,7 +6575,7 @@
 														<Attribute name="ParentNodeName">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>front_cap</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -6669,7 +6669,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0</Value>
+																								<Value>4.93601E-08</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6684,7 +6684,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0</Value>
+																								<Value>-4.93601E-08</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6699,17 +6699,17 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0.725</Value>
+																								<Value>-0.6085007</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>1.8</Value>
+																								<Value>-1.750028</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>6.562447</Value>
+																								<Value>1.211219</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6728,7 +6728,7 @@
 														<Attribute name="ParentNodeName">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>front_cap</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -6817,7 +6817,12 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>1</Value>
+																								<Value>0.9999999</Value>
+																							</Element>
+																						</sFloat32>
+																						<sFloat32>
+																							<Element>
+																								<Value>1.1269E-07</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6832,7 +6837,12 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0</Value>
+																								<Value>-1.1269E-07</Value>
+																							</Element>
+																						</sFloat32>
+																						<sFloat32>
+																							<Element>
+																								<Value>0.9999999</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6842,27 +6852,17 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>1</Value>
+																								<Value>-1.296432</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>0</Value>
+																								<Value>0.07924175</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>-0.006835938</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>3.600678</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>6.37091</Value>
+																								<Value>1.431765</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -6881,7 +6881,7 @@
 														<Attribute name="ParentNodeName">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>front_cap</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>

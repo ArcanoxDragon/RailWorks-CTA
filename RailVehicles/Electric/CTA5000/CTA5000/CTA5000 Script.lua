@@ -61,7 +61,9 @@ addSign("x",  true, { 191, 191, 255 })     --[[ 23 Blue UIC ]]
 addSign("y",  true, {   0,  95, 235 })     --[[ 24 Blue Rosemont ]]
 addSign("z",  true, {   0,  95, 235 })     --[[ 25 Blue Jefferson Park ]]
 
+Print("Declaring Initialise")
 function Initialise()
+	Print("Initialising")
 -- For AWS self test.
 	gAWSReady = TRUE
 	gAWSTesting = FALSE
@@ -90,8 +92,22 @@ function Initialise()
 	gMovingAvgList = { }
 	gMovingAvgIndex = 0 -- 0 - 9
 	gMovingAvg = 0
+	
+-- Control cache
+	gControlCache = { }
+	Print("Initialised")
 
 	Call( "BeginUpdate" )
+end
+Print("Done declaring Initialise")
+
+function GetControlValue(name)
+	return Call("*:GetControlValue", name, 0)
+end
+
+function SetControlValue(name, value)
+	Call("*:SetControlValue", name, 0, value)
+	gControlCache[name] = value
 end
 
 function UpdateMovingAverage(value) -- Updates the moving average for acceleration
@@ -117,7 +133,7 @@ end
 function Update(time)
 	local trainSpeed = Call("GetSpeed") * MPS_TO_MPH
 	local accel = Call("GetAcceleration") * MPS_TO_MPH
-	local reverser = Call("*:GetControlValue", "Reverser", 0)
+	local reverser = GetControlValue("Reverser")
 
 	if ( Call( "GetIsPlayer" ) == 1 ) then
 		gTimeSinceCarCount = gTimeSinceCarCount + time
@@ -126,10 +142,10 @@ function Update(time)
 			CountCars()
 		end
 			
-		local whine = Call("*:GetControlValue", "TractionWhine", 0)
-		local dynamic = Call("*:GetControlValue", "DynamicBrake", 0)
+		local whine = GetControlValue("TractionWhine")
+		local dynamic = GetControlValue("DynamicBrake")
 
-		if ( Call( "*:GetControlValue", "Active", 0 ) == 1 ) then
+		if ( GetControlValue( "Active" ) == 1 ) then
 			if (whine ~= gPrevWhine) then
 				Call( "SendConsistMessage", WHINE_ID, whine, 1 )
 				Call( "SendConsistMessage", WHINE_ID, whine, 0 )
@@ -143,7 +159,7 @@ function Update(time)
 			gPrevWhine = whine
 			gPrevDynamic = dynamic
 			
-			Headlights = Call( "*:GetControlValue", "Headlights", 0 )
+			Headlights = GetControlValue( "Headlights" )
 			if (Headlights > 0.5) then
 				Call( "HeadlightL:Activate", 1 )
 				Call( "HeadlightR:Activate", 1 )
@@ -153,7 +169,7 @@ function Update(time)
 			end
 			
 			local cabSpeed = clamp(math.floor(math.abs(trainSpeed)), 0, 72)
-			Call("*:SetControlValue", "CabSpeedIndicator", 0, cabSpeed)
+			SetControlValue("CabSpeedIndicator", cabSpeed)
 		else
 			Call( "HeadlightL:Activate", 0 )
 			Call( "HeadlightR:Activate", 0 )
@@ -168,25 +184,25 @@ function Update(time)
 		if ( Call( "GetIsEngineWithKey" ) == 1 ) then
 			if gDriven ~= 1 then
 				gDriven = 1
-				Call( "*:SetControlValue", "Active", 0, 1 )
+				SetControlValue( "Active", 1 )
 			end
 		else
 			if gDriven ~= 0 then
 				gDriven = 0
-				Call( "*:SetControlValue", "Active", 0, 0 )
-				Call( "*:SetControlValue", "ATOActive", 0, 0 )
+				SetControlValue( "Active", 0 )
+				SetControlValue( "ATOActive", 0 )
 			end
 		end
 	else
-		Call( "*:SetControlValue", "DestinationSign", 0, 0 )
+		SetControlValue( "DestinationSign", 0 )
 	end
 	
 	-- Inverter whine based on current
 	
 	local tWhine = 1.0
 	local dWhine = 1.2 * time
-	local current = Call("*:GetControlValue", "Ammeter", 0)
-	local tAccel = Call("*:GetControlValue", "TAccel", 0)
+	local current = GetControlValue("Ammeter")
+	local tAccel = GetControlValue("TAccel")
 	if ( math.abs(current) < 0.0001 and tAccel >= 0.0 ) then
 		tWhine = 0.0
 	end
@@ -199,27 +215,36 @@ function Update(time)
 		gWhine = tWhine
 	end
 	
-	Call( "*:SetControlValue", "TractionWhine", 0, clamp(gWhine, 0.0, 1.0) )
+	SetControlValue( "TractionWhine", clamp(gWhine, 0.0, 1.0) )
 	
 	-- Direction
-	local realAccel = Call("*:GetControlValue", "Acceleration", 0)
+	local realAccel = GetControlValue("Acceleration")
 	if (math.abs(trainSpeed) > 0.01) then
 		if (sign(accel) == sign(realAccel)) then
 			gLastDir = -1
 		else
 			gLastDir = 1
 		end
-		if (Call("*:GetControlValue", "Active", 0) > 0) then
-			Call("*:SetControlValue", "Direction", 0, sign(trainSpeed))
+		if (GetControlValue("Active") > 0) then
+			SetControlValue("Direction", sign(trainSpeed))
 		end
 	end
 	
-	Call("*:SetControlValue", "Accel2", 0, round(accel, 2))
-	Call("*:SetControlValue", "Speed2", 0, round(trainSpeed, 2))
+	SetControlValue("Accel2", round(accel, 2))
+	SetControlValue("Speed2", round(trainSpeed, 2))
+	
+	-- Headlights
+	if (GetControlValue("IsEndCar") > 0 and GetControlValue("Active") > 0 and GetControlValue("Headlights") > 0) then
+		Call("ActivateNode", "headlights", 1)
+		Call("*:ActivateNode", "headlights", 1)
+	else
+		Call("ActivateNode", "headlights", 0)
+		Call("*:ActivateNode", "headlights", 0)
+	end
 	
 	-- Fix door animation
-	local doorsLeft = Call("*:GetControlValue", "DoorsOpenCloseLeft", 0) > 0
-	local doorsRight = Call("*:GetControlValue", "DoorsOpenCloseRight", 0) > 0
+	local doorsLeft = GetControlValue("DoorsOpenCloseLeft") > 0
+	local doorsRight = GetControlValue("DoorsOpenCloseRight") > 0
 	if (doorsLeft or doorsRight) then
 		local doorSide = doorsLeft and "doors_left" or "doors_right"
 		gDoorsOpenTime = gDoorsOpenTime + time
@@ -236,8 +261,8 @@ function Update(time)
 	local accelAvg = GetMovingAverage() -- Smooth out acceleration
 	accelAvg = accelAvg / 3.7 -- Max accel for animation is 3.25 MPH/s
 	accelAvg = accelAvg * gLastDir
-	accelAvg = accelAvg * Call("*:GetControlValue", "Direction", 0)
-	if (mod(Call("*:GetControlValue", "CarNum", 0), 2) ~= 0) then
+	accelAvg = accelAvg * GetControlValue("Direction")
+	if (mod(GetControlValue("CarNum"), 2) ~= 0) then
 		accelAvg = -accelAvg
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg, -1, 1)
@@ -259,8 +284,8 @@ function Update(time)
 	
 	-- Destination sign
 	
-	DestSign = Call( "*:GetControlValue", "DestinationSign", 0 )
-	IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
+	DestSign = GetControlValue( "DestinationSign" )
+	IsEndCar = GetControlValue( "IsEndCar" ) > 0
 	RVNumber = Call("*:GetRVNumber")
 	firstPart = "5001"
 	if (string.len(RVNumber) == 5) then
@@ -293,16 +318,16 @@ function CountCars()
 	local endCar = false
 	
 	if (fwd + rev == 1) then
-		Call("*:SetControlValue", "IsEndCar", 0, 1)
+		SetControlValue("IsEndCar", 1)
 		endCar = true
 	else
-		Call("*:SetControlValue", "IsEndCar", 0, 0)
+		SetControlValue("IsEndCar", 0)
 	end
 	
-	if (Call("*:GetControlValue", "Active", 0) > 0) then
+	if (GetControlValue("Active") > 0) then
 		-- Determine the total number of cars in the consist
 
-		Call( "*:SetControlValue", "NumCars", 0, 1 )
+		SetControlValue( "NumCars", 1 )
 		Call( "SendConsistMessage", CARCOUNT_ID, 0, 0 )
 		Call( "SendConsistMessage", CARCOUNT_ID, 0, 1 )
 		
@@ -310,7 +335,7 @@ function CountCars()
 		--debugPrint("Setting car IDs...this car is " .. (endCar and "an" or "not an") .. " end car")
 		if (endCar) then -- Already at end, send backwards
 			Call( "SendConsistMessage", CARNUM_RET_ID, 0, 1 )
-			Call( "*:SetControlValue", "CarNum", 0, 0 )
+			SetControlValue( "CarNum", 0 )
 		else -- Not at end, send forwards so it bounces back from the end
 			Call( "SendConsistMessage", CARNUM_ID, 0, 0 )
 		end
@@ -321,13 +346,13 @@ function OnConsistMessage ( msg, argument, direction )
 	local cancel = false
 	
 	-- If this is not the driven vehicle then update the passed-down controls with values from the master engine
-	if (Call("*:GetControlValue", "Active", 0) == 0) then
+	if (GetControlValue("Active") == 0) then
 		if (msg == WHINE_ID) then
-			--Call("*:SetControlValue", "TractionWhine", 0, argument)
+			--SetControlValue("TractionWhine", argument)
 		end
 		
 		if (msg == DYNAMIC_ID) then
-			Call("*:SetControlValue", "DynamicBrake", 0, argument)
+			SetControlValue("DynamicBrake", argument)
 		end
 		
 		if (msg == CARCOUNT_ID) then -- Going down train counting cars
@@ -340,13 +365,13 @@ function OnConsistMessage ( msg, argument, direction )
 		end
 	else
 		if (msg == CARCOUNT_RET_ID) then
-			local curCarCount = Call( "*:GetControlValue", "NumCars", 0 )
-			Call("*:SetControlValue", "NumCars", 0, curCarCount + argument)
+			local curCarCount = GetControlValue("NumCars")
+			SetControlValue("NumCars", curCarCount + argument)
 		end
 	end
 	
-	if (msg == CARNUM_ID and Call("*:GetControlValue", "IsEndCar", 0) > 0) then -- End car, return back down the line
-		Call("*:SetControlValue", "CarNum", 0, 0) -- First car, set to 0
+	if (msg == CARNUM_ID and GetControlValue("IsEndCar") > 0) then -- End car, return back down the line
+		SetControlValue("CarNum", 0) -- First car, set to 0
 		--debugPrint("CARNUM: Sending 0 to " .. reverseMsgDir(direction))
 		Call("SendConsistMessage", CARNUM_RET_ID, 0, reverseMsgDir(direction)) -- Send return ID back down line
 		cancel = true
@@ -355,7 +380,7 @@ function OnConsistMessage ( msg, argument, direction )
 	if (msg == CARNUM_RET_ID) then
 		local carNum = argument + 1
 		--direction = reverseMsgDir(direction)
-		Call("*:SetControlValue", "CarNum", 0, carNum)
+		SetControlValue("CarNum", carNum)
 		--debugPrint("CARNUM_RET: Sending " .. carNum .. " to " .. direction)
 		Call("SendConsistMessage", CARNUM_RET_ID, carNum, direction)
 		cancel = true
@@ -372,17 +397,17 @@ function OnCustomSignalMessage(argument)
 		if (tonumber(msg) == MSG_ATO_SPEED_LIMIT) then
 			local speedLimit = tonumber(arg)
 			if (speedLimit) then
-				Call("*:SetControlValue", "ATOSpeedLimit", 0, speedLimit)
+				SetControlValue("ATOSpeedLimit", speedLimit)
 			end
 		elseif (tonumber(msg) == MSG_SIGN_CHANGE) then
 			--debugPrint("Received sign change command")
-			if (Call("*:GetControlValue", "Active", 0) > 0.5) then
-				local curSignIndex = Call("*:GetControlValue", "DestinationSign", 0)
+			if (GetControlValue("Active") > 0.5) then
+				local curSignIndex = GetControlValue("DestinationSign")
 				--debugPrint("Current sign: " .. tostring(curSignIndex))
 				if (curSignIndex < NUM_SIGNS and curSignIndex >= 0) then
 					local curSign = SIGNS[curSignIndex + 1]
 					--debugPrint("Changing to: " .. tostring(curSign.nextSign))
-					Call("*:SetControlValue", "DestinationSign", 0, curSign.nextSign)
+					SetControlValue("DestinationSign", curSign.nextSign)
 				end
 			end
 		end
@@ -390,13 +415,15 @@ function OnCustomSignalMessage(argument)
 	
 end
 
-function OnControlValueChange ( name, index, value )
-	--debugPrint("Control changed: " .. tostring(name) .. " (to: " .. tostring(value) .. ")")
+function OnControlValueChange( name, index, value )
+	if (index == 0) then
+		gControlCache[name] = value
+	end
 
 	if Call( "*:ControlExists", name, index ) then
 		Call( "*:SetControlValue", name, index, value )
 		
-		if (name == "DynamicBrake" and Call("*:GetControlValue", "Active", 0) > 0) then
+		if (name == "DynamicBrake" and GetControlValue("Active") > 0) then
 			Call("SendConsistMessage", DYNAMIC_ID, value, 1)
 			Call("SendConsistMessage", DYNAMIC_ID, value, 0)
 		end
