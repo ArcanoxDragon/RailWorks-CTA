@@ -276,7 +276,7 @@
 							<Attribute name="MaxCantAngleDegrees">
 								<sFloat32>
 									<Element>
-										<Value>3</Value>
+										<Value>2</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

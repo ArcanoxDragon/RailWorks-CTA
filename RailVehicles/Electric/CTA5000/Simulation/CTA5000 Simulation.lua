@@ -175,22 +175,18 @@ function Update(interval)
 					tThrottle = 0.0
 				end
 				
-				if (tThrottle > 0.001) then
+				if (tThrottle >= 0.1) then
 					tTAccel = ((tThrottle - 0.1) / 0.9) * (MAX_ACCELERATION - MIN_ACCELERATION) + MIN_ACCELERATION
-				elseif (tThrottle < -0.001) then
+				elseif (tThrottle <= -0.1) then
 					tTAccel = -(((-tThrottle - 0.1) / 0.9) * (MAX_BRAKING - MIN_BRAKING) + MIN_BRAKING)
 				else
 					tTAccel = 0.0
 				end
 				
-				if (math.abs(TrainSpeed) < 0.075 and tThrottle > 0) then
-					tAccel = math.max(tAccel, 0.0)
-				end
-				
 				dAccel = JERK_LIMIT * gTimeDelta
 				
 				if (tAccel < 0 and tTAccel >= 0 and math.abs(TrainSpeed) < 0.1) then
-					tAccel = 0
+					tAccel = math.max(tAccel, 0.0)
 				end
 				
 				if (tAccel < tTAccel - dAccel) then
@@ -250,7 +246,7 @@ function Update(interval)
 						dReg = REG_DELTA * gTimeDelta
 						dDyn = DYN_DELTA * gTimeDelta
 						dBrk = BRK_DELTA * gTimeDelta
-						if (math.abs(tThrottle) < 0.01) then
+						if (math.abs(tThrottle) <= 0.01) then
 							if (gSetBrake > dBrk) then
 								gSetBrake = clamp(gSetBrake - dBrk, 0.0, 1.0)
 							else
@@ -274,7 +270,7 @@ function Update(interval)
 							brkAdjust = 0.0
 							gThrottleTime = 0.0
 						else
-							if (tThrottle >= 0.0) then
+							if (tThrottle > 0.01) then
 								if (gSetBrake > dBrk) then
 									if (math.abs(TrainSpeed) < 0.1) then -- Release brakes instantly from a standstill
 										gSetBrake = 0.0
@@ -304,7 +300,7 @@ function Update(interval)
 										end
 										
 										if (gTimeSinceWheelslip < 1.0) then
-											tAccel = math.min(tAccel, 0.75)
+											tAccel = math.min(tAccel, 0.6)
 											gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
 										end
 									
@@ -319,7 +315,7 @@ function Update(interval)
 									gSetReg = 0.0
 									gThrottleTime = 0.0
 								end
-							else
+							elseif (tThrottle < 0.01) then
 								if (gSetReg > dReg) then
 									gSetReg = clamp(gSetReg - dReg, 0.0, 1.0)
 								else
@@ -335,7 +331,7 @@ function Update(interval)
 										end
 										
 										if (gTimeSinceWheelslip < 1.0) then
-											tAccel = math.max(tAccel, -0.75)
+											tAccel = math.max(tAccel, -0.6)
 											dynEffective = 0.0
 											gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
 										end
