@@ -5097,7 +5097,7 @@
 																					<Attribute name="LowerVisibilityThreshold">
 																						<sFloat32>
 																							<Element>
-																								<Value>15</Value>
+																								<Value>6.01</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -5152,7 +5152,7 @@
 																					<Attribute name="LowerVisibilityThreshold">
 																						<sFloat32>
 																							<Element>
-																								<Value>25</Value>
+																								<Value>15.01</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -5207,7 +5207,7 @@
 																					<Attribute name="LowerVisibilityThreshold">
 																						<sFloat32>
 																							<Element>
-																								<Value>35</Value>
+																								<Value>25.01</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -5262,7 +5262,7 @@
 																					<Attribute name="LowerVisibilityThreshold">
 																						<sFloat32>
 																							<Element>
-																								<Value>45</Value>
+																								<Value>35.01</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -5317,7 +5317,7 @@
 																					<Attribute name="LowerVisibilityThreshold">
 																						<sFloat32>
 																							<Element>
-																								<Value>55</Value>
+																								<Value>45.01</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -5372,7 +5372,7 @@
 																					<Attribute name="LowerVisibilityThreshold">
 																						<sFloat32>
 																							<Element>
-																								<Value>70</Value>
+																								<Value>55.01</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>

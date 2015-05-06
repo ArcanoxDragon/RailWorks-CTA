@@ -1,20 +1,24 @@
-local ATC_TARGET_DECELERATION = 1.0 -- meters/second/second
-local ATC_REACTION_TIME = 2.5 -- seconds
-local MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
-local MPH_TO_MPS = 1.0 / MPS_TO_MPH
-local MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
-local MI_TO_M = 1609.34 -- Miles to Meters
-local M_TO_MI = 1.0 / MI_TO_M -- Meters to Miles
-local ATC_WARN_OFF = 0.0
-local ATC_WARN_CONSTANT = 1.0
-local ATC_WARN_INTERMITTENT = 2.0
+ATC_TARGET_DECELERATION = 1.0 -- meters/second/second
+ATC_REACTION_TIME = 2.5 -- seconds
+MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
+MPH_TO_MPS = 1.0 / MPS_TO_MPH
+MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
+MI_TO_M = 1609.34 -- Miles to Meters
+M_TO_MI = 1.0 / MI_TO_M -- Meters to Miles
+ATC_WARN_OFF = 0.0
+ATC_WARN_CONSTANT = 1.0
+ATC_WARN_INTERMITTENT = 2.0
+DISPLAY_SPEEDS = { 0, 15, 25, 35, 45, 55, 70 }
+NUM_DISLPAY_SPEEDS = 7
 
-local atcSigDirection = 0.0
-local gLastSigDist = 0.0
-local gLastSigDistTime = 0.0
-local gBrakeApplication = false
-local gBrakeTime = 0.0
-local gAlertAcknowledged = true
+atcSigDirection = 0.0
+gLastSigDist = 0.0
+gLastSigDistTime = 0.0
+gBrakeApplication = false
+gBrakeTime = 0.0
+gAlertAcknowledged = true
+gTimeSinceSpeedIncrease = 0.0
+gLastSpeedLimit = 0.0
 
 function getBrakingDistance(vF, vI, a)
 	return ((vF * vF) - (vI * vI)) / (2 * a)
@@ -26,6 +30,24 @@ end
 
 function SetATCWarnMode(mode)
 	Call("*:SetControlValue", "ATCWarnMode", 0, mode)
+end
+
+function getSpeedLimitAbove(speed)
+	for i = 1, NUM_DISLPAY_SPEEDS do
+		if DISPLAY_SPEEDS[i] >= speed then
+			return DISPLAY_SPEEDS[i]
+		end
+	end
+	return DISPLAY_SPEEDS[NUM_DISPLAY_SPEEDS]
+end
+
+function getSpeedLimitBelow(speed)
+	for i = NUM_DISLPAY_SPEEDS, 1, -1 do
+		if DISPLAY_SPEEDS[i] <= speed then
+			return DISPLAY_SPEEDS[i]
+		end
+	end
+	return DISPLAY_SPEEDS[1]
 end
 
 function UpdateATC(interval)
@@ -59,7 +81,7 @@ function UpdateATC(interval)
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			spdBuffer = (getBrakingDistance(spdLimit, targetSpeed, -ATC_TARGET_DECELERATION) + 6)
+			spdBuffer = (getBrakingDistance(spdLimit, (TrainSpeed - 0.5) * MPH_TO_MPS, -ATC_TARGET_DECELERATION) + 6)
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
@@ -87,28 +109,32 @@ function UpdateATC(interval)
 		targetSpeed = 100
 	end
 	
-	-- Restrict target speed to the valid CTA speed limits
-	if (targetSpeed >= 70) then
-		targetSpeed = 70
-	elseif (targetSpeed >= 55) then
-		targetSpeed = 55
-	elseif (targetSpeed >= 45) then
-		targetSpeed = 45
-	elseif (targetSpeed >= 35) then
-		targetSpeed = 35
-	elseif (targetSpeed >= 25) then
-		targetSpeed = 25
-	elseif (targetSpeed >= 15) then
-		targetSpeed = 15
-	elseif (targetSpeed > 0) then
-		targetSpeed = 6
+	ATOEnabled = (Call("*:GetControlValue", "ATOEnabled", 0) or -1) > 0.0
+	
+	if (targetSpeed > gLastSpeedLimit) then
+		if (gTimeSinceSpeedIncrease < 1.5) then -- Don't increase speed if it only increases for a split second (this avoids speed limit bugs in the engine)
+			gTimeSinceSpeedIncrease = gTimeSinceSpeedIncrease + interval
+			targetSpeed = gLastSpeedLimit
+		else
+			gLastSpeedLimit = targetSpeed
+		end
 	else
-		targetSpeed = 0
+		gTimeSinceSpeedIncrease = 0
+		gLastSpeedLimit = targetSpeed
 	end
 	
-	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
-	
-	ATOEnabled = (Call("*:GetControlValue", "ATOEnabled", 0) or -1) > 0.0
+	if (ATOEnabled) then
+		Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
+	else
+		-- Restrict target speed to the valid CTA speed limits
+		if (TrainSpeed >= (targetSpeed + 1)) then
+			targetSpeed = getSpeedLimitBelow(targetSpeed)
+		else
+			targetSpeed = getSpeedLimitAbove(targetSpeed)
+		end
+		
+		Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
+	end
 	
 	-- Following section logic taken from CTA 7000-series RFP spec
 	
