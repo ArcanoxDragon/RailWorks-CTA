@@ -66,6 +66,7 @@ function Setup()
 	gBrakeRelease = 0.0
 	brkAdjust = 0.0
 	gSign = 0
+	gLastAccelSign = 0
 
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 9 -- seconds.
@@ -128,8 +129,6 @@ function Update(interval)
 			
 			Call( "*:SetControlValue", "DestinationSign", 0, DestSign )
 
-	-- Override brake if emergency has been set.
-			
 			if (math.abs(ReverserLever) >= 0.95) then
 				gLastReverser = sign(ReverserLever)
 			else
@@ -138,259 +137,308 @@ function Update(interval)
 				end
 			end
 			
-			--if (gTimeDelta >= 0.0125) then
-				-- Allow for delay in closing doors.
-				if ( gLastDoorsOpen == TRUE ) and ( DoorsOpen == FALSE ) then
-					gDoorsDelay = gDoorsDelay - gTimeDelta
-					if gDoorsDelay < 0 then
-						gDoorsDelay = DOORDELAYTIME
-					else
-						DoorsOpen = TRUE
-					end
+			-- Make script think doors are still open while the animation is finishing
+			if ( gLastDoorsOpen == TRUE ) and ( DoorsOpen == FALSE ) then
+				gDoorsDelay = gDoorsDelay - gTimeDelta
+				if gDoorsDelay < 0 then
+					gDoorsDelay = DOORDELAYTIME
+				else
+					DoorsOpen = TRUE
 				end
-				
-				Call( "*:SetControlValue", "DoorsOpen", 0, math.min(DoorsOpen, 1) )
+			end
+			Call( "*:SetControlValue", "DoorsOpen", 0, math.min(DoorsOpen, 1) )
+		
+			-- Begin propulsion system
+			realAccel = (TrainSpeed - gLastSpeed) / gTimeDelta
+			gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
+			gAvgAccelTime = gAvgAccelTime + gTimeDelta
+			-- Average out acceleration
+			if (gAvgAccelTime >= 1/15) then
+				Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / gAvgAccelTime, 2) )
+				gAvgAccelTime = 0.0
+				gAvgAccel = 0.0
+			end
 			
-				-- Begin propulsion system
-
-				realAccel = (TrainSpeed - gLastSpeed) / gTimeDelta
-				gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
-				gAvgAccelTime = gAvgAccelTime + gTimeDelta
-				if (gAvgAccelTime >= 1/15) then
-					Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / gAvgAccelTime, 2) )
-					gAvgAccelTime = 0.0
-					gAvgAccel = 0.0
-				end
-				gCurrent = Call( "*:GetControlValue", "Ammeter", 0 )
-				
-				if ATOEnabled then
-					tThrottle = ATOThrottle
-					Call( "*:SetControlValue", "ThrottleLever", 0, 0 )
-				else
-					tThrottle = CombinedLever * 2.0 - 1.0
-					Call( "*:SetControlValue", "ThrottleLever", 0, CombinedLever )
-				end
-				
-				if (math.abs(tThrottle) < 0.1 and not ATOEnabled) then
-					tThrottle = 0.0
-				end
-				
-				if (tThrottle >= 0.1) then
-					tTAccel = ((tThrottle - 0.1) / 0.9) * (MAX_ACCELERATION - MIN_ACCELERATION) + MIN_ACCELERATION
-				elseif (tThrottle <= -0.1) then
-					tTAccel = -(((-tThrottle - 0.1) / 0.9) * (MAX_BRAKING - MIN_BRAKING) + MIN_BRAKING)
-				else
-					tTAccel = 0.0
-				end
-				
-				dAccel = JERK_LIMIT * gTimeDelta
-				
-				if (tAccel < 0 and tTAccel >= 0 and math.abs(TrainSpeed) < 0.1) then
-					tAccel = math.max(tAccel, 0.0)
-				end
-				
-				if (tAccel < tTAccel - dAccel) then
-					tAccel = tAccel + dAccel
-				elseif (tAccel > tTAccel + dAccel) then
-					tAccel = tAccel - dAccel
-				else
-					tAccel = tTAccel
-				end
-				
-				if (ATCBrakeApplication > 0) then
-					tAccel = -1
-					tThrottle = -1
-					gSetReg = 0.0
-					gThrottleTime = 1.0
-				end
-				
-				Call( "*:SetControlValue", "TAccel", 0, tAccel)
-				
-				if (math.abs(ReverserLever) < 0.9 or TrackBrake > 0) then
-					Call( "*:SetControlValue", "Regulator", 0, 0.0 )
-					Call( "*:SetControlValue", "DynamicBrake", 0, clamp(NumCars / DYNBRAKE_MAXCARS, 0, 1) )
-					dynEffective = clamp(math.abs(gCurrent) / (DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)), 0, 1)
-					Call( "*:SetControlValue", "TrainBrakeControl", 0, 0.5 + ((1.0 - dynEffective) * 0.5) )
-					if (TrackBrake > 0) then
-						Call( "*:SetControlValue", "Sander", 0, 1 )
-						Call( "*:SetControlValue", "HandBrake", 0, 1 )
-					else
-						Call( "*:SetControlValue", "Sander", 0, 0 )
-						Call( "*:SetControlValue", "HandBrake", 0, 0 )
-					end
-					gSetReg = 0.0
-					gSetDynamic = 0.0
-					gSetBrake = 0.0
-					brkAdjust = MAX_CORRECTION
-					gStoppingTime = MAX_STOPPING_TIME
-					if (math.abs(ReverserLever) < 0.9) then
-						Call( "*:SetControlValue", "ThrottleAndBrake", 0, -1.0 )
-					end
+			gCurrent = Call( "*:GetControlValue", "Ammeter", 0 )
+			
+			-- Set throttle based on ATO or not
+			if ATOEnabled then
+				tThrottle = ATOThrottle
+				Call( "*:SetControlValue", "ThrottleLever", 0, 0 )
+			else
+				tThrottle = CombinedLever * 2.0 - 1.0
+				Call( "*:SetControlValue", "ThrottleLever", 0, CombinedLever )
+			end
+			
+			-- Round throttle to 0 if it's below 10% power/brake; widens "coast" gap
+			if (math.abs(tThrottle) < 0.1 and not ATOEnabled) then
+				tThrottle = 0.0
+			end
+			
+			if (tThrottle >= 0.1) then -- Accelerating; bind range to [ MIN_ACCELERATION, MAX_ACCELERATION ]
+				tTAccel = mapRange(tThrottle, 0.1, 0.9, MIN_ACCELERATION, MAX_ACCELERATION)
+			elseif (tThrottle <= -0.1) then -- Braking; bind range to [ MIN_BRAKING, MAX_BRAKING ]
+				tTAccel = -mapRange(-tThrottle, 0.1, 0.9, MIN_BRAKING, MAX_BRAKING)
+			else
+				tTAccel = 0.0
+			end
+			
+			-- Acceleration change per tick
+			dAccel = JERK_LIMIT * gTimeDelta
+			
+			-- If requesting acceleration and stopped, release brakes instantly
+			if (tTAccel >= 0 and math.abs(TrainSpeed) < 0.1) then
+				tAccel = math.max(tAccel, 0.0)
+			end
+			
+			if (tAccel < tTAccel - dAccel) then -- Increase slowly
+				tAccel = tAccel + dAccel
+			elseif (tAccel > tTAccel + dAccel) then -- Decrease slowly
+				tAccel = tAccel - dAccel
+			else
+				tAccel = tTAccel -- Snap to target value
+			end
+			
+			-- ATC took over braking due to control timeout
+			if (ATCBrakeApplication > 0) then
+				tAccel = -1 -- Instant max braking
+				tThrottle = -1 -- Force 100% Braking throttle input
+				gSetReg = 0.0 -- Drop power instantly
+				gThrottleTime = 100 -- Override "propulsion adjustment" period
+			end
+			
+			Call( "*:SetControlValue", "TAccel", 0, tAccel)
+			
+			-- Max application of dynamic brake based on #cars in consist
+			local dynBrakeMax = clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)
+			
+			-- Parked or track brake engaged
+			if (math.abs(ReverserLever) < 0.9 or TrackBrake > 0) then
+				Call( "*:SetControlValue", "Regulator", 0, 0.0 )
+				Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax )
+				dynEffective = clamp(math.abs(gCurrent) / (DYNAMIC_BRAKE_AMPS * dynBrakeMax), 0, 1)
+				Call( "*:SetControlValue", "TrainBrakeControl", 0, 0.5 + ((1.0 - dynEffective) * 0.5) )
+				if (TrackBrake > 0) then
+					Call( "*:SetControlValue", "Sander", 0, 1 )
+					Call( "*:SetControlValue", "HandBrake", 0, 1 )
+					tAccel = math.min(tAccel, 0.0)
 				else
 					Call( "*:SetControlValue", "Sander", 0, 0 )
 					Call( "*:SetControlValue", "HandBrake", 0, 0 )
-					
-					if (math.abs(TrainSpeed) < 3.0 and not ATOEnabled) then
-						gStoppingTime = gStoppingTime + gTimeDelta
-					else
-						gStoppingTime = 0
-						brkAdjust = 0.0
+				end
+				gSetReg = 0.0
+				gSetDynamic = 0.0
+				gSetBrake = 0.0
+				brkAdjust = MAX_CORRECTION
+				gStoppingTime = MAX_STOPPING_TIME
+				if (math.abs(ReverserLever) < 0.9) then
+					Call( "*:SetControlValue", "ThrottleAndBrake", 0, -1.0 )
+				end
+			else
+				Call( "*:SetControlValue", "Sander", 0, 0 )
+				Call( "*:SetControlValue", "HandBrake", 0, 0 )
+				
+				-- Cancel smooth-stop if train takes too long to stop
+				if (math.abs(TrainSpeed) < 3.0 and not ATOEnabled) then
+					gStoppingTime = gStoppingTime + gTimeDelta
+				else
+					gStoppingTime = 0
+					brkAdjust = 0.0
+				end
+				
+				if (math.abs(tAccel) > 0.05) then
+					local tAccelSign = sign(tAccel)
+					if (tAccelSign ~= gLastAccelSign) then
+						gThrottleTime = 0.0
 					end
-					
-					if (DoorsOpen == TRUE) then
+					gLastAccelSign = tAccelSign
+				end
+				
+				if (BrakeCylBAR > 0.005 and tAccel > 0) then
+					gThrottleTime = 0.0
+				end
+				
+				if (gThrottleTime < 0.125) then
+					gThrottleTime = gThrottleTime + gTimeDelta
+					tAccel = 0.01 * gLastAccelSign
+				end
+				
+				if (DoorsOpen == TRUE) then
+					gSetReg = 0.0
+					gSetDynamic = 0.0
+					gSetBrake = 0.95
+					brkAdjust = MAX_CORRECTION
+				else
+					if (math.abs(tAccel) < 0.01) then
 						gSetReg = 0.0
 						gSetDynamic = 0.0
-						gSetBrake = 0.95
-						brkAdjust = MAX_CORRECTION
+						gSetBrake = 0.0
 					else
-						dReg = REG_DELTA * gTimeDelta
-						dDyn = DYN_DELTA * gTimeDelta
-						dBrk = BRK_DELTA * gTimeDelta
-						if (math.abs(tThrottle) <= 0.01) then
+						gSetReg = clamp(tAccel, 0.0, 1.0)
+						gSetDynamic = clamp(-tAccel, 0.0, 1.0)
+						
+						dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
+						gSetBrake = mapRange(gSetDynamic * (1.0 - dynEffective), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE)
+						
+						if (math.abs(TrainSpeed) < 2.5 and tThrottle < 0) then
+							if (gStoppingTime < MAX_STOPPING_TIME) then
+								gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
+								gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
+							end
+						end
+					end
+					
+					
+					--[[dReg = REG_DELTA * gTimeDelta
+					dDyn = DYN_DELTA * gTimeDelta
+					dBrk = BRK_DELTA * gTimeDelta
+					
+					-- Coast command
+					if (math.abs(tThrottle) <= 0.01) then
+						if (gSetBrake > dBrk) then
+							gSetBrake = clamp(gSetBrake - dBrk, 0.0, 1.0)
+						else
+							gSetBrake = 0.0
+						end
+						
+						if (BrakeCylBAR < 0.005) then
+							if (gSetDynamic > dDyn) then
+								gSetDynamic = clamp(gSetDynamic - dDyn, 0.0, 1.0)
+							else
+								gSetDynamic = 0.0
+							end
+						end
+						
+						if (gSetReg > dReg) then
+							gSetReg = clamp(gSetReg - dReg, 0.0, 1.0)
+						else
+							gSetReg = 0.0
+						end
+						
+						brkAdjust = 0.0
+						gThrottleTime = 0.0
+					else
+						-- Requesting acceleration
+						if (tThrottle >= 0.01) then
 							if (gSetBrake > dBrk) then
-								gSetBrake = clamp(gSetBrake - dBrk, 0.0, 1.0)
+								if (math.abs(TrainSpeed) < 0.1) then -- Release brakes instantly from a standstill
+									gSetBrake = 0.0
+								else
+									gSetBrake = clamp(gSetBrake - dBrk, 0.0, 1.0)
+								end
 							else
 								gSetBrake = 0.0
 							end
 							
-							if (BrakeCylBAR < 0.005) then
+							if (BrakeCylBAR < 0.001) then
 								if (gSetDynamic > dDyn) then
-									gSetDynamic = clamp(gSetDynamic - dDyn, 0.0, 1.0)
+									if (math.abs(TrainSpeed) < 0.1) then -- Release brakes instantly from a standstill
+										gSetDynamic = 0.0
+									else
+										gSetDynamic = clamp(gSetDynamic - dDyn, 0.0, 1.0)
+									end
 								else
 									gSetDynamic = 0.0
 								end
 							end
 							
+							if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001) then
+								if (gThrottleTime >= 0.125) then
+									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
+										gTimeSinceWheelslip = 0.0
+									end
+									
+									if (gTimeSinceWheelslip < 1.0) then
+										tAccel = math.min(tAccel, 0.6)
+										gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+									end
+								
+									gSetReg = clamp(tAccel, 0.0, 1.0)
+								else
+									tAccel = math.min(tAccel, 0.0)									
+									if (math.abs(tAccel) < 0.01) then
+										gThrottleTime = gThrottleTime + gTimeDelta
+									end
+								end
+							else
+								gSetReg = 0.0
+								gThrottleTime = 0.0
+							end
+						elseif (tThrottle < 0.01) then
 							if (gSetReg > dReg) then
 								gSetReg = clamp(gSetReg - dReg, 0.0, 1.0)
 							else
 								gSetReg = 0.0
 							end
 							
-							brkAdjust = 0.0
-							gThrottleTime = 0.0
-						else
-							if (tThrottle > 0.01) then
-								if (gSetBrake > dBrk) then
-									if (math.abs(TrainSpeed) < 0.1) then -- Release brakes instantly from a standstill
-										gSetBrake = 0.0
-									else
-										gSetBrake = clamp(gSetBrake - dBrk, 0.0, 1.0)
-									end
-								else
-									gSetBrake = 0.0
-								end
-								
-								if (BrakeCylBAR < 0.001) then
-									if (gSetDynamic > dDyn) then
-										if (math.abs(TrainSpeed) < 0.1) then -- Release brakes instantly from a standstill
-											gSetDynamic = 0.0
-										else
-											gSetDynamic = clamp(gSetDynamic - dDyn, 0.0, 1.0)
-										end
-									else
-										gSetDynamic = 0.0
-									end
-								end
-								
-								if (gSetBrake < 0.001 and BrakeCylBAR < 0.001 and gSetDynamic < 0.001) then
-									if (gThrottleTime >= 0.125) then
-										if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
-											gTimeSinceWheelslip = 0.0
-										end
-										
-										if (gTimeSinceWheelslip < 1.0) then
-											tAccel = math.min(tAccel, 0.6)
-											gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
-										end
+							if (gSetReg < 0.001) then
+								if (gThrottleTime >= 0.125) then
+									dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
 									
-										gSetReg = clamp(tAccel, 0.0, 1.0)
-									else
-										tAccel = math.min(tAccel, 0.0)									
-										if (math.abs(tAccel) < 0.01) then
-											gThrottleTime = gThrottleTime + gTimeDelta
-										end
+									if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
+										gTimeSinceWheelslip = 0.0
 									end
-								else
-									gSetReg = 0.0
-									gThrottleTime = 0.0
-								end
-							elseif (tThrottle < 0.01) then
-								if (gSetReg > dReg) then
-									gSetReg = clamp(gSetReg - dReg, 0.0, 1.0)
-								else
-									gSetReg = 0.0
-								end
-								
-								if (gSetReg < 0.001) then
-									if (gThrottleTime >= 0.125) then
-										dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
-										
-										if (Call("*:GetControlValue", "Wheelslip", 0) > 1) then
-											gTimeSinceWheelslip = 0.0
-										end
-										
-										if (gTimeSinceWheelslip < 1.0) then
-											tAccel = math.max(tAccel, -0.6)
-											dynEffective = 0.0
-											gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
-										end
 									
-										gSetDynamic = -tAccel
-										--gSetDynamic = 0.15
-										gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - MIN_SERVICE_BRAKE)) + MIN_SERVICE_BRAKE
-										if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < MAX_STOPPING_TIME) then
-											gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
-											gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
-										end
-									else
-										tAccel = math.max(tAccel, 0.0)
-										if (math.abs(tAccel) < 0.01) then
-											gThrottleTime = gThrottleTime + gTimeDelta
-										end
+									if (gTimeSinceWheelslip < 1.0) then
+										tAccel = math.max(tAccel, -0.6)
+										dynEffective = 0.0
+										gTimeSinceWheelslip = gTimeSinceWheelslip + gTimeDelta
+									end
+								
+									gSetDynamic = -tAccel
+									--gSetDynamic = 0.15
+									gSetBrake = (-(tAccel * (1.0 - dynEffective)) * (MAX_SERVICE_BRAKE - MIN_SERVICE_BRAKE)) + MIN_SERVICE_BRAKE
+									if (math.abs(TrainSpeed) < 2.5 and tTAccel < 0 and gStoppingTime < MAX_STOPPING_TIME) then
+										gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
+										gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
 									end
 								else
-									gSetDynamic = 0.0
-									gSetBrake = 0.0
-									gThrottleTime = 0.0
+									tAccel = math.max(tAccel, 0.0)
+									if (math.abs(tAccel) < 0.01) then
+										gThrottleTime = gThrottleTime + gTimeDelta
+									end
 								end
+							else
+								gSetDynamic = 0.0
+								gSetBrake = 0.0
+								gThrottleTime = 0.0
 							end
 						end
-					end
-					
-					if (gSetDynamic < 0.001 and math.abs(TrainSpeed) > 0.1 and tAccel >= 0.0) then
-						Call( "*:SetControlValue", "Regulator", 0, math.max(gSetReg, 0.001) ) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
-					else
-						Call( "*:SetControlValue", "Regulator", 0, gSetReg )
-					end
-					
-					Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0) )
-					Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
-					Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
+					end]]
 				end
+				
+				if (gSetDynamic < 0.001 and math.abs(TrainSpeed) > 0.1 and tAccel >= 0.0) then
+					Call( "*:SetControlValue", "Regulator", 0, math.max(gSetReg, 0.001) ) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
+				else
+					Call( "*:SetControlValue", "Regulator", 0, gSetReg )
+				end
+				
+				Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0) )
+				Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
+				Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
+			end
 
-				-- End propulsion system
-				
-				-- Begin ATC system
-				
-				if UpdateATC then
-					UpdateATC(gTimeDelta)
-				end
-				
-				if UpdateATO then
-					UpdateATO(gTimeDelta)
-				end
-				
-				-- End ATC system
+			-- End propulsion system
+			
+			-- Begin ATC system
+			
+			if UpdateATC then
+				UpdateATC(gTimeDelta)
+			end
+			
+			if UpdateATO then
+				UpdateATO(gTimeDelta)
+			end
+			
+			-- End ATC system
 
-				if ( DoorsOpen ~= FALSE ) then
-					Call( "*:SetControlValue", "Regulator", 0, 0 )
-				end
+			if ( DoorsOpen ~= FALSE ) then
+				Call( "*:SetControlValue", "Regulator", 0, 0 )
+			end
 
-				gLastDoorsOpen = DoorsOpen
-				gLastSpeed = TrainSpeed
-				gTimeDelta = 0
-			--end
+			gLastDoorsOpen = DoorsOpen
+			gLastSpeed = TrainSpeed
+			gTimeDelta = 0
 		end
 	else -- trail engine.
 	

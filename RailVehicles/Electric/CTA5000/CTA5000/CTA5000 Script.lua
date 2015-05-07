@@ -266,7 +266,7 @@ function Update(time)
 		accelAvg = -accelAvg
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg, -1, 1)
-	dBodyTilt = 5.75 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.3, 1.0)
+	dBodyTilt = 5 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.1, 1.0)
 	dBodyTilt = dBodyTilt * time
 	if (gBodyTilt < tBodyTilt - dBodyTilt) then
 		gBodyTilt = gBodyTilt + dBodyTilt

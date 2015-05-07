@@ -43,3 +43,8 @@ function reverseMsgDir(direction)
 	if (direction == 0) then return 1 end
 	return 0
 end
+
+function mapRange(value, sourceMin, sourceMax, destMin, destMax)
+	local normalized = (value - sourceMin) / (sourceMax - sourceMin)
+	return normalized * (destMax - destMin) + destMin
+end

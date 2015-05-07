@@ -81,7 +81,7 @@ function UpdateATC(interval)
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			spdBuffer = (getBrakingDistance(spdLimit, (TrainSpeed - 0.5) * MPH_TO_MPS, -ATC_TARGET_DECELERATION) + 6)
+			spdBuffer = getBrakingDistance(spdLimit, (TrainSpeed - 0.5) * MPH_TO_MPS, -ATC_TARGET_DECELERATION) + 25
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
@@ -103,11 +103,7 @@ function UpdateATC(interval)
 		gLastSigDist = sigDist
 	end
 	
-	if enabled then
-		targetSpeed = math.floor((targetSpeed * MPS_TO_MPH * 10) + 0.5) / 10 -- Round to nearest 0.1
-	else
-		targetSpeed = 100
-	end
+	targetSpeed = math.floor((targetSpeed * MPS_TO_MPH * 10) + 0.5) / 10 -- Round to nearest 0.1
 	
 	ATOEnabled = (Call("*:GetControlValue", "ATOEnabled", 0) or -1) > 0.0
 	
@@ -123,17 +119,22 @@ function UpdateATC(interval)
 		gLastSpeedLimit = targetSpeed
 	end
 	
-	if (ATOEnabled) then
+	if not enabled then
+		targetSpeed = 100
 		Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 	else
-		-- Restrict target speed to the valid CTA speed limits
-		if (TrainSpeed >= (targetSpeed + 1)) then
-			targetSpeed = getSpeedLimitBelow(targetSpeed)
+		if (ATOEnabled) then
+			Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 		else
-			targetSpeed = getSpeedLimitAbove(targetSpeed)
+			-- Restrict target speed to the valid CTA speed limits
+			if (TrainSpeed >= (targetSpeed + 1)) then
+				targetSpeed = getSpeedLimitBelow(targetSpeed)
+			else
+				targetSpeed = getSpeedLimitAbove(targetSpeed)
+			end
+			
+			Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 		end
-		
-		Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 	end
 	
 	-- Following section logic taken from CTA 7000-series RFP spec
