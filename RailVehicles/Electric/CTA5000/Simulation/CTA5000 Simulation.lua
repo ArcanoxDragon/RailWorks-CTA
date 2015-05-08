@@ -277,7 +277,7 @@ function Update(interval)
 						gSetReg = clamp(tAccel, 0.0, 1.0)
 						gSetDynamic = clamp(-tAccel, 0.0, 1.0)
 						
-						dynEffective = -(gCurrent / ((DYNAMIC_BRAKE_AMPS * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)) * -tAccel))
+						dynEffective = clamp(-gCurrent / math.max(DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic, 0.001), 0.0, 1.0)
 						gSetBrake = mapRange(gSetDynamic * (1.0 - dynEffective), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE)
 						
 						if (math.abs(TrainSpeed) < 2.5 and tThrottle < 0) then
