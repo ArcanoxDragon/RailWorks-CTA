@@ -35,8 +35,8 @@ end
 
 --     ( id, light, lightColor, [ nextSign ] )
 addSign("a", false, nil)                   --[[  0 Off ]]
-addSign("b",  true, { 255, 255, 255 })     --[[  1 NIS ]]
-addSign("c",  true, { 255, 255, 255 })     --[[  2 Express ]]
+addSign("b",  true, { 100, 100, 100 })     --[[  1 NIS ]]
+addSign("c",  true, { 100, 100, 100 })     --[[  2 Express ]]
 addSign("d",  true, { 255,  31,  31 })     --[[  3 Red Howard ]]
 addSign("e",  true, { 255,  31,  31 })     --[[  4 Red 95th ]]
 addSign("f",  true, { 255,  31,  31 })     --[[  5 Red Roosevelt ]]
@@ -60,6 +60,9 @@ addSign("w",  true, {   0,  95, 235 })     --[[ 22 Blue Forest Park ]]
 addSign("x",  true, { 191, 191, 255 })     --[[ 23 Blue UIC ]]
 addSign("y",  true, {   0,  95, 235 })     --[[ 24 Blue Rosemont ]]
 addSign("z",  true, {   0,  95, 235 })     --[[ 25 Blue Jefferson Park ]]
+addSign("A",  true, { 191, 191, 255 })     --[[ 26 Blue 54th/Cermak ]]
+addSign("B",  true, { 255, 255,   0 })     --[[ 27 Yellow Skokie ]]
+addSign("C",  true, { 255, 255,   0 })     --[[ 28 Yellow Howard ]]
 
 Print("Declaring Initialise")
 function Initialise()
@@ -235,10 +238,8 @@ function Update(time)
 	
 	-- Headlights
 	if (GetControlValue("IsEndCar") > 0 and GetControlValue("Active") > 0 and GetControlValue("Headlights") > 0) then
-		Call("ActivateNode", "headlights", 1)
 		Call("*:ActivateNode", "headlights", 1)
 	else
-		Call("ActivateNode", "headlights", 0)
 		Call("*:ActivateNode", "headlights", 0)
 	end
 	
@@ -294,20 +295,32 @@ function Update(time)
 		Call("*:SetRVNumber", "5001a")
 	end
 	
-	if (DestSign >= 0 and DestSign < NUM_SIGNS and SIGNS[DestSign + 1]) then
+	if (DestSign > 0 and DestSign < NUM_SIGNS and SIGNS[DestSign + 1]) then
 		local sign = SIGNS[DestSign + 1]
-		local frontPart = IsEndCar and sign.id or SIGNS[1].id -- Middle cars are off
-		Call("*:SetRVNumber", firstPart .. frontPart)
+		local secondPart = sign.id
+		Call("*:SetRVNumber", firstPart .. secondPart)
 		
-		if (SIGNS[DestSign + 1].hasLight and IsEndCar) then
-			Call( "SignLightFront:Activate", 1 )
-			Call( "SignLightFront:SetColour", SIGNS[DestSign + 1].color[1] / 255, SIGNS[DestSign + 1].color[2] / 255, SIGNS[DestSign + 1].color[3] / 255 )
+		Call("*:ActivateNode", "side_displays", 1)
+		
+		if (IsEndCar) then
+			Call("*:ActivateNode", "sign_off_front", 0)
+			
+			if (SIGNS[DestSign + 1].hasLight) then
+				Call( "SignLightFront:Activate", 1 )
+				Call( "SignLightFront:SetColour", SIGNS[DestSign + 1].color[1] / 255, SIGNS[DestSign + 1].color[2] / 255, SIGNS[DestSign + 1].color[3] / 255 )
+			else
+				Call( "SignLightFront:Activate", 0 )
+			end
 		else
+			Call("*:ActivateNode", "sign_off_front", 1)
+			
 			Call( "SignLightFront:Activate", 0 )
 		end
 	else
 		Call("*:SetRVNumber", firstPart .. "a")
 		Call( "SignLightFront:Activate", 0 )
+		Call("*:ActivateNode", "sign_off_front", 1)
+		Call("*:ActivateNode", "side_displays", 0)
 	end
 end
 
