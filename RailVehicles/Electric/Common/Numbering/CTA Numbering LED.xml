@@ -733,6 +733,66 @@
 									</Value>
 								</Element>
 							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>A</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Blue_54thCermak</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>B</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Yellow_Skokie</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>C</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Yellow_Howard</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
 						</Value>
 					</Element>
 				</__Indexed__cNamedTextureSetBlueprint-sTextureEntry>

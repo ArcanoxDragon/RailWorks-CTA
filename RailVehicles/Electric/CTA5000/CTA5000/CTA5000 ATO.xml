@@ -6341,7 +6341,7 @@
 														<Attribute name="MaximumValue">
 															<sFloat32>
 																<Element>
-																	<Value>25</Value>
+																	<Value>28</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
