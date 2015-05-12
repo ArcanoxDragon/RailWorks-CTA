@@ -166,7 +166,7 @@ function UpdateATO(interval)
 		Call("*:SetControlValue", "NextSignalAspect", 0, sigAspect)
 		
 		if (sigAspect == SIGNAL_STATE_STATION) then
-			if (sigDist <= spdBuffer and sigDist >= 5 --[[ we don't want to stop at stations we're too close to ]] and sigDist < gLastSigDist) then
+			if (sigDist <= spdBuffer and sigDist >= 15 --[[ we don't want to stop at stations we're too close to ]] and sigDist < gLastSigDist) then
 				if (atoStopping < 0.25) then
 					statStopStartingSpeed = trainSpeed
 					statStopSpeedLimit = targetSpeed
