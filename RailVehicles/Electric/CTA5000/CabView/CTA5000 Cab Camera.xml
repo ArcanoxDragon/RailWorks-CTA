@@ -135,7 +135,7 @@
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>0</Value>
+														<Value>1</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -223,7 +223,7 @@
 							<Attribute name="DampingZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.019</Value>
+										<Value>0.011</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

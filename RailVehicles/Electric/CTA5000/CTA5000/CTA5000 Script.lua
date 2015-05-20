@@ -13,11 +13,18 @@ CARCOUNT_ID = 1717
 CARCOUNT_RET_ID = 1718
 CARNUM_ID = 1719
 CARNUM_RET_ID = 1720
+CARPOWERCOUNT_ID = 1721
+CARPOWERCOUNT_RET_ID = 1722
 
 MSG_ATO_SPEED_LIMIT = 42
 MSG_SIGN_CHANGE = 43
+MSG_THIRD_RAIL_OFF = 50
+MSG_THIRD_RAIL_ON = 51
 
-CAR_COUNT_TIME = 1.0 -- seconds
+SIGNAL_THIRD_RAIL_OFF = 30
+SIGNAL_THIRD_RAIL_ON = 31
+
+CAR_COUNT_TIME = 0.5 -- seconds
 
 local NUM_SIGNS = 0
 local SIGNS = { }
@@ -96,8 +103,14 @@ function Initialise()
 	gMovingAvgIndex = 0 -- 0 - 9
 	gMovingAvg = 0
 	
+-- Misc. signal stuff
+	gLastSignalDist = 0
+	
 -- Control cache
 	gControlCache = { }
+	
+	SetControlValue("OnThirdRail", 1)
+	
 	Print("Initialised")
 
 	Call( "BeginUpdate" )
@@ -132,6 +145,11 @@ end
 function OnCameraLeave()
 	gCamInside = false
 end
+
+sigType = 0
+sigState = 0
+sigDist = 0
+sigAspect = 0
 
 function Update(time)
 	local trainSpeed = Call("GetSpeed") * MPS_TO_MPH
@@ -200,13 +218,26 @@ function Update(time)
 		SetControlValue( "DestinationSign", 0 )
 	end
 	
+	-- Third rail signal
+	sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", mod(GetControlValue("CarNum"), 2))
+	SetControlValue("NextSignalAspect", sigAspect)
+	SetControlValue("NextSignalDist", sigDist)
+	if (sigDist < 1.0 and sigDist < gLastSignalDist) then
+		if (sigAspect == SIGNAL_THIRD_RAIL_OFF) then
+			SetControlValue("OnThirdRail", 0)
+		elseif (sigAspect == SIGNAL_THIRD_RAIL_ON) then
+			SetControlValue("OnThirdRail", 1)
+		end
+	end
+	gLastSignalDist = sigDist
+	
 	-- Inverter whine based on current
 	
 	local tWhine = 1.0
 	local dWhine = 1.2 * time
 	local current = GetControlValue("Ammeter")
 	local tAccel = GetControlValue("TAccel")
-	if ( math.abs(current) < 0.0001 and tAccel >= 0.0 ) then
+	if ( math.abs(current) < 0.0001 or GetControlValue("OnThirdRail") < 0.5 ) and tAccel >= 0.0 then
 		tWhine = 0.0
 	end
 	
@@ -341,8 +372,16 @@ function CountCars()
 		-- Determine the total number of cars in the consist
 
 		SetControlValue( "NumCars", 1 )
+		if (GetControlValue("OnThirdRail") > 0) then
+			SetControlValue( "NumCarsOnPower", 1 )
+		else
+			SetControlValue( "NumCarsOnPower", 0 )
+		end
 		Call( "SendConsistMessage", CARCOUNT_ID, 0, 0 )
 		Call( "SendConsistMessage", CARCOUNT_ID, 0, 1 )
+		
+		Call( "SendConsistMessage", CARPOWERCOUNT_ID, 0, 0 )
+		Call( "SendConsistMessage", CARPOWERCOUNT_ID, 0, 1 )
 		
 		-- Set "car ID" of each car
 		--debugPrint("Setting car IDs...this car is " .. (endCar and "an" or "not an") .. " end car")
@@ -376,10 +415,27 @@ function OnConsistMessage ( msg, argument, direction )
 				Call( "SendConsistMessage", CARCOUNT_RET_ID, argument, reverseMsgDir(direction) )
 			end
 		end
+		
+		if (msg == CARPOWERCOUNT_ID) then -- Going down train counting cars
+			cancel = true
+			argument = tonumber(argument)
+			if (GetControlValue("OnThirdRail") > 0) then
+				argument = argument + 1
+			end
+			local sent = Call( "SendConsistMessage", msg, argument, direction )
+			if (sent == 0) then
+				Call( "SendConsistMessage", CARPOWERCOUNT_RET_ID, argument, reverseMsgDir(direction) )
+			end
+		end
 	else
 		if (msg == CARCOUNT_RET_ID) then
 			local curCarCount = GetControlValue("NumCars")
 			SetControlValue("NumCars", curCarCount + argument)
+		end
+		
+		if (msg == CARPOWERCOUNT_RET_ID) then
+			local curCarCount = GetControlValue("NumCarsOnPower")
+			SetControlValue("NumCarsOnPower", curCarCount + argument)
 		end
 	end
 	
@@ -423,6 +479,12 @@ function OnCustomSignalMessage(argument)
 					SetControlValue("DestinationSign", curSign.nextSign)
 				end
 			end
+		--[[elseif (tonumber(msg) == MSG_THIRD_RAIL_OFF) then
+			SetControlValue("OnThirdRail", 0)
+			debugPrint("Car #" .. tostring(GetControlValue("CarNum")) .. ": Went off third rail")
+		elseif (tonumber(msg) == MSG_THIRD_RAIL_ON) then
+			SetControlValue("OnThirdRail", 1)
+			debugPrint("Car #" .. tostring(GetControlValue("CarNum")) .. ": Went on third rail")]]
 		end
 	end
 	

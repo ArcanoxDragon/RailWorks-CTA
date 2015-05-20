@@ -102,6 +102,7 @@ function Update(interval)
 			ATCBrakeApplication = Call( "*:GetControlValue", "ATCBrakeApplication", 0 )
 			IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
 			NumCars = Call( "*:GetControlValue", "NumCars", 0 )
+			NumCarsOnPower = Call( "*:GetControlValue", "NumCarsOnPower", 0 )
 			ATOEnabled = (Call( "*:GetControlValue", "ATOEnabled", 0 ) or -1) > 0.5
 			ATOThrottle = (Call( "*:GetControlValue", "ATOThrottle", 0 ) or -1)
 			
@@ -407,12 +408,15 @@ function Update(interval)
 					end]]
 				end
 				
+				local finalRegulator = gSetReg
+				
 				if (gSetDynamic < 0.001 and math.abs(TrainSpeed) > 0.1 and tAccel >= 0.0) then
-					Call( "*:SetControlValue", "Regulator", 0, math.max(gSetReg, 0.001) ) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
-				else
-					Call( "*:SetControlValue", "Regulator", 0, gSetReg )
+					finalRegulator = math.max(finalRegulator, 0.001) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
 				end
 				
+				finalRegulator = finalRegulator * (NumCarsOnPower / NumCars)
+				
+				Call( "*:SetControlValue", "Regulator", 0, finalRegulator)
 				Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0) )
 				Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
 				Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )

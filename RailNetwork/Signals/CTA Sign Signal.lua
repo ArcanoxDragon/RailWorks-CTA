@@ -3,8 +3,6 @@
 MSG_CUSTOM = 15
 MSG_SIGN_CHANGE = 43
 
-MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
-
 SIGNAL_STATE_SIGNCHANGE = 22
 
 function Initialise()
