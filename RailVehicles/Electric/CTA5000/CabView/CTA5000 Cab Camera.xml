@@ -188,7 +188,7 @@
 							<Attribute name="SpringXCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.06</Value>
+										<Value>0.065</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -223,7 +223,7 @@
 							<Attribute name="DampingZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.011</Value>
+										<Value>0.0075</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
