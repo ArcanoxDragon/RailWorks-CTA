@@ -3244,7 +3244,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>14.999</Value>
+																				<Value>14.95</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3264,7 +3264,27 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>15</Value>
+																				<Value>15.01</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.45</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>15.035</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3291,7 +3311,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0</Value>
+																				<Value>0.3</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3325,7 +3345,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>15</Value>
+																				<Value>14.85</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3352,7 +3372,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>1.02</Value>
+																				<Value>0.75</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3372,7 +3392,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.65</Value>
+																				<Value>0.3</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3392,7 +3412,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.35</Value>
+																				<Value>0.125</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3412,7 +3432,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.6</Value>
+																				<Value>0.45</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3546,6 +3566,26 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
+																				<Value>15.07</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.745</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
 																				<Value>21</Value>
 																			</Element>
 																		</sFloat32>
@@ -3553,7 +3593,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>1.53448975</Value>
+																				<Value>1.01</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>

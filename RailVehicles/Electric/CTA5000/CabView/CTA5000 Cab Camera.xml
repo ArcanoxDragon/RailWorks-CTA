@@ -167,7 +167,7 @@
 							<Attribute name="MaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1</Value>
+										<Value>1.15</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -181,7 +181,7 @@
 							<Attribute name="WindowMaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1</Value>
+										<Value>1.15</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
