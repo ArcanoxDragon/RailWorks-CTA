@@ -3244,7 +3244,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>14.95</Value>
+																				<Value>14.85</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3271,7 +3271,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.45</Value>
+																				<Value>0.15</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3284,7 +3284,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>15.035</Value>
+																				<Value>15.09</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3345,7 +3345,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>14.85</Value>
+																				<Value>14.25</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3365,7 +3365,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>15.75</Value>
+																				<Value>15.05</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3566,7 +3566,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>15.07</Value>
+																				<Value>15.03</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -5497,7 +5497,7 @@
 										<Attribute name="ActiveRangeStartValue">
 											<sFloat32>
 												<Element>
-													<Value>15</Value>
+													<Value>14</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -5597,7 +5597,7 @@
 										<Attribute name="ActiveRangeStartValue">
 											<sFloat32>
 												<Element>
-													<Value>15</Value>
+													<Value>14</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
