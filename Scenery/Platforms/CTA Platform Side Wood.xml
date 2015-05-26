@@ -144,14 +144,14 @@
 															<Attribute name="Provider">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>briman0094</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
 															<Attribute name="Product">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>CTA</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -162,7 +162,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value />
+														<Value>Scenery\Platforms\CTA Platform Side Wood Start.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -218,14 +218,14 @@
 															<Attribute name="Provider">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>briman0094</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
 															<Attribute name="Product">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>CTA</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -236,7 +236,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value />
+														<Value>Scenery\Platforms\CTA Platform Side Wood End.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -247,7 +247,7 @@
 							<Attribute name="RotateEndGeometry">
 								<eBoolean>
 									<Element>
-										<Value>eTrue</Value>
+										<Value>eFalse</Value>
 									</Element>
 								</eBoolean>
 							</Attribute>
