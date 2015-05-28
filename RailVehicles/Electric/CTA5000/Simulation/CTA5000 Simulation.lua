@@ -67,6 +67,7 @@ function Setup()
 	brkAdjust = 0.0
 	gSign = 0
 	gLastAccelSign = 0
+	gDAccel = 0
 
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 9 -- seconds.
@@ -184,21 +185,26 @@ function Update(interval)
 				tTAccel = 0.0
 			end
 			
-			-- Acceleration change per tick
-			dAccel = JERK_LIMIT * gTimeDelta
-			
 			-- If requesting acceleration and stopped, release brakes instantly
 			if (tTAccel >= 0 and math.abs(TrainSpeed) < 0.1) then
 				tAccel = math.max(tAccel, 0.0)
 			end
 			
-			if (tAccel < tTAccel - dAccel) then -- Increase slowly
-				tAccel = tAccel + dAccel
-			elseif (tAccel > tTAccel + dAccel) then -- Decrease slowly
-				tAccel = tAccel - dAccel
-			else
-				tAccel = tTAccel -- Snap to target value
+			tJerkLimit = 0
+			
+			if (tAccel < tTAccel - 0.001) then -- Increase slowly
+				tJerkLimit = JERK_LIMIT * clamp((tTAccel - tAccel) / 0.5, 0.0, 1.0)
+			elseif (tAccel > tTAccel + 0.001) then -- Decrease slowly
+				tJerkLimit = -JERK_LIMIT * clamp((tAccel - tTAccel) / 0.5, 0.0, 1.0)
 			end
+			
+			if (gDAccel < tJerkLimit) then
+				gDAccel = gDAccel + gTimeDelta
+			elseif (gDAccel > tJerkLimit) then
+				gDAccel = gDAccel - gTimeDelta
+			end
+			
+			tAccel = tAccel + (gDAccel * gTimeDelta)
 			
 			-- ATC took over braking due to control timeout
 			if (ATCBrakeApplication > 0) then
@@ -278,7 +284,7 @@ function Update(interval)
 						gSetReg = clamp(tAccel, 0.0, 1.0)
 						gSetDynamic = clamp(-tAccel, 0.0, 1.0)
 						
-						dynEffective = clamp(-gCurrent / math.max(DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic, 0.001), 0.0, 1.0)
+						dynEffective = clamp(-gCurrent / math.max(DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic, 0.001) + 0.05, 0.0, 1.0)
 						gSetBrake = mapRange(gSetDynamic * (1.0 - dynEffective), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE)
 						
 						if (math.abs(TrainSpeed) < 2.5 and tThrottle < 0) then

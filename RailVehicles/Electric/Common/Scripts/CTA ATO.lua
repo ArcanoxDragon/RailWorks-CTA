@@ -62,10 +62,11 @@ function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr, buffer)
 	local buf = buffer or 0.0
 	
 	local e = math.min(target - real, 0) - math.min(real - (target - buffer), 0)
+	local iE = math.min((target - buffer / 8) - real, 0) - math.min(real - (target - buffer), 0)
 	
 	if (gErrorSums[pN] == nil or gLastErrors[pN] == nil or gSettled[pN] == nil or gSettleTarget[pN] == nil or gSettledTime[pN] == nil) then resetPid(pN) end
 	if (gSettled[pN]) then
-		gErrorSums[pN] = math.max(math.min(gErrorSums[pN] + (e * tD), mxErr), mnErr)
+		gErrorSums[pN] = math.max(math.min(gErrorSums[pN] + (iE * tD), mxErr), mnErr)
 	else
 		gErrorSums[pN] = 0.0
 	end
@@ -246,7 +247,7 @@ function UpdateATO(interval)
 			atoThrottle = -1.0
 		else
 			-- pid(tD, kP, kI, kD, e, minErr, maxErr)
-			atoK_P = 1.0 / 3.5
+			atoK_P = 1.0 / 2.5
 			if (atoStopping > 0) then atoK_P = atoK_P * 2.0 end
 			t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -5.0, 5.0, 2.0)
 			atoThrottle = clamp(t, -1.0 - (1/8), 1.0 + (1/8))
