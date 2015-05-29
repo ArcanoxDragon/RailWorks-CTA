@@ -192,11 +192,13 @@ function Update(interval)
 			
 			tJerkLimit = 0
 			
-			if (tAccel < tTAccel - 0.001) then -- Increase slowly
-				tJerkLimit = JERK_LIMIT * clamp((tTAccel - tAccel) / 0.5, 0.0, 1.0)
-			elseif (tAccel > tTAccel + 0.001) then -- Decrease slowly
-				tJerkLimit = -JERK_LIMIT * clamp((tAccel - tTAccel) / 0.5, 0.0, 1.0)
+			if (tAccel < tTAccel) then -- Increase slowly
+				tJerkLimit = JERK_LIMIT
+			elseif (tAccel > tTAccel) then -- Decrease slowly
+				tJerkLimit = -JERK_LIMIT
 			end
+			
+			tJerkLimit = tJerkLimit * clamp(math.abs(tAccel - tTAccel) / 0.5, 0.0, 1.0)
 			
 			if (gDAccel < tJerkLimit) then
 				gDAccel = gDAccel + gTimeDelta
@@ -204,7 +206,7 @@ function Update(interval)
 				gDAccel = gDAccel - gTimeDelta
 			end
 			
-			if (math.abs(TrainSpeed) < 0.1 and BrakeCylBAR > 0.005 and tAccel > 0.0) then
+			if (math.abs(TrainSpeed) < 0.1 and BrakeCylBAR > 0.001 and tAccel > 0.0) then
 				gDAccel = 0.0
 			end
 			
@@ -272,6 +274,7 @@ function Update(interval)
 				if (gThrottleTime < 0.125) then
 					gThrottleTime = gThrottleTime + gTimeDelta
 					tAccel = 0.01 * gLastAccelSign
+					gDAccel = 0.0
 				end
 				
 				if (DoorsOpen == TRUE) then
