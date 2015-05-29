@@ -204,6 +204,10 @@ function Update(interval)
 				gDAccel = gDAccel - gTimeDelta
 			end
 			
+			if (math.abs(TrainSpeed) < 0.1 and BrakeCylBAR > 0.005 and tAccel > 0.0) then
+				gDAccel = 0.0
+			end
+			
 			tAccel = tAccel + (gDAccel * gTimeDelta)
 			
 			-- ATC took over braking due to control timeout
