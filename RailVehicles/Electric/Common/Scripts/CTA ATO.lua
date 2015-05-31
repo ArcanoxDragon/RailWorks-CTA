@@ -63,7 +63,12 @@ function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr, buffer)
 	local buf = buffer or 0.0
 	
 	local e = math.min(target - real, 0) - math.min(real - (target - buffer), 0)
-	local iE = math.min((target + buffer / 8) - real, 0) - math.min(real - (target - buffer), 0)
+	local iE = 0.0
+	if (e > 0) then 
+		iE = e
+	elseif (e < 0) then
+		iE = math.min((target + buffer / 8) - real, 0) - math.min(real - (target - buffer), 0)
+	end
 	
 	if (gErrorSums[pN] == nil or gLastErrors[pN] == nil or gSettled[pN] == nil or gSettleTarget[pN] == nil or gSettledTime[pN] == nil) then resetPid(pN) end
 	if (gSettled[pN]) then
