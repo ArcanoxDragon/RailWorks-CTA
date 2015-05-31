@@ -56,19 +56,15 @@ function resetPid(pidName)
 	gSettleTarget[pN] = 0.0
 end
 
-function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr, buffer)
+function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr, buffer, iTarget)
 	local pN = pidName or "default"
 	local mnErr = minErr or -1
 	local mxErr = maxErr or 1
 	local buf = buffer or 0.0
 	
 	local e = math.min(target - real, 0) - math.min(real - (target - buffer), 0)
-	local iE = 0.0
-	if (e > 0) then 
-		iE = e
-	elseif (e < 0) then
-		iE = math.min((target + buffer / 8) - real, 0) - math.min(real - (target - buffer), 0)
-	end
+	local iE = math.min(iTarget - real, 0) - math.min(real - (iTarget - (buffer * 0.75)), 0)
+	
 	
 	if (gErrorSums[pN] == nil or gLastErrors[pN] == nil or gSettled[pN] == nil or gSettleTarget[pN] == nil or gSettledTime[pN] == nil) then resetPid(pN) end
 	if (gSettled[pN]) then
@@ -193,7 +189,7 @@ function UpdateATO(interval)
 		end
 		
 		if (atoStopping > 0) then
-			local distBuffer = 1.5
+			local distBuffer = 1.0
 			targetSpeed = math.min(atoMaxSpeed, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - (sigDist - distBuffer)), 1.0 * MPH_TO_MPS))
 				
 			statStopTime = statStopTime + interval
@@ -253,6 +249,7 @@ function UpdateATO(interval)
 		end
 		
 		targetSpeed = math.floor(targetSpeed * MPS_TO_MPH * 10) / 10 -- Round down to nearest 0.1
+		pidTargetSpeed = targetSpeed
 		if (targetSpeed > 2.0) then
 			targetSpeed = targetSpeed - 0.75 -- For safety's sake in case of a downhill slope
 		end
@@ -264,7 +261,7 @@ function UpdateATO(interval)
 			-- pid(tD, kP, kI, kD, e, minErr, maxErr)
 			atoK_P = 1.0 / 4.0
 			if (atoStopping > 0) then atoK_P = atoK_P * 2.0 end
-			t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -5.0, 5.0, 2.0)
+			t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -5.0, 5.0, 2.0, pidTargetSpeed)
 			atoThrottle = clamp(t, -1.0 - (1/8), 1.0 + (1/8))
 			--[[if (atoStopping > 0) then
 				if (sigDist > 5) then
