@@ -193,12 +193,12 @@ function Update(interval)
 			tJerkLimit = 0
 			
 			if (tAccel < tTAccel) then -- Increase slowly
-				tJerkLimit = JERK_LIMIT * clamp((tTAccel - tAccel) / 0.385, 0.0, 1.0)
+				tJerkLimit = JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.5, 0.01, 1.0)
 			elseif (tAccel > tTAccel) then -- Decrease slowly
-				tJerkLimit = -JERK_LIMIT * clamp((tAccel - tTAccel) / 0.385, 0.0, 1.0)
+				tJerkLimit = -JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.5, 0.01, 1.0)
 			end
 			
-			jerkDelta = gTimeDelta * clamp(math.abs(tAccel) / 0.2, 0.01, 1.0)
+			jerkDelta = gTimeDelta * JERK_LIMIT * clamp(math.abs(tJerkLimit) / 0.35, 0.25, 1.0)
 			
 			if (gDAccel < tJerkLimit) then
 				gDAccel = gDAccel + jerkDelta
@@ -209,6 +209,8 @@ function Update(interval)
 			if (math.abs(TrainSpeed) < 0.1 and BrakeCylBAR > 0.005 and tAccel > 0.0) then
 				gDAccel = 0.0
 			end
+			
+			gDAccel = clamp(gDAccel, -JERK_LIMIT, JERK_LIMIT)
 			
 			tAccel = tAccel + (gDAccel * gTimeDelta)
 			
@@ -291,15 +293,28 @@ function Update(interval)
 						gSetReg = clamp(tAccel, 0.0, 1.0)
 						gSetDynamic = clamp(-tAccel, 0.0, 1.0)
 						
-						dynEffective = clamp(-gCurrent / math.max(DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic, 0.001) + 0.05, 0.0, 1.0)
+						targetAmps = DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic
+						dynEffective = clamp(-gCurrent / math.max(targetAmps, 0.001), 0.05, 1.0)
+						if (gSetDynamic < 0.001) then
+							dynEffective = 1.0
+						end
 						gSetBrake = mapRange(gSetDynamic * (1.0 - dynEffective), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE)
 						
-						if (math.abs(TrainSpeed) < 2.5 and tThrottle < 0) then
-							if (gStoppingTime < MAX_STOPPING_TIME) then
-								gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
-								gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
+						if (math.abs(TrainSpeed) < 2.5) then
+							if (tThrottle < 0.0) then
+								if (gStoppingTime < MAX_STOPPING_TIME) then
+									gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
+								else
+									if (tAccel < 0.0) then
+										gBrakeRelease = 0.0
+									end
+								end
+							else
+								gStoppingTime = MAX_STOPPING_TIME
 							end
 						end
+						
+						gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
 					end
 					
 					
