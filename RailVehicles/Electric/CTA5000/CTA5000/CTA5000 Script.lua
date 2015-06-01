@@ -253,7 +253,7 @@ function Update(time)
 	
 	-- Direction
 	local realAccel = GetControlValue("Acceleration")
-	if (math.abs(trainSpeed) > 0.01) then
+	if (math.abs(trainSpeed) > 0.01 and math.abs(realAccel) > 0.001 and math.abs(accel) > 0.001) then
 		if (sign(accel) == sign(realAccel)) then
 			gLastDir = -1
 		else

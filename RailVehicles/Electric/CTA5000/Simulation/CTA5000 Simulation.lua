@@ -193,15 +193,17 @@ function Update(interval)
 			tJerkLimit = 0
 			
 			if (tAccel < tTAccel) then -- Increase slowly
-				tJerkLimit = JERK_LIMIT * clamp((tTAccel - tAccel) / 0.375, 0.0, 1.0)
+				tJerkLimit = JERK_LIMIT * clamp((tTAccel - tAccel) / 0.385, 0.0, 1.0)
 			elseif (tAccel > tTAccel) then -- Decrease slowly
-				tJerkLimit = -JERK_LIMIT * clamp((tAccel - tTAccel) / 0.375, 0.0, 1.0)
+				tJerkLimit = -JERK_LIMIT * clamp((tAccel - tTAccel) / 0.385, 0.0, 1.0)
 			end
 			
+			jerkDelta = gTimeDelta * clamp(math.abs(tAccel) / 0.2, 0.01, 1.0)
+			
 			if (gDAccel < tJerkLimit) then
-				gDAccel = gDAccel + (0.9 * gTimeDelta)
+				gDAccel = gDAccel + jerkDelta
 			elseif (gDAccel > tJerkLimit) then
-				gDAccel = gDAccel - (0.9 * gTimeDelta)
+				gDAccel = gDAccel - jerkDelta
 			end
 			
 			if (math.abs(TrainSpeed) < 0.1 and BrakeCylBAR > 0.005 and tAccel > 0.0) then
