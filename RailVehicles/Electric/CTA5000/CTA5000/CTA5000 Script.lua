@@ -253,7 +253,7 @@ function Update(time)
 	
 	-- Direction
 	local realAccel = GetControlValue("Acceleration")
-	if (math.abs(trainSpeed) > 0.01 and math.abs(realAccel) > 0.001 and math.abs(accel) > 0.001) then
+	if (math.abs(trainSpeed) > 0.01 and math.abs(realAccel) > 0.1 and math.abs(accel) > 0.1) then
 		if (sign(accel) == sign(realAccel)) then
 			gLastDir = -1
 		else
@@ -291,7 +291,7 @@ function Update(time)
 	
 	UpdateMovingAverage(accel) -- MPH/s
 	local accelAvg = GetMovingAverage() -- Smooth out acceleration
-	accelAvg = accelAvg / 3.7 -- Max accel for animation is 3.25 MPH/s
+	accelAvg = accelAvg / 3.7 -- Max accel for animation is 3.7 MPH/s
 	accelAvg = accelAvg * gLastDir
 	accelAvg = accelAvg * GetControlValue("Direction")
 	if (mod(GetControlValue("CarNum"), 2) ~= 0) then

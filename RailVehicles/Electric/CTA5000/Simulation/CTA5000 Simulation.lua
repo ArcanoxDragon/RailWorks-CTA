@@ -193,12 +193,12 @@ function Update(interval)
 			tJerkLimit = 0
 			
 			if (tAccel < tTAccel) then -- Increase slowly
-				tJerkLimit = JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.5, 0.01, 1.0)
+				tJerkLimit = JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.25, 0.01, 1.0)
 			elseif (tAccel > tTAccel) then -- Decrease slowly
-				tJerkLimit = -JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.5, 0.01, 1.0)
+				tJerkLimit = -JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.25, 0.01, 1.0)
 			end
 			
-			jerkDelta = gTimeDelta * JERK_LIMIT * clamp(math.abs(tJerkLimit) / 0.35, 0.25, 1.0)
+			jerkDelta = gTimeDelta * JERK_LIMIT * clamp(math.abs(tJerkLimit) / 0.125, 0.65, 2.0)
 			
 			if (gDAccel < tJerkLimit) then
 				gDAccel = gDAccel + jerkDelta
