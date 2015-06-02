@@ -67,7 +67,7 @@ function Setup()
 	brkAdjust = 0.0
 	gSign = 0
 	gLastAccelSign = 0
-	gDAccel = 0
+	gLastJerkLimit = 0
 
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 9 -- seconds.
@@ -177,12 +177,22 @@ function Update(interval)
 				tThrottle = 0.0
 			end
 			
-			if (tThrottle >= 0.1) then -- Accelerating; bind range to [ MIN_ACCELERATION, MAX_ACCELERATION ]
-				tTAccel = mapRange(tThrottle, 0.1, 0.9, MIN_ACCELERATION, MAX_ACCELERATION)
-			elseif (tThrottle <= -0.1) then -- Braking; bind range to [ MIN_BRAKING, MAX_BRAKING ]
-				tTAccel = -mapRange(-tThrottle, 0.1, 0.9, MIN_BRAKING, MAX_BRAKING)
+			if (ATOEnabled) then
+				if (tThrottle >= 0.001) then -- Accelerating; bind range to [ MIN_ACCELERATION, MAX_ACCELERATION ]
+					tTAccel = mapRange(tThrottle, 0.0, 1.0, 0.0, MAX_ACCELERATION)
+				elseif (tThrottle <= -0.001) then -- Braking; bind range to [ MIN_BRAKING, MAX_BRAKING ]
+					tTAccel = -mapRange(-tThrottle, 0.0, 1.0, 0.0, MAX_BRAKING)
+				else
+					tTAccel = 0.0
+				end
 			else
-				tTAccel = 0.0
+				if (tThrottle >= 0.1) then -- Accelerating; bind range to [ MIN_ACCELERATION, MAX_ACCELERATION ]
+					tTAccel = mapRange(tThrottle, 0.1, 0.9, MIN_ACCELERATION, MAX_ACCELERATION)
+				elseif (tThrottle <= -0.1) then -- Braking; bind range to [ MIN_BRAKING, MAX_BRAKING ]
+					tTAccel = -mapRange(-tThrottle, 0.1, 0.9, MIN_BRAKING, MAX_BRAKING)
+				else
+					tTAccel = 0.0
+				end
 			end
 			
 			-- If requesting acceleration and stopped, release brakes instantly
@@ -190,29 +200,15 @@ function Update(interval)
 				tAccel = math.max(tAccel, 0.0)
 			end
 			
-			tJerkLimit = 0
+			JERK_DELTA = 0.75 * gTimeDelta
 			
-			if (tAccel < tTAccel) then -- Increase slowly
-				tJerkLimit = JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.25, 0.01, 1.0)
-			elseif (tAccel > tTAccel) then -- Decrease slowly
-				tJerkLimit = -JERK_LIMIT * clamp(math.abs(tTAccel - tAccel) / 0.25, 0.01, 1.0)
-			end
+			tJerkLimit = JERK_LIMIT * clamp(math.abs(tAccel - tTAccel) / 0.4, 0.125, 1.0)
+			tJerkLimit = tJerkLimit * sign(tTAccel - tAccel)
+			tJerkLimit = sign(tJerkLimit) * math.min(math.abs(tJerkLimit), math.abs(gLastJerkLimit) + JERK_DELTA)
 			
-			jerkDelta = gTimeDelta * JERK_LIMIT * clamp(math.abs(tJerkLimit) / 0.125, 0.65, 2.0)
+			tAccel = tAccel + (tJerkLimit * gTimeDelta)
 			
-			if (gDAccel < tJerkLimit) then
-				gDAccel = gDAccel + jerkDelta
-			elseif (gDAccel > tJerkLimit) then
-				gDAccel = gDAccel - jerkDelta
-			end
-			
-			if (math.abs(TrainSpeed) < 0.1 and BrakeCylBAR > 0.005 and tAccel > 0.0) then
-				gDAccel = 0.0
-			end
-			
-			gDAccel = clamp(gDAccel, -JERK_LIMIT, JERK_LIMIT)
-			
-			tAccel = tAccel + (gDAccel * gTimeDelta)
+			gLastJerkLimit = tJerkLimit
 			
 			-- ATC took over braking due to control timeout
 			if (ATCBrakeApplication > 0) then
@@ -276,7 +272,7 @@ function Update(interval)
 				if (gThrottleTime < 0.125) then
 					gThrottleTime = gThrottleTime + gTimeDelta
 					tAccel = 0.01 * gLastAccelSign
-					gDAccel = 0.0
+					gLastJerkLimit = 0
 				end
 				
 				if (DoorsOpen == TRUE) then
