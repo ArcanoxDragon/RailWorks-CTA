@@ -1351,14 +1351,14 @@
 										<Attribute name="Button">
 											<iInputMapper-eButton>
 												<Element>
-													<Value>Key_K</Value>
+													<Value>Key_D</Value>
 												</Element>
 											</iInputMapper-eButton>
 										</Attribute>
 										<Attribute name="ShiftButton">
 											<iInputMapper-eShift>
 												<Element>
-													<Value>Shift_Control</Value>
+													<Value>Control</Value>
 												</Element>
 											</iInputMapper-eShift>
 										</Attribute>
