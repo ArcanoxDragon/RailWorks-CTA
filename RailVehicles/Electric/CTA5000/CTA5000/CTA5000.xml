@@ -865,7 +865,7 @@
 							<Attribute name="AnimatedBodyNodeName">
 								<cDeltaString>
 									<Element>
-										<Value />
+										<Value>front_cap</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
