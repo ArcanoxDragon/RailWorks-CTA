@@ -111,6 +111,18 @@ function Update(interval)
 			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
 			DestSign     = Call( "*:GetControlValue", "DestinationSign", 0 )
 			
+			-- Headlights
+			
+			if (Call("*:GetControlValue", "Active", 0) > 0.5) then
+				if (math.abs(ReverserLever) > 0.8) then
+					Call("*:SetControlValue", "Headlights", 0, 1)
+				elseif (math.abs(ReverserLever) < 0.2) then
+					Call("*:SetControlValue", "Headlights", 0, 0)
+				end
+			end
+			
+			-- Destination Sign
+			
 			if (DestSignNext and DestSign < Call("*:GetControlMaximum", "DestinationSign", 0)) then
 				if (not gDestSignNext) then
 					gDestSignNext = true
