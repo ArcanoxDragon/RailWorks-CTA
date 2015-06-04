@@ -71,9 +71,7 @@ addSign("A",  true, { 191, 191, 255 })     --[[ 26 Blue 54th/Cermak ]]
 addSign("B",  true, { 255, 255,   0 })     --[[ 27 Yellow Skokie ]]
 addSign("C",  true, { 255, 255,   0 })     --[[ 28 Yellow Howard ]]
 
-Print("Declaring Initialise")
 function Initialise()
-	Print("Initialising")
 -- For AWS self test.
 	gAWSReady = TRUE
 	gAWSTesting = FALSE
@@ -110,12 +108,9 @@ function Initialise()
 	gControlCache = { }
 	
 	SetControlValue("OnThirdRail", 1)
-	
-	Print("Initialised")
 
 	Call( "BeginUpdate" )
 end
-Print("Done declaring Initialise")
 
 function GetControlValue(name)
 	return Call("*:GetControlValue", name, 0)
@@ -222,11 +217,20 @@ function Update(time)
 	sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", mod(GetControlValue("CarNum"), 2))
 	SetControlValue("NextSignalAspect", sigAspect)
 	SetControlValue("NextSignalDist", sigDist)
-	if (sigDist < 1.0 and sigDist < gLastSignalDist) then
-		if (sigAspect == SIGNAL_THIRD_RAIL_OFF) then
-			SetControlValue("OnThirdRail", 0)
-		elseif (sigAspect == SIGNAL_THIRD_RAIL_ON) then
-			SetControlValue("OnThirdRail", 1)
+	if (sigDist < 1.0) then
+		if (sigDist < gLastSignalDist - 0.01) then
+			if (sigAspect == SIGNAL_THIRD_RAIL_OFF) then
+				SetControlValue("OnThirdRail", 0)
+			elseif (sigAspect == SIGNAL_THIRD_RAIL_ON) then
+				SetControlValue("OnThirdRail", 1)
+			end
+		elseif (sigDist > gLastSignalDist + 0.01) then
+			if (sigAspect == SIGNAL_THIRD_RAIL_OFF) then
+				SetControlValue("OnThirdRail", 1)
+			elseif (sigAspect == SIGNAL_THIRD_RAIL_ON) then
+				SetControlValue("OnThirdRail", 0)
+			end
+
 		end
 	end
 	gLastSignalDist = sigDist

@@ -238,9 +238,9 @@ function Update(interval)
 			-- Parked or track brake engaged
 			if (math.abs(ReverserLever) < 0.9 or TrackBrake > 0) then
 				Call( "*:SetControlValue", "Regulator", 0, 0.0 )
-				Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax )
-				dynEffective = clamp(math.abs(gCurrent) / (DYNAMIC_BRAKE_AMPS * dynBrakeMax), 0, 1)
-				Call( "*:SetControlValue", "TrainBrakeControl", 0, 0.5 + ((1.0 - dynEffective) * 0.5) )
+				Call( "*:SetControlValue", "TrainBrakeControl", 0, 1.0 )
+				-- E-braking uses friction brakes primarily, but use the dynamic brakes to balance the braking force out as the brakes apply
+				Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax * (1.0 - clamp(BrakeCylBAR / 2.75, 0.0, 1.0)) )
 				if (TrackBrake > 0) then
 					Call( "*:SetControlValue", "Sander", 0, 1 )
 					Call( "*:SetControlValue", "HandBrake", 0, 1 )
