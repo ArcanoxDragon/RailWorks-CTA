@@ -301,7 +301,11 @@ function Update(time)
 	if (mod(GetControlValue("CarNum"), 2) ~= 0) then
 		accelAvg = -accelAvg
 	end
-	tBodyTilt = 1.0 + clamp(accelAvg, -1, 1)
+	tiltMult = 1.0
+	if (gCamInside) then
+		tiltMult = 0.75
+	end
+	tBodyTilt = 1.0 + clamp(accelAvg * tiltMult, -1, 1)
 	dBodyTilt = 5 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.1, 1.0)
 	dBodyTilt = dBodyTilt * time
 	if (gBodyTilt < tBodyTilt - dBodyTilt) then
@@ -312,11 +316,8 @@ function Update(time)
 		gBodyTilt = tBodyTilt
 	end
 		
-	if gCamInside then -- Don't animate inside; camera movement already occurs
-		Call("*:SetTime", "body_tilt", 1.0)
-	else
-		Call("*:SetTime", "body_tilt", gBodyTilt)
-	end
+	Call("*:SetTime", "body_tilt", gBodyTilt)
+	SetControlValue("BodyTilt", gBodyTilt - 1.0)
 	
 	-- Destination sign
 	
