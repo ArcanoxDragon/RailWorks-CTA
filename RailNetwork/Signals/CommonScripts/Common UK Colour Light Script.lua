@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- Signals\Pro Signals\CommonScripts                                        --
---     C o m m o n   C o l o r   L i g h t   S c r i p t . l u a    --
+--     C o m m o n   U K   C o l o u r   L i g h t   S c r i p t . l u a    --
 --                                                                          --
 ------------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ function DefaultInitialise ( )
 	-- Initialises common signal features
 	BaseInitialise()
 
-	-- Initialise US-specific global variables
+	-- Initialise UK-specific global variables
 	gInitialised			= false								-- has the route finished loading yet?
 	gPreparedness			= SIGNAL_UNPREPARED					-- is a train approaching us?
 	gSignalType				= Call("GetControlMode")			-- what type of signal are we - controlled or automatic?
@@ -100,52 +100,39 @@ function DefaultSetLights ( newState )
 	
 	-- Switch the appropriate lights on and off based on our new state
 	
-	if (newState == ANIMSTATE_GREEN_RED) then
+	if (newState == ANIMSTATE_GREEN) then
 		SwitchLight( LIGHT_NODE_GREEN,		1 )
 		SwitchLight( LIGHT_NODE_YELLOW,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
 		SwitchLight( LIGHT_NODE_RED,		0 )
-		SwitchLight( LIGHT_NODE_RED2,		1 )
-		
-		Call(    "TopGlow:SetColour",  31, 255,  31 )
-		Call( "BottomGlow:SetColour", 255,  31,  31 )
 
-		DebugPrint("State: Green Over Red")
-	elseif (newState == ANIMSTATE_YELLOW_RED) then
+	elseif (newState == ANIMSTATE_DOUBLE_YELLOW) then
+		SwitchLight( LIGHT_NODE_GREEN,		0 )
+		SwitchLight( LIGHT_NODE_YELLOW,		1 )
+		SwitchLight( LIGHT_NODE_YELLOW2,	1 )
+		SwitchLight( LIGHT_NODE_RED, 		0 )
+
+	elseif (newState == ANIMSTATE_YELLOW) then
 		SwitchLight( LIGHT_NODE_GREEN,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW,		1 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
-		SwitchLight( LIGHT_NODE_RED,		0 )
-		SwitchLight( LIGHT_NODE_RED2,		1 )
-		
-		Call(    "TopGlow:SetColour", 255, 255,  31 )
-		Call( "BottomGlow:SetColour", 255,  31,  31 )
+		SwitchLight( LIGHT_NODE_RED, 		0 )
 
-		DebugPrint("State: Yellow Over Red")
-	elseif (newState == ANIMSTATE_RED_YELLOW) then
-		SwitchLight( LIGHT_NODE_GREEN,		0 )
-		SwitchLight( LIGHT_NODE_YELLOW,		0 )
-		SwitchLight( LIGHT_NODE_YELLOW2,	1 )
-		SwitchLight( LIGHT_NODE_RED,		1 )
-		SwitchLight( LIGHT_NODE_RED2,		0 )
-		
-		Call(    "TopGlow:SetColour", 255,  31,  31 )
-		Call( "BottomGlow:SetColour", 255, 255,  31 )
-
-		DebugPrint("State: Red Over Yellow")
-	elseif (newState == ANIMSTATE_RED_RED) then
+	elseif (newState == ANIMSTATE_RED) then
 		SwitchLight( LIGHT_NODE_GREEN,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
-		SwitchLight( LIGHT_NODE_RED,		1 )
-		SwitchLight( LIGHT_NODE_RED2,		1 )
+		SwitchLight( LIGHT_NODE_RED, 		1 )
 		
-		Call(    "TopGlow:SetColour", 255,  31,  31 )
-		Call( "BottomGlow:SetColour", 255,  31,  31 )
-		
-		DebugPrint("State: Red Over Red")
+	elseif (newState >= ANIMSTATE_FLASHING_YELLOW) then
+		-- Lights are flashing, turn them all off and then start update loop
+		SwitchLight( LIGHT_NODE_GREEN,		0 )
+		SwitchLight( LIGHT_NODE_YELLOW,		0 )
+		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
+		SwitchLight( LIGHT_NODE_RED, 		0 )
+		Call( "BeginUpdate" )
 	else
-		DebugPrint( ("ERROR: SetLights trying to switch to invalid state " .. newState ) )
+		Print( ("ERROR: SetLights trying to switch to invalid state " .. newState ) )
 	end
 end
 
@@ -156,8 +143,53 @@ end
 --
 function DefaultActivateRouteIndicator ( connectedLink )
 	
-	-- Empty
+	local newIndicator = 0
+	local newIndicatorStr = ""
+
+	-- If we're connected to a valid link and the signal isn't red
+	if connectedLink > 0 then
+
+		-- Check what indicator (if any) is used by that route
+		newIndicator = Call("GetLinkFeatherChar", connectedLink)
+
+		-- If route has a valid indicator, turn its ID into a string
+		if newIndicator ~= 0 then
+			newIndicatorStr = string.char(newIndicator)
+		else
+			newIndicatorStr = ""
+		end
+	end
 	
+	-- If we were connected to a different link before
+	if gCurrentIndicator ~= newIndicatorStr then
+		-- If we're a feathered signal...
+		if gIndicatorType == ROUTE_INDICATOR_FEATHERS then
+
+			-- If a feather is currently switched on, switch it off
+			if gCurrentIndicator ~= "" then
+				Call( "Route Indicator:ActivateNode", INDICATOR_ROOT_NAME .. gCurrentIndicator, 0 )
+			end
+			
+			-- If the newly connected route has a feather, switch it on
+			if newIndicatorStr ~= "" then
+				Call( "Route Indicator:ActivateNode", INDICATOR_ROOT_NAME .. newIndicatorStr, 1 )
+			end
+			
+		-- If we use a theatre indicator
+		elseif gIndicatorType == ROUTE_INDICATOR_THEATRE then
+		
+			-- Switch new texture on - this should get rid of the old texture too
+			-- KJM 28-Aug-2008 Use new theatre function 
+			-- Call( "ActivateNode", INDICATOR_ROOT_NAME .. newIndicator, 1 )
+			Call( "Theatre Indicator:SetText", newIndicatorStr, PRIMARY_TEXT )
+
+		end
+		
+		DebugPrint(("DEBUG: DefaultActivateRouteIndicator() - route indicator switching from " .. INDICATOR_ROOT_NAME .. gCurrentIndicator .. " to " .. INDICATOR_ROOT_NAME .. newIndicator))
+	end
+	
+	-- Remember which indicator we just switched on
+	gCurrentIndicator = newIndicatorStr
 end
 
 
@@ -167,6 +199,7 @@ end
 --
 function DefaultDetermineSignalState()
 
+	-- KJM 16-Nov-2009 Doesn't seem right to process if uninitialised
 	if not gInitialised then
 		return
 	end
@@ -177,6 +210,7 @@ function DefaultDetermineSignalState()
 	
 	-- Default call-on to false, unless we find otherwise
 	gCallOnState = false
+
 
 	-- If line is blocked
 	if gConnectedLink == -1 or gOccupationTable[0] > 0 or gOccupationTable[gConnectedLink] > 0 then
@@ -189,97 +223,156 @@ function DefaultDetermineSignalState()
 		-- Update block and switch state according to state of connected link
 		newBlockState = gLinkState[gConnectedLink]
 		newSwitchState = gRouteState[gConnectedLink]
-	end
 
-	if gConnectedLink > 1 then
-		newSwitchDirection = "DIVERGING"
+		-- If we're covering a junction, check approach control type for connected link
+		if gConnectedLink > 0 then
+			
+			local approachControlType = Call("GetLinkApproachControl", gConnectedLink)
+
+			-- Approach Control with Flashing Yellows used by this link
+			if approachControlType == 1 then
+				newSwitchState = SIGNAL_DIVERGING_FLASHING
+
+			-- Approach Control from Red used by this link
+			elseif approachControlType == 2 then
+				newSwitchState = SIGNAL_DIVERGING_RED
+				
+			-- If no Approach Control for this link, switch state depends on next signal up the line
+			end
+		end
 	end
 
 	-- Next figure out what aspect to show based on new state
 	local newAnimState = gAnimState
 
+
 	-- If signal is a control signal and it's currently inactive
 	if gControlState == SIGNAL_STATE_INACTIVE then
 	
 		newBlockState = SIGNAL_BLOCKED	-- treat signal as blocked
-		newAnimState = ANIMSTATE_RED_RED
+		newAnimState = ANIMSTATE_RED
 		gSignalState = BLOCKED
 
 	-- If signal is a control signal and it's currently in "Call-On" mode
 	elseif gControlState == SIGNAL_STATE_CALL_ON then
 	
 		newBlockState = SIGNAL_BLOCKED	-- treat signal as blocked
-		newAnimState = ANIMSTATE_RED_RED
+		newAnimState = ANIMSTATE_RED
 		gSignalState = WARNING			-- TPWS inactive but AWS gives warning
 		gCallOnState = true
 
 	-- If line is blocked
 	elseif newBlockState == SIGNAL_BLOCKED or gPreparedness == SIGNAL_UNPREPARED then
 
-		newAnimState = ANIMSTATE_RED_RED
+		newAnimState = ANIMSTATE_RED
 		gSignalState = BLOCKED
 
 	-- If we're connected to a link that uses Approach Control from Red
 	-- and there isn't a train approaching within sight of us yet
-	elseif newSwitchState == SIGNAL_DIVERGING_RED and gPreparedness ~= SIGNAL_PREPARED_VISIBLE then
+	elseif newSwitchState == SIGNAL_DIVERGING_RED
+		and gPreparedness ~= SIGNAL_PREPARED_VISIBLE then
 
-		newAnimState = ANIMSTATE_RED_RED
+		newAnimState = ANIMSTATE_RED
 		gSignalState = BLOCKED
 
-	elseif gAspect == 2 then -- In any other case, 2 Aspect signals show green
-	
-		if newSwitchDirection == "AHEAD" then
-			newAnimState = ANIMSTATE_GREEN_RED
-			gSignalState = CLEAR
-		else
-			newAnimState = ANIMSTATE_RED_YELLOW
-			gSignalState = WARNING
-		end
+	-- In any other case, 2 Aspect signals show green
+	elseif gAspect == 2 then
 
-	elseif Call ( "GetLinkLimitedToYellow", gConnectedLink ) ~= 0 then -- If the connected link is aspect limited, show yellow
+		newAnimState = ANIMSTATE_GREEN
+		gSignalState = CLEAR
+
+	-- If the connected link is aspect limited, show yellow
+	-- KJM 15-Dec-2009 Use new call
+	--elseif gAspectLimitSpeed > 0
+	--	and Call ( "GetTrackSpeedLimit", gConnectedLink ) < gAspectLimitSpeed then
+	elseif Call ( "GetLinkLimitedToYellow", gConnectedLink ) ~= 0 then
 	
 		newBlockState = SIGNAL_WARNING	-- treat signal as at warning
-		
-		if newSwitchDirection == "AHEAD" then
-			newAnimState = ANIMSTATE_YELLOW_RED
-		else
-			newAnimState = ANIMSTATE_RED_YELLOW
-		end
-		
+		newAnimState = ANIMSTATE_YELLOW
 		gSignalState = WARNING
-		
-	elseif newBlockState == SIGNAL_WARNING then -- If line ahead is at warning
-	
-		if newSwitchDirection == "AHEAD" then
-			newAnimState = ANIMSTATE_YELLOW_RED
-		else
-			newAnimState = ANIMSTATE_RED_YELLOW
-		end
-		
-		gSignalState = WARNING
-		
-	elseif newBlockState == SIGNAL_WARNING2 then -- If line ahead is at warning
 
-		if newSwitchDirection == "AHEAD" then
-			newAnimState = ANIMSTATE_YELLOW_RED
-		else
-			newAnimState = ANIMSTATE_RED_YELLOW
-		end
-		
+	-- If line ahead is at warning,
+	-- or if next signal is set to a link that uses approach control from red,
+	-- or if we're set to a link that uses approach control with flashing yellows...
+	-- or if we're set to a link that is aspect limited
+	elseif newBlockState == SIGNAL_WARNING
+		or newSwitchState == SIGNAL_DIVERGING_YELLOW
+		or newSwitchState == SIGNAL_DIVERGING_FLASHING then
+
+		newAnimState = ANIMSTATE_YELLOW
 		gSignalState = WARNING
-		
-	elseif newBlockState == SIGNAL_CLEARED then -- If line ahead is clear
+
+	-- If next signal  is set to a link that uses approach control with flashing yellows...
+	elseif newSwitchState == SIGNAL_DIVERGING_FLASHING_YELLOW then
+
+		newAnimState = ANIMSTATE_FLASHING_YELLOW
+		gSignalState = WARNING
+
+	-- In any other case, 3 Aspect signals show green
+	elseif gAspect == 3 then
+
+		newAnimState = ANIMSTATE_GREEN
+		gSignalState = CLEAR
+
+	-- If line ahead is at warning2
+	-- or if next but one signal is set to a link that uses approach control from red
+	elseif newBlockState == SIGNAL_WARNING2
+		or newSwitchState == SIGNAL_DIVERGING_DOUBLE_YELLOW then
+
+		newAnimState = ANIMSTATE_DOUBLE_YELLOW
+		gSignalState = WARNING
+
+	-- If next but one signal is set to a link that uses approach control with flashing yellows
+	elseif newSwitchState == SIGNAL_DIVERGING_FLASHING_DOUBLE_YELLOW then
+
+		newAnimState = ANIMSTATE_FLASHING_DOUBLE_YELLOW
+		gSignalState = WARNING
+
+	-- If line ahead is clear
+	elseif newBlockState == SIGNAL_CLEARED then
 	
-		if newSwitchDirection == "AHEAD" then
-			newAnimState = ANIMSTATE_GREEN_RED
-			gSignalState = CLEAR
-		else
-			newAnimState = ANIMSTATE_RED_YELLOW
-			gSignalState = WARNING
-		end
+		newAnimState = ANIMSTATE_GREEN
+		gSignalState = CLEAR
 		
 	else
 		Print( ("ERROR - couldn't figure out what state " .. gAspect .. " aspect signal should be in with block state " .. newBlockState .. ", switch state " .. newSwitchState .. ", control state " .. gControlState .. ", call on state " .. gCallOnState .. " and preparedness " .. gPreparedness) )
+	end
+
+	
+	-- If we've got route indicators...
+	if gIndicatorType ~= ROUTE_INDICATOR_NONE then
+
+		-- If lights are red, turn all route indicators off
+		if newAnimState == ANIMSTATE_RED then
+			ActivateRouteIndicator(0)
+
+		-- Otherwise, activate the appropriate route indicator for the connected link
+		else
+			ActivateRouteIndicator(gConnectedLink)
+		end
+
+		-- If we've got feathers and one of them has just been activated, check if we're diverging left or right
+		-- because there may be a repeater indicator signal behind us that needs to know which way we're going
+		if gIndicatorType == ROUTE_INDICATOR_FEATHERS and gCurrentIndicator ~= "" then
+			
+			-- If no feather is active, treat as straight ahead
+			-- KJM 03-Sep-2008 gCurrentIndicator could be alpha for mini theatres.  
+			-- Mutihead repeaters wont be used with ground mini theatres so treast asd ahread
+			if ( not tonumber(gCurrentIndicator) ) or tonumber(gCurrentIndicator) == 0 then
+				-- Do nothing
+				DebugPrint ("DEBUG: DefaultDetermineSignalState() - no feather active, treat as ahead")
+				
+			-- If feather 1, 2 or 3 is active, we're going left
+			elseif tonumber(gCurrentIndicator) < 4 then
+				DebugPrint ("DEBUG: DefaultDetermineSignalState() - feather 1-3 is active, diverging left")
+				newSwitchDirection = "LEFT"
+				
+			-- Otherwise feather 4, 5 or 6 must be active, and we're going right
+			else
+				DebugPrint ("DEBUG: DefaultDetermineSignalState() - feather 4-6 is active, diverging right")
+				newSwitchDirection = "RIGHT"
+			end
+		end
 	end
 	
 	
@@ -422,6 +515,28 @@ function DefaultUpdate( time )
 			gTimeSinceLastFlash = 0
 		end
 	end	
+
+	-- If the signal is flashing
+	if gAnimState >= ANIMSTATE_FLASHING_YELLOW then
+
+		-- Are we turning the lights on / off?
+		if newLightState >= 0 then
+
+			-- If so, switch on / off the appropriate light(s)
+			if gAnimState == ANIMSTATE_FLASHING_YELLOW then
+				SwitchLight( LIGHT_NODE_YELLOW, newLightState )
+				
+			elseif gAnimState == ANIMSTATE_FLASHING_DOUBLE_YELLOW then
+				SwitchLight( LIGHT_NODE_YELLOW, newLightState )
+				SwitchLight( LIGHT_NODE_YELLOW2, newLightState )
+			end
+		end
+		
+	-- If the signal isn't flashing anymore, stop updates and remember to reset everything if we start flashing again later
+	else
+		Call( "EndUpdate" )
+		gFirstLightFlash = true
+	end
 end
 
 --------------------------------------------------------------------------------------
@@ -577,9 +692,9 @@ function DefaultReactToSignalMessage( message, parameter, direction, linkIndex )
 		-- update the occupation table for this signal given the information that a train has just left this block and entered the next block
 		if gOccupationTable[linkIndex] > 0 then
 			gOccupationTable[linkIndex] = gOccupationTable[linkIndex] - 1
-			--DebugPrint( ("DEBUG: DefaultReactToSignalMessage: OCCUPATION_DECREMENT received... gOccupationTable[" .. linkIndex .. "]: " .. gOccupationTable[linkIndex]) )
+			DebugPrint( ("DEBUG: DefaultReactToSignalMessage: OCCUPATION_DECREMENT received... gOccupationTable[" .. linkIndex .. "]: " .. gOccupationTable[linkIndex]) )
 		else
-			--Print( ("ERROR: DefaultReactToSignalMessage: OCCUPATION_DECREMENT received... gOccupationTable[" .. linkIndex .. "] was already 0!") )
+			Print( ("ERROR: DefaultReactToSignalMessage: OCCUPATION_DECREMENT received... gOccupationTable[" .. linkIndex .. "] was already 0!") )
 		end
 
 		-- If this isn't the connected link...
@@ -793,7 +908,7 @@ function DefaultReactToSignalMessage( message, parameter, direction, linkIndex )
 	elseif (message == INITIALISE_SIGNAL_TO_BLOCKED) then
 	
 		gOccupationTable[linkIndex] = gOccupationTable[linkIndex] + 1
-		--DebugPrint( ("DEBUG: DefaultReactToSignalMessage: INITIALISE_SIGNAL_TO_BLOCKED received... gOccupationTable[" .. linkIndex .. "]: " .. gOccupationTable[linkIndex]) )
+		DebugPrint( ("DEBUG: DefaultReactToSignalMessage: INITIALISE_SIGNAL_TO_BLOCKED received... gOccupationTable[" .. linkIndex .. "]: " .. gOccupationTable[linkIndex]) )
 
 		-- Only need to do this for single link signals - anything spanning a junction will initialise later when junctions are set
 		if (gLinkCount == 1 and gOccupationTable[linkIndex] == 1) then
@@ -835,7 +950,7 @@ function DefaultReactToSignalMessage( message, parameter, direction, linkIndex )
 	-- KJM 22-Mar-2010 Add Call on functionality on TAB key
 	elseif (message == REQUEST_TO_SPAD) then
 
-		--DebugPrint( ("DEBUG: " .. gId .. " DefaultReactToSignalMessage: REQUEST_TO_SPAD" ) )
+		DebugPrint( ("DEBUG: " .. gId .. " DefaultReactToSignalMessage: REQUEST_TO_SPAD" ) )
 		gControlState = SIGNAL_STATE_CALL_ON
 		DetermineSignalState()
 

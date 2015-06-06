@@ -12,14 +12,11 @@ WARNING = 1
 BLOCKED = 2
 
 
--- LIGHT STATES - For UK Colour Lights
-ANIMSTATE_GREEN									= 0
-ANIMSTATE_YELLOW								= 1
-ANIMSTATE_DOUBLE_YELLOW							= 2
-ANIMSTATE_RED									= 3
--- 4-9 left clear to allow for any other non-flashing light states
-ANIMSTATE_FLASHING_YELLOW						= 10
-ANIMSTATE_FLASHING_DOUBLE_YELLOW				= 11
+-- LIGHT STATES - For US CTA Colour Lights
+ANIMSTATE_GREEN_RED								= 0
+ANIMSTATE_YELLOW_RED							= 1
+ANIMSTATE_RED_YELLOW							= 10
+ANIMSTATE_RED_RED								= 3
 
 
 -- ROUTE INDICATOR TYPES
