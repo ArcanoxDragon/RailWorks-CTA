@@ -212,9 +212,9 @@ function Update(interval)
 				tAccel = math.max(tAccel, 0.0)
 			end
 			
-			JERK_DELTA = 0.75 * gTimeDelta
+			JERK_DELTA = 0.95 * gTimeDelta
 			
-			tJerkLimit = JERK_LIMIT * clamp(math.abs(tAccel - tTAccel) / 0.4, 0.125, 1.0)
+			tJerkLimit = JERK_LIMIT * clamp(math.abs(tAccel - tTAccel) / 0.25, 0.0625, 1.0)
 			tJerkLimit = tJerkLimit * sign(tTAccel - tAccel)
 			tJerkLimit = sign(tJerkLimit) * math.min(math.abs(tJerkLimit), math.abs(gLastJerkLimit) + JERK_DELTA)
 			
