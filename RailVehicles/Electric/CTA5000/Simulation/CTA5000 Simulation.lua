@@ -239,8 +239,9 @@ function Update(interval)
 			if (math.abs(ReverserLever) < 0.9 or TrackBrake > 0) then
 				Call( "*:SetControlValue", "Regulator", 0, 0.0 )
 				Call( "*:SetControlValue", "TrainBrakeControl", 0, 1.0 )
-				-- E-braking uses friction brakes primarily, but use the dynamic brakes to balance the braking force out as the brakes apply
-				Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax * (1.0 - clamp(BrakeCylBAR / 2.75, 0.0, 1.0)) )
+				
+				--Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax * (1.0 - clamp(BrakeCylBAR / 2.75, 0.0, 1.0)) )
+				Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax )
 				if (TrackBrake > 0) then
 					Call( "*:SetControlValue", "Sander", 0, 1 )
 					Call( "*:SetControlValue", "HandBrake", 0, 1 )
