@@ -19,7 +19,7 @@
 			<Attribute name="Geometry">
 				<cDeltaString>
 					<Element>
-						<Value>bo02</Value>
+						<Value>bogie_back</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>

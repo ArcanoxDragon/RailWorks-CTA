@@ -3841,7 +3841,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>35</Value>
+																				<Value>27</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3861,7 +3861,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>40</Value>
+																				<Value>35</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4083,7 +4083,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>40</Value>
+																				<Value>32</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
