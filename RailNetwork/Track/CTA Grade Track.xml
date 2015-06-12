@@ -367,14 +367,14 @@
 							<Attribute name="SleeperHeight">
 								<sFloat32>
 									<Element>
-										<Value>0.175</Value>
+										<Value>0.2</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SleeperGaugeExt">
 								<sFloat32>
 									<Element>
-										<Value>0.2</Value>
+										<Value>0.28</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -423,14 +423,14 @@
 							<Attribute name="SleeperMinV">
 								<sFloat32>
 									<Element>
-										<Value>0.59375</Value>
+										<Value>0</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SleeperMaxV">
 								<sFloat32>
 									<Element>
-										<Value>1</Value>
+										<Value>0.59375</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

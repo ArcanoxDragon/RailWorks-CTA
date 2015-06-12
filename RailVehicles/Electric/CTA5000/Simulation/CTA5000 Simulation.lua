@@ -39,7 +39,7 @@ function Setup()
 	MIN_ACCELERATION = 0.125
 	MAX_BRAKING = 1.0
 	MIN_BRAKING = 0.2
-	JERK_LIMIT = 0.90
+	JERK_LIMIT = 0.75
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
 	MAX_BRAKE_RELEASE = 0.755
@@ -212,7 +212,7 @@ function Update(interval)
 				tAccel = math.max(tAccel, 0.0)
 			end
 			
-			JERK_DELTA = 0.95 * gTimeDelta
+			--[[JERK_DELTA = 0.95 * gTimeDelta
 			
 			tJerkLimit = JERK_LIMIT * clamp(math.abs(tAccel - tTAccel) / 0.25, 0.0625, 1.0)
 			tJerkLimit = tJerkLimit * sign(tTAccel - tAccel)
@@ -220,7 +220,10 @@ function Update(interval)
 			
 			tAccel = tAccel + (tJerkLimit * gTimeDelta)
 			
-			gLastJerkLimit = tJerkLimit
+			gLastJerkLimit = tJerkLimit]]
+			
+			tJerkLimit = JERK_LIMIT * sign(tTAccel - tAccel)
+			tAccel = tAccel + (tJerkLimit * gTimeDelta)
 			
 			-- ATC took over braking due to control timeout
 			if (ATCBrakeApplication > 0) then
