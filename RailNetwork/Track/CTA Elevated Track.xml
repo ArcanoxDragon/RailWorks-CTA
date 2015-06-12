@@ -367,7 +367,7 @@
 							<Attribute name="SleeperHeight">
 								<sFloat32>
 									<Element>
-										<Value>0.127</Value>
+										<Value>0.15</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
