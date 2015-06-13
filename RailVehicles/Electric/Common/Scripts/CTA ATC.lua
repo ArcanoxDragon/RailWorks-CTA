@@ -123,23 +123,22 @@ function UpdateATC(interval)
 		gLastSpeedLimit = targetSpeed
 	end
 	
-	if not enabled then
-		targetSpeed = 100
-		Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
-	else
-		if (ATOEnabled) then
-			Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
-		else
-			-- Restrict target speed to the valid CTA speed limits
-			if (TrainSpeed >= (targetSpeed + 1)) then
+	if enabled then
+		-- The ATC can only display certain speed limits; allow the next lowest one above actual, and driver is responsible for following actual
+		if (targetSpeed >= 10) then
+			targetSpeed = getSpeedLimitAbove(targetSpeed)
+		else -- If it's below 10 (like end of track), we force them to obey it
+			if (math.abs(TrainSpeed) > targetSpeed + 1) then
 				targetSpeed = getSpeedLimitBelow(targetSpeed)
 			else
 				targetSpeed = getSpeedLimitAbove(targetSpeed)
 			end
-			
-			Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 		end
+	else
+		targetSpeed = 70
 	end
+	
+	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 	
 	-- Following section logic taken from CTA 7000-series RFP spec
 	
