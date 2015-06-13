@@ -241,7 +241,7 @@ function Update(time)
 	local dWhine = 1.2 * time
 	local current = GetControlValue("Ammeter")
 	local tAccel = GetControlValue("TAccel")
-	if ( math.abs(current) < 0.0001 or GetControlValue("OnThirdRail") < 0.5 ) then
+	if ( GetControlValue("OnThirdRail") < 0.5 ) then
 		tWhine = 0.0
 	end
 	
