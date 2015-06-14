@@ -70,14 +70,14 @@
 			<Attribute name="DistancebetweenJoints">
 				<sFloat32>
 					<Element>
-						<Value>10</Value>
+						<Value>7</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="JunctionClatterDistance">
 				<sFloat32>
 					<Element>
-						<Value>10</Value>
+						<Value>3</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
