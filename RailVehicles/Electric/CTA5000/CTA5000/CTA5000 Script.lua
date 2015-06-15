@@ -40,6 +40,19 @@ local function addSign(texName, lightOn, lightColor, nextSign)
 	NUM_SIGNS = NUM_SIGNS + 1
 end
 
+local function getSignIndex(letter)
+	debugPrint("Getting sign index for: " .. letter)
+	for i = 1, NUM_SIGNS do
+		if SIGNS[i].id == letter then
+			debugPrint("Returning sign index " .. tostring(i))
+			return i
+		end
+	end
+	
+	debugPrint("Sign not found")
+	return 0
+end
+
 --     ( id, light, lightColor, [ nextSign ] )
 addSign("a", false, nil)                   --[[  0 Off ]]
 addSign("b",  true, { 100, 100, 100 })     --[[  1 NIS ]]
@@ -94,6 +107,7 @@ function Initialise()
 	gCamInside = false
 	gLastDir = 1
 	gIsBCar = 0 -- Is this an "A" car or a "B" car?
+	gInit = false
 	
 -- Moving average for acceleration
 	gMovingAvgSize = 50
@@ -150,8 +164,22 @@ function Update(time)
 	local trainSpeed = Call("GetSpeed") * MPS_TO_MPH
 	local accel = Call("GetAcceleration") * MPS_TO_MPH
 	local reverser = GetControlValue("Reverser")
+	
+	if (not gInit) then
+		-- Set "DestinationSign" control to value from car number (allows scenarios to set destsign)
+		RVNumber = Call("*:GetRVNumber")
+		if (string.len(RVNumber) == 5) then
+			lastPart = string.lower(string.sub(RVNumber, 5, 5))
+			debugPrint("RV#: " .. RVNumber .. "; Last part: " .. lastPart)
+			SetControlValue("DestinationSign", getSignIndex(lastPart) - 1)
+		else
+			Call("*:SetRVNumber", "5001a")
+		end
+		
+		gInit = true
+	end
 
-	if ( Call( "GetIsPlayer" ) == 1 ) then
+	--if ( Call( "GetIsPlayer" ) == 1 ) then
 		gTimeSinceCarCount = gTimeSinceCarCount + time
 		if (gTimeSinceCarCount >= CAR_COUNT_TIME) then
 			gTimeSinceCarCount = 0
@@ -209,9 +237,7 @@ function Update(time)
 				SetControlValue( "ATOActive", 0 )
 			end
 		end
-	else
-		SetControlValue( "DestinationSign", 0 )
-	end
+	--end
 	
 	-- Third rail signal
 	sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", mod(GetControlValue("CarNum"), 2))
