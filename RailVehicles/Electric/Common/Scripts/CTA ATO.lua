@@ -190,7 +190,7 @@ function UpdateATO(interval)
 		
 		if (atoStopping > 0) then
 			local distBuffer = 2.0
-			targetSpeed = math.min(atoMaxSpeed, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - (sigDist - distBuffer)), 1.0 * MPH_TO_MPS))
+			targetSpeed = math.min(ATCRestrictedSpeed * MPH_TO_MPS, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - (sigDist - distBuffer)), 1.0 * MPH_TO_MPS))
 				
 			statStopTime = statStopTime + interval
 			
@@ -250,9 +250,6 @@ function UpdateATO(interval)
 		
 		targetSpeed = math.floor(targetSpeed * MPS_TO_MPH * 10) / 10 -- Round down to nearest 0.1
 		pidTargetSpeed = targetSpeed
-		if (targetSpeed > 2.0) then
-			--targetSpeed = targetSpeed - 0.75 -- For safety's sake in case of a downhill slope
-		end
 		Call("*:SetControlValue", "ATOTargetSpeed", 0, targetSpeed)
 		Call("*:SetControlValue", "ATOOverrun", 0, round(atoOverrunDist * 100.0, 2))
 		if (targetSpeed < 0.25) then
@@ -282,7 +279,7 @@ function UpdateATO(interval)
 			atoThrottle = -1
 		end
 		
-		if (ATCRestrictedSpeed <= 0.1 and trainSpeed <= 0.1) then
+		if (ATCRestrictedSpeed <= 0.1 and trainSpeed <= 0.01) then
 			Call("*:SetControlValue", "Headlights", 0, 0)
 			Call("*:SetControlValue", "Reverser", 0, 0) -- Park train
 			Call("*:SetControlValue", "DestinationSign", 0, 1) -- "Not In Service"

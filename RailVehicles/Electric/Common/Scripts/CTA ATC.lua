@@ -1,4 +1,4 @@
-ATC_TARGET_DECELERATION = 1.0 -- meters/second/second
+ATC_TARGET_DECELERATION = 0.85 -- meters/second/second
 ATC_REACTION_TIME = 2.5 -- seconds
 MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
 MPH_TO_MPS = 1.0 / MPS_TO_MPH
@@ -58,24 +58,30 @@ function UpdateATC(interval)
 	local sigType, sigState, sigDist, sigAspect
 
 	targetSpeed = Call("*:GetCurrentSpeedLimit")
-	trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
-	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
-	spdType2, spdLimit2, spdDist2 = Call("*:GetNextSpeedLimit", 0, spdDist + 0.1)
-	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
-	
-	targetSpeed = Call("*:GetCurrentSpeedLimit")
 	trackSpeed = targetSpeed
-	if (spdType2 == 0 and spdType ~= 0) then
-		spdType, spdLimit, spdDist = spdType2, spdLimit2, spdDist2
-	end
+	trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
+	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
+	reactionTimeDistance = trackSpeed * (EST_REACTION_TIME + ACCEL_TIME)
+	stoppingDistance = getBrakingDistance(0, trainSpeed, -ATC_TARGET_DECELERATION)
 	
-	reactionTimeDistance = trainSpeed * (EST_REACTION_TIME + ACCEL_TIME)
+	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
+	
+	searchDist = spdDist + 0.1
+	searchCount = 0
+	while (searchDist < reactionTimeDistance and spdType >= 0 and searchCount < 10) do
+		tSpdType, tSpdLimit, tSpdDist = Call("*:GetNextSpeedLimit", searchDist, 0)
+		if (tSpdType == 0 or tSpdLimit < spdLimit) then
+			spdType, spdLimit, spdDist = tSpdType, tSpdLimit, tSpdDist
+		end
+		searchDist = tSpdDist + 0.1
+		searchCount = searchCount + 1
+	end
 	
 	if (spdType == 0) then -- End of line...stop the train
 		spdBuffer = (getBrakingDistance(0.0, targetSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance)
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 		if (spdDist <= spdBuffer) then
-			targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 10.0) - spdDist) - 0.25, 1.0 * MPH_TO_MPS)
+			targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 10.0) - spdDist) - 0.25, 6.0 * MPH_TO_MPS)
 			if (spdDist <= 50) then
 				targetSpeed = math.min(targetSpeed, 6 * MPH_TO_MPS)
 			end
@@ -85,7 +91,7 @@ function UpdateATC(interval)
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			spdBuffer = getBrakingDistance(spdLimit, (TrainSpeed - 0.5) * MPH_TO_MPS, -ATC_TARGET_DECELERATION) + reactionTimeDistance
+			spdBuffer = getBrakingDistance(spdLimit, getSpeedLimitAbove(TrainSpeed) * MPH_TO_MPS, -ATC_TARGET_DECELERATION) + reactionTimeDistance
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
@@ -124,14 +130,16 @@ function UpdateATC(interval)
 	end
 	
 	if enabled then
-		-- The ATC can only display certain speed limits; allow the next lowest one above actual, and driver is responsible for following actual
-		if (targetSpeed >= 10) then
-			targetSpeed = getSpeedLimitAbove(targetSpeed)
-		else -- If it's below 10 (like end of track), we force them to obey it
-			if (math.abs(TrainSpeed) > targetSpeed + 1) then
-				targetSpeed = getSpeedLimitBelow(targetSpeed)
-			else
+		if (not ATOEnabled) then
+			-- The ATC can only display certain speed limits; allow the next lowest one above actual, and driver is responsible for following actual
+			if (targetSpeed >= 10) then
 				targetSpeed = getSpeedLimitAbove(targetSpeed)
+			else -- If it's below 10 (like end of track), we force them to obey it
+				if (math.abs(TrainSpeed) > targetSpeed + 1) then
+					targetSpeed = getSpeedLimitBelow(targetSpeed)
+				else
+					targetSpeed = getSpeedLimitAbove(targetSpeed)
+				end
 			end
 		end
 	else

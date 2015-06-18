@@ -353,6 +353,11 @@ function Update(time)
 	firstPart = "5001"
 	if (string.len(RVNumber) == 5) then
 		firstPart = string.sub(RVNumber, 1, 4)
+		lastPart = string.sub(RVNumber, 5, 5)
+		
+		if (Call("GetIsPlayer") == 0) then
+			DestSign = getSignIndex(string.lower(lastPart)) - 1
+		end
 	else
 		Call("*:SetRVNumber", "5001a")
 	end
@@ -379,10 +384,16 @@ function Update(time)
 			Call( "SignLightFront:Activate", 0 )
 		end
 	else
-		Call("*:SetRVNumber", firstPart .. "a")
+		if (Call("GetIsPlayer") == 0) then
+			Call("*:SetRVNumber", firstPart .. "a")
+		end
 		Call( "SignLightFront:Activate", 0 )
 		Call("*:ActivateNode", "sign_off_front", 1)
 		Call("*:ActivateNode", "side_displays", 0)
+	end
+	
+	if (Call("GetIsPlayer") == 0) then
+		SetControlValue("DestinationSign", DestSign)
 	end
 end
 
