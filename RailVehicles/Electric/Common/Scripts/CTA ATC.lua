@@ -1,4 +1,4 @@
-ATC_TARGET_DECELERATION = 0.85 -- meters/second/second
+ATC_TARGET_DECELERATION = 1.15 -- meters/second/second
 ATC_REACTION_TIME = 2.5 -- seconds
 MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
 MPH_TO_MPS = 1.0 / MPS_TO_MPH
@@ -91,7 +91,7 @@ function UpdateATC(interval)
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			spdBuffer = getBrakingDistance(spdLimit, getSpeedLimitAbove(TrainSpeed) * MPH_TO_MPS, -ATC_TARGET_DECELERATION) + reactionTimeDistance
+			spdBuffer = getBrakingDistance(spdLimit, trackSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance
 			if (spdDist <= spdBuffer) then
 				targetSpeed = spdLimit
 			end
