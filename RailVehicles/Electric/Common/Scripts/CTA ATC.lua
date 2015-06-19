@@ -1,4 +1,4 @@
-ATC_TARGET_DECELERATION = 1.15 -- meters/second/second
+ATC_TARGET_DECELERATION = 1.20 -- meters/second/second
 ATC_REACTION_TIME = 2.5 -- seconds
 MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
 MPH_TO_MPS = 1.0 / MPS_TO_MPH
@@ -55,26 +55,44 @@ end
 function UpdateATC(interval)
 	local targetSpeed, trainSpeed, enabled, throttle
 	local spdType, spdLimit, spdDist, spdBuffer
-	local sigType, sigState, sigDist, sigAspect
+	local sigResult, sigState, sigDist, sigAspect
 
 	targetSpeed = Call("*:GetCurrentSpeedLimit")
 	trackSpeed = targetSpeed
 	trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
 	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
 	reactionTimeDistance = trackSpeed * (EST_REACTION_TIME + ACCEL_TIME)
-	stoppingDistance = getBrakingDistance(0, trainSpeed, -ATC_TARGET_DECELERATION)
+	stoppingDistance = getBrakingDistance(0, math.min(trainSpeed, 0.01), -ATC_TARGET_DECELERATION)
 	
-	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0, 0)
+	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0)
+	sigResult, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", 0)
+	
+	searchCount = 0
+	while (sigResult > 0 and sigAspect >= 20 and searchCount < 10) do -- Signal aspects >20 are for wayside communication, not for path clearance
+		sigResult, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", 0, sigDist + 0.1)
+		searchCount = searchCount + 1
+	end
+	
+	if (sigResult < 0) then -- no signal
+		sigState = 0
+	end
+	Call("*:SetControlValue", "ATCAspect", 0, sigState)
 	
 	searchDist = spdDist + 0.1
 	searchCount = 0
-	while (searchDist < reactionTimeDistance and spdType >= 0 and searchCount < 10) do
-		tSpdType, tSpdLimit, tSpdDist = Call("*:GetNextSpeedLimit", searchDist, 0)
+	maxSearchDist = reactionTimeDistance + stoppingDistance
+	while (searchDist < maxSearchDist and spdType >= 0 and searchCount < 10) do
+		tSpdType, tSpdLimit, tSpdDist = Call("*:GetNextSpeedLimit", 0, searchDist)
 		if (tSpdType == 0 or tSpdLimit < spdLimit) then
 			spdType, spdLimit, spdDist = tSpdType, tSpdLimit, tSpdDist
 		end
 		searchDist = tSpdDist + 0.1
 		searchCount = searchCount + 1
+	end
+	
+	if (sigResult > 0 and (sigState == 2 or sigAspect == 3)) then -- Treat a red signal as "end of track"
+		spdType = 0
+		spdDist = sigDist
 	end
 	
 	if (spdType == 0) then -- End of line...stop the train
@@ -91,9 +109,10 @@ function UpdateATC(interval)
 		end
 	elseif (spdType > 0) then
 		if (spdLimit < targetSpeed) then
-			spdBuffer = getBrakingDistance(spdLimit, trackSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance
+			spdBuffer = getBrakingDistance(spdLimit, trainSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance
 			if (spdDist <= spdBuffer) then
-				targetSpeed = spdLimit
+				--targetSpeed = spdLimit
+				targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - reactionTimeDistance)), spdLimit)
 			end
 		end
 	end
@@ -126,8 +145,8 @@ function UpdateATC(interval)
 		end
 	else
 		gTimeSinceSpeedIncrease = 0
-		gLastSpeedLimit = targetSpeed
 	end
+	gLastSpeedLimit = targetSpeed
 	
 	if enabled then
 		if (not ATOEnabled) then

@@ -191,6 +191,7 @@ function DefaultDetermineSignalState()
 		newSwitchState = gRouteState[gConnectedLink]
 	end
 
+	DebugPrint("Connected link: " .. tostring(gConnectedLink))
 	if gConnectedLink > 1 then
 		newSwitchDirection = "DIVERGING"
 	end
@@ -214,7 +215,7 @@ function DefaultDetermineSignalState()
 		gCallOnState = true
 
 	-- If line is blocked
-	elseif newBlockState == SIGNAL_BLOCKED or gPreparedness == SIGNAL_UNPREPARED then
+	elseif newBlockState == SIGNAL_BLOCKED or gPreparedness == SIGNAL_UNPREPARED or not gJunctionReady then
 
 		newAnimState = ANIMSTATE_RED_RED
 		gSignalState = BLOCKED
@@ -295,7 +296,7 @@ function DefaultDetermineSignalState()
 	if newAnimState ~= gAnimState then
 	
 		-- Change lights, update 2D map and let any repeaters behind us know our new aspect
-		DebugPrint( ("DEBUG: DefaultDetermineSignalState() - lights changing from " .. gAnimState .. " to " .. newAnimState) )
+		--DebugPrint( ("DEBUG: DefaultDetermineSignalState() - lights changing from " .. gAnimState .. " to " .. newAnimState) )
 		SetLights(newAnimState)
 		Call( "Set2DMapProSignalState", newAnimState )
 		Call( "SendSignalMessage", SIGNAL_REPEATER_STATE, "" .. newAnimState, -1, 1, 0 )
@@ -303,14 +304,14 @@ function DefaultDetermineSignalState()
 
 	-- If block state has changed
 	if newBlockState ~= gBlockState then
-		DebugPrint( ("DEBUG: DefaultDetermineSignalState() - block state changed from " .. gBlockState .. " to " .. newBlockState .. " - sending message" ) )
+		--DebugPrint( ("DEBUG: DefaultDetermineSignalState() - block state changed from " .. gBlockState .. " to " .. newBlockState .. " - sending message" ) )
 		gBlockState = newBlockState
 		Call( "SendSignalMessage", newBlockState, "", -1, 1, 0 )
 	end
 
 	-- If switch state or direction has changed
 	if newSwitchState ~= gSwitchState or newSwitchDirection ~= gSwitchDirection then
-		DebugPrint( ("DEBUG: DefaultDetermineSignalState() - switch state changed from " .. gSwitchState .. ", direction " .. gSwitchDirection .. " to " .. newSwitchState .. ", direction " .. newSwitchDirection .. " - sending message" ) )
+		--DebugPrint( ("DEBUG: DefaultDetermineSignalState() - switch state changed from " .. gSwitchState .. ", direction " .. gSwitchDirection .. " to " .. newSwitchState .. ", direction " .. newSwitchDirection .. " - sending message" ) )
 		gSwitchState = newSwitchState
 		gSwitchDirection = newSwitchDirection
 		Call( "SendSignalMessage", newSwitchState, newSwitchDirection, -1, 1, 0 )
@@ -827,6 +828,14 @@ function DefaultReactToSignalMessage( message, parameter, direction, linkIndex )
 				-- When it reaches a link > 0 or a signal with only one link, it will be consumed
 			Call( "SendSignalMessage", message, parameter, -direction, 1, linkIndex )
 		end
+		
+		if (tostring(parameter) == "1") then
+			gJunctionReady = false -- In transition
+		elseif (tostring(parameter) == "0") then
+			gJunctionReady = true -- Locked
+		end
+		
+		DetermineSignalState()
 		
 	-- This message is to reset the signals after a scenario / route is reset
 	elseif (message == RESET_SIGNAL_STATE) then

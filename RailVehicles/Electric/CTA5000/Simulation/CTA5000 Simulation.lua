@@ -233,8 +233,6 @@ function Update(interval)
 				gThrottleTime = 100 -- Override "propulsion adjustment" period
 			end
 			
-			Call( "*:SetControlValue", "TAccel", 0, tAccel)
-			
 			-- Max application of dynamic brake based on #cars in consist
 			local dynBrakeMax = clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0)
 			
@@ -456,6 +454,7 @@ function Update(interval)
 				
 				finalRegulator = finalRegulator * (NumCarsOnPower / NumCars)
 				
+				Call( "*:SetControlValue", "TAccel", 0, tAccel)
 				Call( "*:SetControlValue", "Regulator", 0, finalRegulator)
 				Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp(NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0) )
 				Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )

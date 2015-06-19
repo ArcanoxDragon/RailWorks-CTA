@@ -41,10 +41,10 @@ local function addSign(texName, lightOn, lightColor, nextSign)
 end
 
 local function getSignIndex(letter)
-	debugPrint("Getting sign index for: " .. letter)
+	--debugPrint("Getting sign index for: " .. letter)
 	for i = 1, NUM_SIGNS do
 		if SIGNS[i].id == letter then
-			debugPrint("Returning sign index " .. tostring(i))
+			--debugPrint("Returning sign index " .. tostring(i))
 			return i
 		end
 	end
@@ -170,7 +170,6 @@ function Update(time)
 		RVNumber = Call("*:GetRVNumber")
 		if (string.len(RVNumber) == 5) then
 			lastPart = string.lower(string.sub(RVNumber, 5, 5))
-			debugPrint("RV#: " .. RVNumber .. "; Last part: " .. lastPart)
 			SetControlValue("DestinationSign", getSignIndex(lastPart) - 1)
 		else
 			Call("*:SetRVNumber", "5001a")
@@ -294,7 +293,6 @@ function Update(time)
 		end
 	end
 	
-	SetControlValue("Accel2", round(accel, 2))
 	SetControlValue("Speed2", round(trainSpeed, 2))
 	
 	-- Headlights
@@ -321,6 +319,7 @@ function Update(time)
 	
 	UpdateMovingAverage(accel) -- MPH/s
 	local accelAvg = GetMovingAverage() -- Smooth out acceleration
+	SetControlValue("Accel2", accelAvg)
 	accelAvg = accelAvg / 3.7 -- Max accel for animation is 3.7 MPH/s
 	accelAvg = accelAvg * gLastDir
 	accelAvg = accelAvg * GetControlValue("Direction")

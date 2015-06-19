@@ -579,14 +579,14 @@
 														<Attribute name="MaxPower">
 															<sFloat32>
 																<Element>
-																	<Value>250</Value>
+																	<Value>280</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
 														<Attribute name="MaxForce">
 															<sFloat32>
 																<Element>
-																	<Value>5</Value>
+																	<Value>6</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -700,7 +700,7 @@
 														<Attribute name="MaxContinuousForce">
 															<sFloat32>
 																<Element>
-																	<Value>5</Value>
+																	<Value>6</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -827,7 +827,7 @@
 																					<Attribute name="MaxForce">
 																						<sFloat32>
 																							<Element>
-																								<Value>44</Value>
+																								<Value>41.5</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>

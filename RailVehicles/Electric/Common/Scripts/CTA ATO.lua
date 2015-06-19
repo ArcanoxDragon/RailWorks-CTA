@@ -279,11 +279,11 @@ function UpdateATO(interval)
 			atoThrottle = -1
 		end
 		
-		if (ATCRestrictedSpeed <= 0.1 and trainSpeed <= 0.01) then
+		--[[if (ATCRestrictedSpeed <= 0.1 and trainSpeed <= 0.01) then
 			Call("*:SetControlValue", "Headlights", 0, 0)
 			Call("*:SetControlValue", "Reverser", 0, 0) -- Park train
 			Call("*:SetControlValue", "DestinationSign", 0, 1) -- "Not In Service"
-		end
+		end]]
 		
 		Call("*:SetControlValue", "ThrottleAndBrake", 0, (Call("*:GetControlValue", "ATOThrottle", 0) + 1) / 2)
 	else

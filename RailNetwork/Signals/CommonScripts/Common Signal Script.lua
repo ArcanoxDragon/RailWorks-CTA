@@ -144,6 +144,8 @@ function BaseInitialise()
 	gLinkState = {}								-- state of line beyond this link
 	gYardEntry = {}								-- is this link going inside a yard?
 	gOccupationTable = {}						-- how many trains are in this part of our block?
+	
+	gJunctionReady = true
 
 	for link = 0, gLinkCount - 1 do
 		gLinkState[link] = SIGNAL_CLEARED
@@ -486,7 +488,7 @@ end
 --
 function BaseOnSignalMessage( message, parameter, direction, linkIndex )
 
-	DebugPrint( ("DEBUG: BaseOnSignalMessage(" .. message .. ", " .. parameter .. ", " .. direction .. ", " .. linkIndex .. ")") )
+	--DebugPrint( ("DEBUG: BaseOnSignalMessage(" .. message .. ", " .. parameter .. ", " .. direction .. ", " .. linkIndex .. ")") )
 	
 	-- Check for signal receiving a message it might need to forward, in case there are two overlapping signal blocks (eg for a converging junction or crossover)
 	if (linkIndex > 0) then
