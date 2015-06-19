@@ -7,7 +7,7 @@
 --include=CommonScripts\Common Signal Script.lua
 
 -- This is a two aspect signal
-gAspect					= 2
+gAspect					= 3
 
 --------------------------------------------------------------------------------------
 -- INITIALISE

@@ -34,3 +34,24 @@ function OnConsistPass(prevFrontDist, prevRearDist, frontDist, rearDist, linkInd
 		end
 	end
 end
+
+--------------------------------------------------------------------------------------
+-- JUNCTION STATE CHANGE
+-- Called when a junction is changed. Should only be handled by home signals.
+--
+function OnJunctionStateChange( junction_state, parameter, direction, linkIndex )
+	-- Repeater; nothing
+end
+
+-------------------------------------------------------------------------------------
+-- ON SIGNAL MESSAGE
+-- Handles messages from other signals. 
+--
+function OnSignalMessage( message, parameter, direction, linkIndex )
+	-- Just pass the message along...we're a repeater
+	Call("SendSignalMessage", message, parameter, -direction, 1, linkIndex)
+end
+
+function GetSignalState()
+	return 1 -- Warning
+end

@@ -227,16 +227,6 @@ function DefaultDetermineSignalState()
 		newAnimState = ANIMSTATE_RED_RED
 		gSignalState = BLOCKED
 
-	elseif gAspect == 2 then -- In any other case, 2 Aspect signals show green
-	
-		if newSwitchDirection == "AHEAD" then
-			newAnimState = ANIMSTATE_GREEN_RED
-			gSignalState = CLEAR
-		else
-			newAnimState = ANIMSTATE_RED_YELLOW
-			gSignalState = WARNING
-		end
-
 	elseif Call ( "GetLinkLimitedToYellow", gConnectedLink ) ~= 0 then -- If the connected link is aspect limited, show yellow
 	
 		newBlockState = SIGNAL_WARNING	-- treat signal as at warning
@@ -259,6 +249,15 @@ function DefaultDetermineSignalState()
 		
 		gSignalState = WARNING
 		
+	elseif gAspect == 3 then
+
+		if newSwitchDirection == "AHEAD" then
+			newAnimState = ANIMSTATE_GREEN_RED
+		else
+			newAnimState = ANIMSTATE_RED_YELLOW
+		end
+		gSignalState = CLEAR
+		
 	elseif newBlockState == SIGNAL_WARNING2 then -- If line ahead is at warning
 
 		if newSwitchDirection == "AHEAD" then
@@ -273,11 +272,11 @@ function DefaultDetermineSignalState()
 	
 		if newSwitchDirection == "AHEAD" then
 			newAnimState = ANIMSTATE_GREEN_RED
-			gSignalState = CLEAR
 		else
 			newAnimState = ANIMSTATE_RED_YELLOW
-			gSignalState = WARNING
 		end
+		
+		gSignalState = CLEAR
 		
 	else
 		Print( ("ERROR - couldn't figure out what state " .. gAspect .. " aspect signal should be in with block state " .. newBlockState .. ", switch state " .. newSwitchState .. ", control state " .. gControlState .. ", call on state " .. gCallOnState .. " and preparedness " .. gPreparedness) )
