@@ -181,8 +181,8 @@ function UpdateATO(interval)
 		end
 		
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
-		Call("*:SetControlValue", "NextSignalDist", 0, round(sigDist * 100.0, 2))
-		Call("*:SetControlValue", "NextSignalAspect", 0, sigAspect)
+		--Call("*:SetControlValue", "NextSignalDist", 0, round(sigDist * 100.0, 2))
+		--Call("*:SetControlValue", "NextSignalAspect", 0, sigAspect)
 		
 		if (sigAspect == SIGNAL_STATE_STATION) then
 			if (sigDist <= spdBuffer and sigDist >= 15 --[[ we don't want to stop at stations we're too close to ]] and sigDist < gLastSigDist) then
@@ -250,7 +250,7 @@ function UpdateATO(interval)
 			if (sigAspect ~= SIGNAL_STATE_STATION or sigDist > atoStartingSpeedBuffer + 15) then -- Lost station marker; possibly overshot
 				atoOverrunDist = atoOverrunDist + (trainSpeed * interval)
 				targetSpeed = 0.0
-				if (atoOverrunDist > 5.0) then -- overshot station by 2.5 meters -- something went wrong; cancel stop
+				if (atoOverrunDist > 5.0) then -- overshot station by 5.0 meters -- something went wrong; cancel stop
 					atoOverrunDist = 0
 					atoStopping = 0
 					atoTimeStopped = 0

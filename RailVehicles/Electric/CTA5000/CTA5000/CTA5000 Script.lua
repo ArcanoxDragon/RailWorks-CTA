@@ -278,7 +278,11 @@ function Update(time)
 		gWhine = tWhine
 	end
 	
-	SetControlValue( "TractionWhine", clamp(gWhine, 0.0, 1.0) )
+	if (Call("GetIsPlayer") < 0.5) then
+		SetControlValue( "TractionWhine", 1.0 )
+	else
+		SetControlValue( "TractionWhine", clamp(gWhine, 0.0, 1.0) )
+	end
 	
 	-- Direction
 	local realAccel = GetControlValue("Acceleration")

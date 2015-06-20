@@ -1,3 +1,10 @@
+-- LIGHT STATES - For US CTA Colour Lights
+ANIMSTATE_GREEN_RED								= 0
+ANIMSTATE_RED_GREEN								= 11
+ANIMSTATE_YELLOW_RED							= 1
+ANIMSTATE_RED_YELLOW							= 10
+ANIMSTATE_RED_RED								= 3
+
 ATC_TARGET_DECELERATION = 1.20 -- meters/second/second
 ATC_REACTION_TIME = 2.5 -- seconds
 MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
@@ -80,18 +87,32 @@ function UpdateATC(interval)
 	searchDist = 0
 	searchCount = 0
 	maxSearchDist = reactionTimeDistance + trackStoppingDistance
+	--debugPrint("=======================")
+	setAspect = false
 	repeat
-		if (sigDist < trackStoppingDistance + reactionTimeDistance) then
-			Call("*:SetControlValue", "ATCAspect", 0, sigState)
-		else
-			Call("*:SetControlValue", "ATCAspect", 0, 0)
+		if (sigAspect < 20 and setAspect == false) then
+			if (sigAspect == ANIMSTATE_GREEN_RED or sigAspect == ANIMSTATE_RED_GREEN) then -- Clear signals are actually at warning so the script system sees them (honestly, DTG...can you not make a way to find clear signals?)
+				Call("*:SetControlValue", "ATCAspect", 0, 0)
+			else
+				Call("*:SetControlValue", "ATCAspect", 0, sigState)
+			end
+			
+			Call("*:SetControlValue", "NextSignalAspect", sigAspect)
+			setAspect = true
+		end
+			
+		if (sigResult > 0 and sigState == 2 and sigDist < trackStoppingDistance + reactionTimeDistance) then -- Treat a red signal as "end of track"
+			spdType = 0
+			spdDist = sigDist
 		end
 	
 		if (spdType == 0) then -- End of line...stop the train
-			spdBuffer = (getBrakingDistance(0.0, targetSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance)
+			spdBuffer = (getBrakingDistance(0.0, trackSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance)
+			--debugPrint("b: " .. tostring(spdBuffer) .. ", d: " .. tostring(spdDist))
 			Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 			if (spdDist <= spdBuffer) then
-				targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - reactionTimeDistance)), 6.0 * MPH_TO_MPS)
+				targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - 10)), 6.0 * MPH_TO_MPS)
+				debugPrint("ts: " .. tostring(targetSpeed))
 				if (spdDist < 10) then
 					targetSpeed = 0
 				end
@@ -111,22 +132,23 @@ function UpdateATC(interval)
 		end
 		
 		tSigResult, tSigState, tSigDist, tSigAspect = Call("*:GetNextRestrictiveSignal", 0, searchDist)
+		--debugPrint(tSigResult .. ", " .. tSigState .. ", " .. tSigDist .. ", " .. tSigAspect)
 		
-		if (tSigState == 2 or tSigAspect == 3) then -- Restrictive signal
+		if (tSigState >= sigState and tSigAspect < 20) then -- More restrictive signal, or we're skipping over a station signal
 			sigResult, sigState, sigDist, sigAspect = tSigResult, tSigState, tSigDist, tSigAspect
 		end
-			
-		if (sigResult > 0 and (sigState == 2 or sigAspect == 3) and (sigDist < trackStoppingDistance + reactionTimeDistance)) then -- Treat a red signal as "end of track"
-			spdType = 0
-			spdDist = sigDist
-		end
 		
-		searchDist = math.min(tSpdDist, sigDist) + 0.1
+		if (tSpdType < 0) then
+			searchDist = tSigDist + 0.1
+		elseif (tSigResult < 0) then
+			searchDist = tSpdDist + 0.1
+		else
+			searchDist = math.min(tSpdDist, tSigDist) + 0.1
+		end
 		searchCount = searchCount + 1
-	until (searchDist > maxSearchDist or spdType < 0 or searchCount > 25)
+	until (searchDist > maxSearchDist or searchCount > 25 or (tSpdType < 0 and tSigResult < 0))
 	
 	gLastSigDistTime = gLastSigDistTime + interval
-	sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atcSigDirection)
 	if (sigDist > gLastSigDist and gLastSigDistTime >= 1.0) then
 		if (atcSigDirection < 0.5) then
 			atcSigDirection = 1

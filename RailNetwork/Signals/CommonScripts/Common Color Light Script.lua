@@ -272,7 +272,9 @@ function DefaultDetermineSignalState()
 		else
 			newAnimState = ANIMSTATE_RED_GREEN
 		end
-		gSignalState = CLEAR
+		
+		--gSignalState = CLEAR
+		gSignalState = WARNING -- Let the script system see the signal so the ATC display knows there's a green signal...
 		
 	elseif newBlockState == SIGNAL_WARNING2 then -- If line ahead is at warning
 
@@ -292,7 +294,8 @@ function DefaultDetermineSignalState()
 			newAnimState = ANIMSTATE_RED_GREEN
 		end
 		
-		gSignalState = CLEAR
+		--gSignalState = CLEAR
+		gSignalState = WARNING -- Let the script system see the signal so the ATC display knows there's a green signal...
 		
 	else
 		Print( ("ERROR - couldn't figure out what state " .. gAspect .. " aspect signal should be in with block state " .. newBlockState .. ", switch state " .. newSwitchState .. ", control state " .. gControlState .. ", call on state " .. gCallOnState .. " and preparedness " .. gPreparedness) )
