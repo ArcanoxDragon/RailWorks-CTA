@@ -5,7 +5,7 @@
 			<Attribute name="Name">
 				<cDeltaString>
 					<Element>
-						<Value>[CTA] 2-Aspect Auto Signal</Value>
+						<Value>[CTA] 1T Signal</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] 2-Aspect Auto Signal</Value>
+														<Value>[CTA] 1T Signal</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -403,7 +403,7 @@
 							<Attribute name="NumberOfTrackLinks">
 								<sUInt32>
 									<Element>
-										<Value>1</Value>
+										<Value>2</Value>
 									</Element>
 								</sUInt32>
 							</Attribute>
@@ -417,7 +417,7 @@
 							<Attribute name="JunctionSignalType">
 								<cSignalComponentBlueprint-eJunctionSignalTypes>
 									<Element>
-										<Value>eJunctionTypeTheatre</Value>
+										<Value>eJunctionTypeNone</Value>
 									</Element>
 								</cSignalComponentBlueprint-eJunctionSignalTypes>
 							</Attribute>
@@ -439,7 +439,7 @@
 							<Attribute name="Name">
 								<cDeltaString>
 									<Element>
-										<Value>RailNetwork\Signals\CTA 2-Aspect.lua</Value>
+										<Value>RailNetwork\Signals\CTA Signal.lua</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>

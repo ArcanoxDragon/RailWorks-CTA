@@ -2,7 +2,7 @@ local MI_TO_M = 1609.34 -- Miles to Meters
 local M_TO_MI = 1.0 / MI_TO_M -- Meters to Miles
 local SIGNAL_STATE_SPEED = 20
 local SIGNAL_STATE_STATION = 21
-local ATO_TARGET_DECELERATION = 0.90 -- Meters/second/second
+local ATO_TARGET_DECELERATION = 0.85 -- Meters/second/second
 local ACCEL_PER_SECOND = 1.0 -- Units of acceleration per second (jerk limit, used for extra buffers)
 atoK_P = 1.0 / 5.0
 atoK_I = 1.0 / 18.0
@@ -141,12 +141,20 @@ function UpdateATO(interval)
 		
 		trainSpeed = Call("*:GetSpeed")
 		trainSpeedMPH = trainSpeed * MPS_TO_MPH
-		sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atoSigDirection)
 		doors = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
 		tThrottle = Call("*:GetControlValue", "TrueThrottle", 0)
 		
 		ATCRestrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
 		targetSpeed = ATCRestrictedSpeed * MPH_TO_MPS
+		
+		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0)
+		
+		accelBuff = ((tAccel - (-1)) / ACCEL_PER_SECOND) -- Estimated time to reach full brakes from current throttle
+		accelBuff = accelBuff * trainSpeed -- Estimated meters covered in the time taken to reach full brakes
+		
+		spdBuffer = spdBuffer + accelBuff -- Accomodate for jerk limit
+		
+		sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atoSigDirection)
 		
 		gLastSigDistTime = gLastSigDistTime + interval
 		
@@ -158,17 +166,19 @@ function UpdateATO(interval)
 			end
 		end
 		
+		searchDist = sigDist + 0.1
+		while (searchDist < spdBuffer and sigAspect ~= SIGNAL_STATE_STATION) do
+			tSigType, tSigState, tSigDist, tSigAspect = Call("*:GetNextRestrictiveSignal", atoSigDirection, searchDist)
+			if (tSigAspect == SIGNAL_STATE_STATION) then
+				sigType, sigState, sigDist, sigAspect = tSigType, tSigState, tSigDist, tSigAspect
+			end
+			searchDist = tSigDist + 0.1
+		end
+		
 		if (gLastSigDistTime >= 1.0) then
 			gLastSigDistTime = 0.0
 			gLastSigDist = sigDist
 		end
-		
-		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0)
-		
-		accelBuff = ((tAccel - (-1)) / ACCEL_PER_SECOND) -- Estimated time to reach full brakes from current throttle
-		accelBuff = accelBuff * trainSpeed -- Estimated meters covered in the time taken to reach full brakes
-		
-		spdBuffer = spdBuffer + accelBuff -- Accomodate for jerk limit
 		
 		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 		Call("*:SetControlValue", "NextSignalDist", 0, round(sigDist * 100.0, 2))

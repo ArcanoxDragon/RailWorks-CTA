@@ -5,7 +5,7 @@
 			<Attribute name="Name">
 				<cDeltaString>
 					<Element>
-						<Value>[CTA] 2-Aspect Signal</Value>
+						<Value>[CTA] End-Of-Line Signal</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] 2-Aspect Signal</Value>
+														<Value>[CTA] End-Of-Line Signal</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -275,7 +275,7 @@
 							<Attribute name="GeometryID">
 								<cDeltaString>
 									<Element>
-										<Value>RailNetwork\Signals\Signal 2-Aspect.igs</Value>
+										<Value>RailNetwork\Signals\Signal Invisible.igs</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -296,14 +296,14 @@
 							<Attribute name="CastsShadows">
 								<eBoolean>
 									<Element>
-										<Value>eTrue</Value>
+										<Value>eFalse</Value>
 									</Element>
 								</eBoolean>
 							</Attribute>
 							<Attribute name="ShadowType">
 								<eShadowType>
 									<Element>
-										<Value>eShadowType_Blobby</Value>
+										<Value>eShadowType_None</Value>
 									</Element>
 								</eShadowType>
 							</Attribute>
@@ -403,7 +403,7 @@
 							<Attribute name="NumberOfTrackLinks">
 								<sUInt32>
 									<Element>
-										<Value>2</Value>
+										<Value>1</Value>
 									</Element>
 								</sUInt32>
 							</Attribute>
@@ -417,7 +417,7 @@
 							<Attribute name="JunctionSignalType">
 								<cSignalComponentBlueprint-eJunctionSignalTypes>
 									<Element>
-										<Value>eJunctionTypeNone</Value>
+										<Value>eJunctionTypeTheatre</Value>
 									</Element>
 								</cSignalComponentBlueprint-eJunctionSignalTypes>
 							</Attribute>
@@ -439,7 +439,7 @@
 							<Attribute name="Name">
 								<cDeltaString>
 									<Element>
-										<Value>RailNetwork\Signals\CTA 2-Aspect.lua</Value>
+										<Value>RailNetwork\Signals\CTA EOL Signal.lua</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -468,7 +468,7 @@
 														<Attribute name="ChildName">
 															<cDeltaString>
 																<Element>
-																	<Value>TopGlow</Value>
+																	<Value>Editor</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -501,7 +501,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailNetwork\Signals\Signal Glow.xml</Value>
+																					<Value>RailNetwork\Signals\Editor Gizmo.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -519,7 +519,7 @@
 																					<Value>
 																						<sFloat32>
 																							<Element>
-																								<Value>-1</Value>
+																								<Value>1</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -529,7 +529,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>1.564535E-06</Value>
+																								<Value>0</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -559,7 +559,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>-1.564535E-06</Value>
+																								<Value>0</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -569,7 +569,7 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>-1</Value>
+																								<Value>1</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -579,17 +579,17 @@
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>4.768371E-07</Value>
+																								<Value>0</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>1.303806</Value>
+																								<Value>0</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
 																							<Element>
-																								<Value>-0.1108398</Value>
+																								<Value>0</Value>
 																							</Element>
 																						</sFloat32>
 																						<sFloat32>
@@ -608,160 +608,7 @@
 														<Attribute name="ParentNodeName">
 															<cDeltaString>
 																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</cEntityContainerBlueprint-sChild>
-											<cEntityContainerBlueprint-sChild>
-												<Element>
-													<Value>
-														<Attribute name="ChildName">
-															<cDeltaString>
-																<Element>
-																	<Value>BottomGlow</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="BlueprintID">
-															<iBlueprintLibrary-cAbsoluteBlueprintID>
-																<Element>
-																	<Value>
-																		<Attribute name="BlueprintSetID">
-																			<iBlueprintLibrary-cBlueprintSetID>
-																				<Element>
-																					<Value>
-																						<Attribute name="Provider">
-																							<cDeltaString>
-																								<Element>
-																									<Value>briman0094</Value>
-																								</Element>
-																							</cDeltaString>
-																						</Attribute>
-																						<Attribute name="Product">
-																							<cDeltaString>
-																								<Element>
-																									<Value>CTA</Value>
-																								</Element>
-																							</cDeltaString>
-																						</Attribute>
-																					</Value>
-																				</Element>
-																			</iBlueprintLibrary-cBlueprintSetID>
-																		</Attribute>
-																		<Attribute name="BlueprintID">
-																			<cDeltaString>
-																				<Element>
-																					<Value>RailNetwork\Signals\Signal Glow.xml</Value>
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																	</Value>
-																</Element>
-															</iBlueprintLibrary-cAbsoluteBlueprintID>
-														</Attribute>
-														<Attribute name="Matrix">
-															<cHcRMatrix4x4>
-																<Element>
-																	<Value>
-																		<Attribute name="Element">
-																			<__Indexed__sFloat32>
-																				<Element>
-																					<Value>
-																						<sFloat32>
-																							<Element>
-																								<Value>-1</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>1.564535E-06</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>1</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>-1.564535E-06</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>-1</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>0</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>4.768372E-07</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>1.130645</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>-0.1108398</Value>
-																							</Element>
-																						</sFloat32>
-																						<sFloat32>
-																							<Element>
-																								<Value>1</Value>
-																							</Element>
-																						</sFloat32>
-																					</Value>
-																				</Element>
-																			</__Indexed__sFloat32>
-																		</Attribute>
-																	</Value>
-																</Element>
-															</cHcRMatrix4x4>
-														</Attribute>
-														<Attribute name="ParentNodeName">
-															<cDeltaString>
-																<Element>
-																	<Value />
+																	<Value>invisible</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>

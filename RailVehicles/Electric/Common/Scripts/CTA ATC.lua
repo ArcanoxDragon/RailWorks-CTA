@@ -63,64 +63,67 @@ function UpdateATC(interval)
 	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
 	reactionTimeDistance = trackSpeed * (EST_REACTION_TIME + ACCEL_TIME)
 	stoppingDistance = getBrakingDistance(0, math.max(trainSpeed, 0.01), -ATC_TARGET_DECELERATION)
+	trackStoppingDistance = getBrakingDistance(0, math.max(trackSpeed, 0.01), -ATC_TARGET_DECELERATION)
 	
 	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0)
 	sigResult, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", 0)
 	
-	if (spdLimit ~= targetSpeed and spdType > 0) then
-		--debugPrint("Next speed limit drop: " .. tostring(spdLimit * MPS_TO_MPH) .. " MPH in " .. tostring(spdDist) .. " m (t: " .. tostring(spdType) .. ")")
-	end
-	
-	searchCount = 0
-	while (sigResult > 0 and sigAspect >= 20 and searchCount < 10) do -- Signal aspects >20 are for wayside communication, not for path clearance
-		sigResult, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", 0, sigDist + 0.1)
-		searchCount = searchCount + 1
-	end
+	--[[if not enabled then
+		a, b, c, d = Call("*:GetNextRestrictiveSignal", 0)
+		debugPrint(tostring(a) .. ", " .. tostring(b) .. ", " .. tostring(c) .. ", " .. tostring(d))
+	end]]
 	
 	if (sigResult < 0) then -- no signal
 		sigState = 0
 	end
-	Call("*:SetControlValue", "ATCAspect", 0, sigState)
 	
-	if (sigResult > 0 and (sigState == 2 or sigAspect == 3) and (sigDist < stoppingDistance + reactionTimeDistance)) then -- Treat a red signal as "end of track"
-		spdType = 0
-		spdDist = sigDist
-		--debugPrint("Found red signal in " .. tostring(sigDist) .. " m...")
-	end
-	
-	if (spdType == 0) then -- End of line...stop the train
-		spdBuffer = (getBrakingDistance(0.0, targetSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance)
-		Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
-		if (spdDist <= spdBuffer) then
-			targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, (spdBuffer + 10.0) - spdDist) - 0.25, 6.0 * MPH_TO_MPS)
-			if (spdDist <= 50) then
-				targetSpeed = math.min(targetSpeed, 6 * MPH_TO_MPS)
-			end
-			if (spdDist < 10) then
-				targetSpeed = 0
-			end
+	searchDist = 0
+	searchCount = 0
+	maxSearchDist = reactionTimeDistance + trackStoppingDistance
+	repeat
+		if (sigDist < trackStoppingDistance + reactionTimeDistance) then
+			Call("*:SetControlValue", "ATCAspect", 0, sigState)
+		else
+			Call("*:SetControlValue", "ATCAspect", 0, 0)
 		end
-	elseif (spdType > 0) then
-		searchDist = spdDist + 0.1
-		searchCount = 0
-		maxSearchDist = reactionTimeDistance + stoppingDistance
-		repeat
+	
+		if (spdType == 0) then -- End of line...stop the train
+			spdBuffer = (getBrakingDistance(0.0, targetSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance)
+			Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
+			if (spdDist <= spdBuffer) then
+				targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - reactionTimeDistance)), 6.0 * MPH_TO_MPS)
+				if (spdDist < 10) then
+					targetSpeed = 0
+				end
+			end
+		elseif (spdType > 0) then
 			if (spdLimit < targetSpeed) then
 				spdBuffer = getBrakingDistance(spdLimit, trainSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance
 				if (spdDist <= spdBuffer) then
 					targetSpeed = math.min(targetSpeed, math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - reactionTimeDistance)), spdLimit))
 				end
 			end
+		end
+		
+		tSpdType, tSpdLimit, tSpdDist = Call("*:GetNextSpeedLimit", 0, searchDist)
+		if (tSpdType == 0 or (tSpdType > 0 and tSpdLimit < spdLimit)) then
+			spdType, spdLimit, spdDist = tSpdType, tSpdLimit, tSpdDist
+		end
+		
+		tSigResult, tSigState, tSigDist, tSigAspect = Call("*:GetNextRestrictiveSignal", 0, searchDist)
+		
+		if (tSigState == 2 or tSigAspect == 3) then -- Restrictive signal
+			sigResult, sigState, sigDist, sigAspect = tSigResult, tSigState, tSigDist, tSigAspect
+		end
 			
-			tSpdType, tSpdLimit, tSpdDist = Call("*:GetNextSpeedLimit", 0, searchDist)
-			if (tSpdType == 0 or (tSpdType > 0 and tSpdLimit < spdLimit)) then
-				spdType, spdLimit, spdDist = tSpdType, tSpdLimit, tSpdDist
-			end
-			
-			searchDist = tSpdDist + 0.1
-			searchCount = searchCount + 1
-		until (searchDist > maxSearchDist or spdType < 0 or searchCount > 10)
-	end
+		if (sigResult > 0 and (sigState == 2 or sigAspect == 3) and (sigDist < trackStoppingDistance + reactionTimeDistance)) then -- Treat a red signal as "end of track"
+			spdType = 0
+			spdDist = sigDist
+		end
+		
+		searchDist = math.min(tSpdDist, sigDist) + 0.1
+		searchCount = searchCount + 1
+	until (searchDist > maxSearchDist or spdType < 0 or searchCount > 25)
 	
 	gLastSigDistTime = gLastSigDistTime + interval
 	sigType, sigState, sigDist, sigAspect = Call("*:GetNextRestrictiveSignal", atcSigDirection)

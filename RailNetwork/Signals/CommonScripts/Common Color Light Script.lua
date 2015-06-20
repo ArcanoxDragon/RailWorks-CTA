@@ -102,6 +102,7 @@ function DefaultSetLights ( newState )
 	
 	if (newState == ANIMSTATE_GREEN_RED) then
 		SwitchLight( LIGHT_NODE_GREEN,		1 )
+		SwitchLight( LIGHT_NODE_GREEN2,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
 		SwitchLight( LIGHT_NODE_RED,		0 )
@@ -111,8 +112,21 @@ function DefaultSetLights ( newState )
 		Call( "BottomGlow:SetColour", 255,  31,  31 )
 
 		DebugPrint("State: Green Over Red")
+	elseif (newState == ANIMSTATE_RED_GREEN) then
+		SwitchLight( LIGHT_NODE_GREEN,		0 )
+		SwitchLight( LIGHT_NODE_GREEN2,		1 )
+		SwitchLight( LIGHT_NODE_YELLOW,		0 )
+		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
+		SwitchLight( LIGHT_NODE_RED,		1 )
+		SwitchLight( LIGHT_NODE_RED2,		0 )
+		
+		Call(    "TopGlow:SetColour", 255,  31,  31 )
+		Call( "BottomGlow:SetColour",  31, 255,  31 )
+
+		DebugPrint("State: Red Over Green")
 	elseif (newState == ANIMSTATE_YELLOW_RED) then
 		SwitchLight( LIGHT_NODE_GREEN,		0 )
+		SwitchLight( LIGHT_NODE_GREEN2,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW,		1 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
 		SwitchLight( LIGHT_NODE_RED,		0 )
@@ -124,6 +138,7 @@ function DefaultSetLights ( newState )
 		DebugPrint("State: Yellow Over Red")
 	elseif (newState == ANIMSTATE_RED_YELLOW) then
 		SwitchLight( LIGHT_NODE_GREEN,		0 )
+		SwitchLight( LIGHT_NODE_GREEN2,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	1 )
 		SwitchLight( LIGHT_NODE_RED,		1 )
@@ -135,6 +150,7 @@ function DefaultSetLights ( newState )
 		DebugPrint("State: Red Over Yellow")
 	elseif (newState == ANIMSTATE_RED_RED) then
 		SwitchLight( LIGHT_NODE_GREEN,		0 )
+		SwitchLight( LIGHT_NODE_GREEN2,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW,		0 )
 		SwitchLight( LIGHT_NODE_YELLOW2,	0 )
 		SwitchLight( LIGHT_NODE_RED,		1 )
@@ -254,7 +270,7 @@ function DefaultDetermineSignalState()
 		if newSwitchDirection == "AHEAD" then
 			newAnimState = ANIMSTATE_GREEN_RED
 		else
-			newAnimState = ANIMSTATE_RED_YELLOW
+			newAnimState = ANIMSTATE_RED_GREEN
 		end
 		gSignalState = CLEAR
 		
@@ -273,7 +289,7 @@ function DefaultDetermineSignalState()
 		if newSwitchDirection == "AHEAD" then
 			newAnimState = ANIMSTATE_GREEN_RED
 		else
-			newAnimState = ANIMSTATE_RED_YELLOW
+			newAnimState = ANIMSTATE_RED_GREEN
 		end
 		
 		gSignalState = CLEAR

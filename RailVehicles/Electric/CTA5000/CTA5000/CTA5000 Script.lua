@@ -518,6 +518,14 @@ function OnCustomSignalMessage(argument)
 					local curSign = SIGNS[curSignIndex + 1]
 					--debugPrint("Changing to: " .. tostring(curSign.nextSign))
 					SetControlValue("DestinationSign", curSign.nextSign)
+					RVNumber = Call("*:GetRVNumber")
+					firstPart = "5001"
+					if (string.len(RVNumber) == 5) then
+						firstPart = string.sub(RVNumber, 1, 4)
+						Call("*:SetRVNumber", firstPart .. curSign.nextSign.id)
+					else
+						Call("*:SetRVNumber", "5001a")
+					end
 				end
 			end
 		--[[elseif (tonumber(msg) == MSG_THIRD_RAIL_OFF) then

@@ -5,7 +5,7 @@
 			<Attribute name="Name">
 				<cDeltaString>
 					<Element>
-						<Value>[CTA] 2-Aspect Junction Signal</Value>
+						<Value>[CTA] 2T Junction Signal</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] 2-Aspect Junction Signal</Value>
+														<Value>[CTA] 2T Junction Signal</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -439,7 +439,7 @@
 							<Attribute name="Name">
 								<cDeltaString>
 									<Element>
-										<Value>RailNetwork\Signals\CTA 2-Aspect.lua</Value>
+										<Value>RailNetwork\Signals\CTA Signal.lua</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
