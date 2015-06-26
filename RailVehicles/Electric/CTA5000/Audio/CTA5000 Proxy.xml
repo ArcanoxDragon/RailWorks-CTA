@@ -3707,7 +3707,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.65</Value>
+																				<Value>0.45</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3720,14 +3720,14 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>17.5</Value>
+																				<Value>27.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.3</Value>
+																				<Value>0.1</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4002,7 +4002,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>21</Value>
+																				<Value>27</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -5778,7 +5778,7 @@
 										<Attribute name="InstanceExceededAction">
 											<kLoud-eInstanceExceededAction>
 												<Element>
-													<Value>RejectNew</Value>
+													<Value>StopOldest</Value>
 												</Element>
 											</kLoud-eInstanceExceededAction>
 										</Attribute>

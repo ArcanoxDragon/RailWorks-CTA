@@ -332,7 +332,7 @@ function Update(time)
 	end
 	tiltMult = 1.0
 	if (gCamInside) then
-		tiltMult = 0.75
+		tiltMult = 0.45
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg * tiltMult, -1, 1)
 	dBodyTilt = 5 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.1, 1.0)
