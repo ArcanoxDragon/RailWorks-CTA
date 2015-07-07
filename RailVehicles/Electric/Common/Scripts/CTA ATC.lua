@@ -16,7 +16,7 @@ ATC_WARN_OFF = 0.0
 ATC_WARN_CONSTANT = 1.0
 ATC_WARN_INTERMITTENT = 2.0
 DISPLAY_SPEEDS = { 0, 15, 25, 35, 45, 55, 70 }
-NUM_DISLPAY_SPEEDS = 7
+NUM_DISPLAY_SPEEDS = 7
 EST_REACTION_TIME = 3 -- Estimated reaction time of the driver for speed drops
 ACCEL_TIME = 2 -- The amount of time it takes to go from full power to full brake (with jerk limit)
 
@@ -42,7 +42,7 @@ function SetATCWarnMode(mode)
 end
 
 function getSpeedLimitAbove(speed)
-	for i = 1, NUM_DISLPAY_SPEEDS do
+	for i = 1, NUM_DISPLAY_SPEEDS do
 		if DISPLAY_SPEEDS[i] >= speed then
 			return DISPLAY_SPEEDS[i]
 		end
@@ -51,7 +51,7 @@ function getSpeedLimitAbove(speed)
 end
 
 function getSpeedLimitBelow(speed)
-	for i = NUM_DISLPAY_SPEEDS, 1, -1 do
+	for i = NUM_DISPLAY_SPEEDS, 1, -1 do
 		if DISPLAY_SPEEDS[i] <= speed then
 			return DISPLAY_SPEEDS[i]
 		end
@@ -112,7 +112,7 @@ function UpdateATC(interval)
 			Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 			if (spdDist <= spdBuffer) then
 				targetSpeed = math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - 10)), 6.0 * MPH_TO_MPS)
-				debugPrint("ts: " .. tostring(targetSpeed))
+				--debugPrint("ts: " .. tostring(targetSpeed))
 				if (spdDist < 10) then
 					targetSpeed = 0
 				end
