@@ -204,7 +204,7 @@ function UpdateATO(interval)
 				
 			statStopTime = statStopTime + interval
 			
-			if (sigDist < 1.4 or (atoOverrunDist > 0 and atoOverrunDist < 5.0)) then
+			if (sigDist < 1.6 or (atoOverrunDist > 0 and atoOverrunDist < 5.0)) then
 				targetSpeed = 0.0
 				if (trainSpeed <= 0.025) then
 					if (atoIsStopped < 0.25) then

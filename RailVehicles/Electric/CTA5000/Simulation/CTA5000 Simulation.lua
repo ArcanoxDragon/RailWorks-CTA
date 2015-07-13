@@ -313,7 +313,7 @@ function Update(interval)
 						if (math.abs(TrainSpeed) < 2.5) then
 							if (tThrottle < 0.0) then
 								if (gStoppingTime < MAX_STOPPING_TIME) then
-									gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 1.75, 0.0, 1.0)
+									gBrakeRelease = clamp((2.0 - math.abs(TrainSpeed)) / 1.25, 0.0, 1.0)
 								else
 									if (tAccel < 0.0) then
 										gBrakeRelease = 0.0
