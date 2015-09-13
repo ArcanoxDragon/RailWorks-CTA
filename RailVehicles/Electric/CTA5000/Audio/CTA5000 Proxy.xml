@@ -146,7 +146,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>0.65</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -245,7 +245,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>1</Value>
+													<Value>1.3</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -344,7 +344,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>0.65</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -443,7 +443,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>1</Value>
+													<Value>1.3</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1296,7 +1296,7 @@
 														<Attribute name="Filename">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\doors_open</Value>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\doors_open_int</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1494,7 +1494,7 @@
 														<Attribute name="Filename">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\doors_close</Value>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\doors_close_int</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1730,7 +1730,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.35</Value>
+													<Value>0.75</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1928,7 +1928,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.35</Value>
+													<Value>0.75</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2126,7 +2126,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.35</Value>
+													<Value>0.75</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -3256,14 +3256,14 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>20</Value>
+																				<Value>28</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.15</Value>
+																				<Value>0.16</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3788,7 +3788,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.75</Value>
+																				<Value>0.95</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3848,6 +3848,26 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
+																				<Value>0.95</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>24</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
 																				<Value>0.45</Value>
 																			</Element>
 																		</sFloat32>
@@ -3861,27 +3881,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>27</Value>
-																			</Element>
-																		</sFloat32>
-																	</Attribute>
-																	<Attribute name="Y">
-																		<sFloat32>
-																			<Element>
-																				<Value>0.4</Value>
-																			</Element>
-																		</sFloat32>
-																	</Attribute>
-																</Value>
-															</Element>
-														</kLoud-cRVector2>
-														<kLoud-cRVector2>
-															<Element>
-																<Value>
-																	<Attribute name="X">
-																		<sFloat32>
-																			<Element>
-																				<Value>35</Value>
+																				<Value>32.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4449,6 +4449,67 @@
 																		<sFloat32>
 																			<Element>
 																				<Value>0.05</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>1</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cRVector2>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cCurve>
+							<kLoud-cCurve>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>AirConVolumeActive</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="CurvePoint">
+											<__Indexed__kLoud-cRVector2>
+												<Element>
+													<Value>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.49</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -5723,6 +5784,62 @@
 									</Value>
 								</Element>
 							</kLoud-cModifierChain>
+							<kLoud-cModifierChain>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>AirCon</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="Modifier">
+											<__Indexed__kLoud-cModifier>
+												<Element>
+													<Value>
+														<kLoud-cVolumeCurveModifier>
+															<Element>
+																<Value>
+																	<Attribute name="ControllerIsGlobal">
+																		<bool>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</bool>
+																	</Attribute>
+																	<Attribute name="ControllerName">
+																		<cDeltaString>
+																			<Element>
+																				<Value>Active</Value>
+																			</Element>
+																		</cDeltaString>
+																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>AirConVolumeActive</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cVolumeCurveModifier>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cModifier>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cModifierChain>
 						</Value>
 					</Element>
 				</__Indexed__kLoud-cModifierChain>
@@ -5764,7 +5881,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>AirCon</Value>
+													<Value>AirConExt</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -6664,7 +6781,7 @@
 										<Attribute name="ActiveRangeEndValue">
 											<sFloat32>
 												<Element>
-													<Value>1</Value>
+													<Value>1.5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -6682,7 +6799,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>AirCon</Value>
+																	<Value>AirConExt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -6732,7 +6849,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>AirCon</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -6764,7 +6881,7 @@
 										<Attribute name="ActiveRangeEndValue">
 											<sFloat32>
 												<Element>
-													<Value>1</Value>
+													<Value>1.5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -6782,7 +6899,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>AirCon</Value>
+																	<Value />
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -8842,7 +8959,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>AirCon</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -9028,7 +9145,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>AirCon</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>

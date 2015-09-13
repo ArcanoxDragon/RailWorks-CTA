@@ -257,14 +257,14 @@
 																																			<Attribute name="MaxQuickReleaseRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>70</Value>
+																																						<Value>120</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
 																																			<Attribute name="EmergencyApplicationRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>70</Value>
+																																						<Value>120</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -341,14 +341,14 @@
 																												<Attribute name="MaxReleaseRate">
 																													<sFloat32>
 																														<Element>
-																															<Value>70</Value>
+																															<Value>120</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
 																												<Attribute name="MaxApplicationRate">
 																													<sFloat32>
 																														<Element>
-																															<Value>70</Value>
+																															<Value>120</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>

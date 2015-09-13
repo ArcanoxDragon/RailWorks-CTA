@@ -39,10 +39,10 @@ function Setup()
 	MIN_ACCELERATION = 0.125
 	MAX_BRAKING = 1.0
 	MIN_BRAKING = 0.2
-	JERK_LIMIT = 0.75
+	JERK_LIMIT = 0.73
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.715
+	MAX_BRAKE_RELEASE = 0.755
 	MAX_SERVICE_BRAKE = 0.875
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
@@ -70,7 +70,7 @@ function Setup()
 	gLastJerkLimit = 0
 
 -- For controlling delayed doors interlocks.
-	DOORDELAYTIME = 9 -- seconds.
+	DOORDELAYTIME = 8.0 -- seconds.
 	gDoorsDelay = DOORDELAYTIME
 end
 
