@@ -4475,6 +4475,67 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
+													<Value>AirConVolumePower</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="CurvePoint">
+											<__Indexed__kLoud-cRVector2>
+												<Element>
+													<Value>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>1</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>1</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cRVector2>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cCurve>
+							<kLoud-cCurve>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
 													<Value>AirConVolumeActive</Value>
 												</Element>
 											</cDeltaString>
@@ -5790,7 +5851,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>AirCon</Value>
+													<Value>AirConInt</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -5798,6 +5859,41 @@
 											<__Indexed__kLoud-cModifier>
 												<Element>
 													<Value>
+														<kLoud-cVolumeCurveModifier>
+															<Element>
+																<Value>
+																	<Attribute name="ControllerIsGlobal">
+																		<bool>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</bool>
+																	</Attribute>
+																	<Attribute name="ControllerName">
+																		<cDeltaString>
+																			<Element>
+																				<Value>TractionWhine</Value>
+																			</Element>
+																		</cDeltaString>
+																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>AirConVolumePower</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cVolumeCurveModifier>
 														<kLoud-cVolumeCurveModifier>
 															<Element>
 																<Value>
@@ -5823,6 +5919,62 @@
 																						<cDeltaString>
 																							<Element>
 																								<Value>AirConVolumeActive</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cVolumeCurveModifier>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cModifier>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cModifierChain>
+							<kLoud-cModifierChain>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>AirConExt</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="Modifier">
+											<__Indexed__kLoud-cModifier>
+												<Element>
+													<Value>
+														<kLoud-cVolumeCurveModifier>
+															<Element>
+																<Value>
+																	<Attribute name="ControllerIsGlobal">
+																		<bool>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</bool>
+																	</Attribute>
+																	<Attribute name="ControllerName">
+																		<cDeltaString>
+																			<Element>
+																				<Value>TractionWhine</Value>
+																			</Element>
+																		</cDeltaString>
+																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>AirConVolumePower</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
@@ -6749,7 +6901,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>AirConExt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -6849,7 +7001,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>AirCon</Value>
+																	<Value>AirConInt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -8959,7 +9111,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>AirCon</Value>
+																	<Value>AirConInt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -9052,7 +9204,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>AirConExt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -9145,7 +9297,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>AirCon</Value>
+																	<Value>AirConInt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>

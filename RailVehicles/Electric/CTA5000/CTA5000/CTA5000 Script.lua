@@ -108,6 +108,7 @@ function Initialise()
 	gLastDir = 1
 	gIsBCar = 0 -- Is this an "A" car or a "B" car?
 	gInit = false
+	gOnThirdRail = true
 	
 -- Moving average for acceleration
 	gMovingAvgSize = 50
@@ -122,6 +123,9 @@ function Initialise()
 	gControlCache = { }
 	
 	SetControlValue("OnThirdRail", 1)
+	
+	HeadlightOn = false
+	TaillightOn = false
 
 	Call( "BeginUpdate" )
 end
@@ -164,6 +168,8 @@ function Update(time)
 	local trainSpeed = Call("GetSpeed") * MPS_TO_MPH
 	local accel = Call("GetAcceleration") * MPS_TO_MPH
 	local reverser = GetControlValue("Reverser")
+	local IsEndCar = GetControlValue( "IsEndCar" ) > 0
+	local CarNum = GetControlValue( "CarNum" )
 	
 	if (not gInit) then
 		-- Set "DestinationSign" control to value from car number (allows scenarios to set destsign)
@@ -201,22 +207,55 @@ function Update(time)
 
 			gPrevWhine = whine
 			gPrevDynamic = dynamic
-			
-			Headlights = GetControlValue( "Headlights" )
-			if (Headlights > 0.5) then
+		end
+	
+		-- Headlights
+		
+		Headlights = GetControlValue( "Headlights" )
+		if (Headlights > 0.5 and IsEndCar) then
+			if (reverser > 0.5 and CarNum == 0) or (reverser < -0.5 and CarNum ~= 0) then -- Leading car (in direction of travel)
 				Call( "HeadlightL:Activate", 1 )
 				Call( "HeadlightR:Activate", 1 )
-			else
+				Call( "TaillightL:Activate", 0 )
+				Call( "TaillightR:Activate", 0 )
+				
+				HeadlightOn = true
+				TaillightOn = false
+			elseif (reverser > 0.5 and CarNum ~= 0) or (reverser < -0.5 and CarNum == 0) then -- Trailing car (in direction of travel)
 				Call( "HeadlightL:Activate", 0 )
 				Call( "HeadlightR:Activate", 0 )
+				Call( "TaillightL:Activate", 1 )
+				Call( "TaillightR:Activate", 1 )
+				
+				HeadlightOn = false
+				TaillightOn = true
 			end
-			
-			local cabSpeed = clamp(math.floor(math.abs(trainSpeed)), 0, 72)
-			SetControlValue("CabSpeedIndicator", cabSpeed)
-		else
+		else -- Either middle car or headlights were switched off
 			Call( "HeadlightL:Activate", 0 )
 			Call( "HeadlightR:Activate", 0 )
+			Call( "TaillightL:Activate", 0 )
+			Call( "TaillightR:Activate", 0 )
+			
+			HeadlightOn = false
+			TaillightOn = false
 		end
+	
+		if HeadlightOn then
+			Call("*:ActivateNode", "headlights", 1)
+		else
+			Call("*:ActivateNode", "headlights", 0)
+		end
+	
+		if TaillightOn then
+			Call("*:ActivateNode", "taillights", 1)
+		else
+			Call("*:ActivateNode", "taillights", 0)
+		end
+		
+		-- Cab speed
+		
+		local cabSpeed = clamp(math.floor(math.abs(trainSpeed)), 0, 72)
+		SetControlValue("CabSpeedIndicator", cabSpeed)
 
 		if gInitialised == FALSE then
 			gInitialised = TRUE
@@ -245,20 +284,27 @@ function Update(time)
 	if (sigDist < 1.0) then
 		if (sigDist < gLastSignalDist - 0.01) then
 			if (sigAspect == SIGNAL_THIRD_RAIL_OFF) then
-				SetControlValue("OnThirdRail", 0)
+				gOnThirdRail = false
 			elseif (sigAspect == SIGNAL_THIRD_RAIL_ON) then
-				SetControlValue("OnThirdRail", 1)
+				gOnThirdRail = true
 			end
 		elseif (sigDist > gLastSignalDist + 0.01) then
 			if (sigAspect == SIGNAL_THIRD_RAIL_OFF) then
-				SetControlValue("OnThirdRail", 1)
+				gOnThirdRail = true
 			elseif (sigAspect == SIGNAL_THIRD_RAIL_ON) then
-				SetControlValue("OnThirdRail", 0)
+				gOnThirdRail = false
 			end
 
 		end
 	end
 	gLastSignalDist = sigDist
+	
+	if GetControlValue("ThirdRail") < 0.5 then
+		SetControlValue("OnThirdRail", 0)
+	else
+		debugPrint("gOnThirdRail: " .. tostring(gOnThirdRail))
+		SetControlValue("OnThirdRail", gOnThirdRail and 1 or 0)
+	end
 	
 	-- Inverter whine based on current
 	
@@ -266,7 +312,7 @@ function Update(time)
 	local dWhine = 1.2 * time
 	local current = GetControlValue("Ammeter")
 	local tAccel = GetControlValue("TAccel")
-	if ( GetControlValue("OnThirdRail") < 0.5 ) then
+	if ( GetControlValue("OnThirdRail") < 0.5) then
 		tWhine = 0.0
 	end
 	
@@ -298,13 +344,6 @@ function Update(time)
 	end
 	
 	SetControlValue("Speed2", round(trainSpeed, 2))
-	
-	-- Headlights
-	if (GetControlValue("IsEndCar") > 0 and GetControlValue("Active") > 0 and GetControlValue("Headlights") > 0) then
-		Call("*:ActivateNode", "headlights", 1)
-	else
-		Call("*:ActivateNode", "headlights", 0)
-	end
 	
 	-- Fix door animation
 	local doorsLeft = GetControlValue("DoorsOpenCloseLeft") > 0
@@ -351,7 +390,6 @@ function Update(time)
 	-- Destination sign
 	
 	DestSign = GetControlValue( "DestinationSign" )
-	IsEndCar = GetControlValue( "IsEndCar" ) > 0
 	RVNumber = Call("*:GetRVNumber")
 	firstPart = "5001"
 	if (string.len(RVNumber) == 5) then

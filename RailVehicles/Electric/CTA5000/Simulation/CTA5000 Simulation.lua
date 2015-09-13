@@ -87,11 +87,21 @@ function Update(interval)
 	local rInterval = round(interval, 5)
 	--gTimeDelta = gTimeDelta + rInterval
 	gTimeDelta = interval
+			
+	-- Headlights
+	
+	if (Call("*:GetControlValue", "Startup", 0) > 0) then
+		Call("*:SetControlValue", "Headlights", 0, 1)
+		Call("*:SetControlValue", "ThirdRail", 0, 1)
+	else
+		Call("*:SetControlValue", "Headlights", 0, 0)
+		Call("*:SetControlValue", "ThirdRail", 0, 0)
+	end
 
 	if Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
 
 		if Call( "IsExpertMode" ) == TRUE then -- Expert mode only.
-
+		
 			CombinedLever = Call( "*:GetControlValue", "ThrottleAndBrake", 0 )
 			ReverserLever = Call( "*:GetControlValue", "Reverser", 0 )
 			TrackBrake = Call( "*:GetControlValue", "TrackBrake", 0 )
@@ -110,16 +120,6 @@ function Update(interval)
 			DestSignNext = Call( "*:GetControlValue", "DestSignNext", 0 ) > 0
 			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
 			DestSign     = Call( "*:GetControlValue", "DestinationSign", 0 )
-			
-			-- Headlights
-			
-			if (Call("*:GetControlValue", "Active", 0) > 0.5) then
-				if (math.abs(ReverserLever) > 0.8) then
-					Call("*:SetControlValue", "Headlights", 0, 1)
-				elseif (math.abs(ReverserLever) < 0.2) then
-					Call("*:SetControlValue", "Headlights", 0, 0)
-				end
-			end
 			
 			-- Destination Sign
 			
@@ -462,6 +462,22 @@ function Update(interval)
 			end
 
 			-- End propulsion system
+
+			if Call( "*:GetControlValue", "Startup", 0 ) < 0 then -- Shutdown...reset everything
+				Call( "*:SetControlValue", "Reverser", 0, 0 )
+				Call( "*:SetControlValue", "ThrottleAndBrake", 0, 0 )
+				Call( "*:SetControlValue", "ATOEnabled", 0, 0 )
+				Call( "*:SetControlValue", "DestinationSign", 0, 0 )
+				
+				Call( "*:SetControlValue", "TrainBrakeControl", 1.0 )
+				Call( "*:SetControlValue", "HandBrake", 1.0 )
+				Call( "*:SetControlValue", "Regulator", 0.0 )
+				Call( "*:SetControlValue", "DynamicBrake", 0.0 )
+				
+				tTAccel = 0.0
+				tAccel = 0.0
+				tThrottle = 0.0
+			end
 			
 			-- Begin ATC system
 			
