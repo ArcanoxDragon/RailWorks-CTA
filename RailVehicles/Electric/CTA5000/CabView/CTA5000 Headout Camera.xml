@@ -41,14 +41,14 @@
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>3.135</Value>
+														<Value>2.85</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>6.075</Value>
+														<Value>6</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -70,14 +70,14 @@
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>3.135</Value>
+														<Value>2.85</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>6.075</Value>
+														<Value>6</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>

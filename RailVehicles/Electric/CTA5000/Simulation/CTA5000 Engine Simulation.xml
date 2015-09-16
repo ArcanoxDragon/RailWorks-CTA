@@ -216,14 +216,14 @@
 															<__Indexed__EngineSimulation-cTrainBrakeSystemBlueprint>
 																<Element>
 																	<Value>
-																		<EngineSimulation-cTrainEPBrakeBlueprint>
+																		<EngineSimulation-cTrainECPBrakeBlueprint>
 																			<Element>
 																				<Value>
 																					<Attribute name="BrakeType">
-																						<__Indexed__EngineSimulation-cTrainEPBrakeDataBlueprint>
+																						<__Indexed__EngineSimulation-cTrainECPBrakeDataBlueprint>
 																							<Element>
 																								<Value>
-																									<EngineSimulation-cTrainEPBrakeDataBlueprint>
+																									<EngineSimulation-cTrainECPBrakeDataBlueprint>
 																										<Element>
 																											<Value>
 																												<Attribute name="EquipmentType">
@@ -236,7 +236,7 @@
 																												<Attribute name="MaxForcePercentOfVehicleWeight">
 																													<sFloat32>
 																														<Element>
-																															<Value>150</Value>
+																															<Value>130</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -313,7 +313,7 @@
 																																			<Attribute name="MaxForce">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>3500</Value>
+																																						<Value>5500</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -474,14 +474,14 @@
 																																			<Attribute name="ApplicationRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>40</Value>
+																																						<Value>120</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
 																																			<Attribute name="ChargeRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>15</Value>
+																																						<Value>120</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -502,14 +502,14 @@
 																																			<Attribute name="MaxChargingRate">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>15</Value>
+																																						<Value>120</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
 																																			<Attribute name="MaxReservoirPressure">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>100</Value>
+																																						<Value>50</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -523,7 +523,7 @@
 																												<Attribute name="PressureUsedFromPipePerPoundGained">
 																													<sFloat32>
 																														<Element>
-																															<Value>0.25</Value>
+																															<Value>0.3</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -562,16 +562,263 @@
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
+																												<Attribute name="VacuumBrake">
+																													<EngineSimulation-cTrainVacuumBrakeDataBlueprint>
+																														<Element>
+																															<Value>
+																																<Attribute name="EquipmentType">
+																																	<EngineSimulation-eEquipmentType>
+																																		<Element>
+																																			<Value>eAirSinglePipe</Value>
+																																		</Element>
+																																	</EngineSimulation-eEquipmentType>
+																																</Attribute>
+																																<Attribute name="MaxForcePercentOfVehicleWeight">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>80</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="Control">
+																																	<__Indexed__EngineSimulation-cBrakeControlBlueprint>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cBrakeControlBlueprint>
+																																</Attribute>
+																																<Attribute name="Handbrake">
+																																	<__Indexed__EngineSimulation-cHandbrake>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cHandbrake>
+																																</Attribute>
+																																<Attribute name="MaxReleaseRate">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>1</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MaxApplicationRate">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>1</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MaxCylinderPressure">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>21</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="PressureForMaxForce">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>1</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MaxSystemPressure">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>21</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MinSystemPressure">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>0</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="ProportionalBrake">
+																																	<eBoolean>
+																																		<Element>
+																																			<Value>eFalse</Value>
+																																		</Element>
+																																	</eBoolean>
+																																</Attribute>
+																																<Attribute name="PressureUsedFromPipePerPoundGained">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>0.3</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																															</Value>
+																														</Element>
+																													</EngineSimulation-cTrainVacuumBrakeDataBlueprint>
+																												</Attribute>
+																												<Attribute name="AirBrake">
+																													<EngineSimulation-cTrainAirBrakeDataBlueprint>
+																														<Element>
+																															<Value>
+																																<Attribute name="EquipmentType">
+																																	<EngineSimulation-eEquipmentType>
+																																		<Element>
+																																			<Value>eAirSinglePipe</Value>
+																																		</Element>
+																																	</EngineSimulation-eEquipmentType>
+																																</Attribute>
+																																<Attribute name="MaxForcePercentOfVehicleWeight">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>80</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="Control">
+																																	<__Indexed__EngineSimulation-cBrakeControlBlueprint>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cBrakeControlBlueprint>
+																																</Attribute>
+																																<Attribute name="Handbrake">
+																																	<__Indexed__EngineSimulation-cHandbrake>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cHandbrake>
+																																</Attribute>
+																																<Attribute name="GraduatedRelease">
+																																	<eBoolean>
+																																		<Element>
+																																			<Value>eFalse</Value>
+																																		</Element>
+																																	</eBoolean>
+																																</Attribute>
+																																<Attribute name="ProportionalBrake">
+																																	<eBoolean>
+																																		<Element>
+																																			<Value>eFalse</Value>
+																																		</Element>
+																																	</eBoolean>
+																																</Attribute>
+																																<Attribute name="MaxReleaseRate">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>5</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MaxApplicationRate">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>10</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MaxCylinderPressure">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>90</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="PressureForMaxForce">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>70</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MaxSystemPressure">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>70</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="MinSystemPressure">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>0</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="Distributor">
+																																	<__Indexed__EngineSimulation-cBrakeDistributorBlueprint>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cBrakeDistributorBlueprint>
+																																</Attribute>
+																																<Attribute name="EmergencyBraking">
+																																	<__Indexed__EngineSimulation-cBaseAirBrakeBlueprint-cEmergencyBraking>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cBaseAirBrakeBlueprint-cEmergencyBraking>
+																																</Attribute>
+																																<Attribute name="AuxiliaryBraking">
+																																	<__Indexed__EngineSimulation-cBaseAirBrakeBlueprint-cAuxiliaryBraking>
+																																		<Element>
+																																			<Value />
+																																		</Element>
+																																	</__Indexed__EngineSimulation-cBaseAirBrakeBlueprint-cAuxiliaryBraking>
+																																</Attribute>
+																																<Attribute name="PressureUsedFromPipePerPoundGained">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>0.3</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="PressureGainedFromOnePipePounds">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>100</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="RetainerType">
+																																	<EngineSimulation-cBaseAirBrakeBlueprint-eRetainerType>
+																																		<Element>
+																																			<Value>eNoRetainer</Value>
+																																		</Element>
+																																	</EngineSimulation-cBaseAirBrakeBlueprint-eRetainerType>
+																																</Attribute>
+																																<Attribute name="TripleValve">
+																																	<eBoolean>
+																																		<Element>
+																																			<Value>eFalse</Value>
+																																		</Element>
+																																	</eBoolean>
+																																</Attribute>
+																																<Attribute name="TripleValveRatio">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>2.5</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																																<Attribute name="RetainerSlowReleaseRate">
+																																	<sFloat32>
+																																		<Element>
+																																			<Value>15</Value>
+																																		</Element>
+																																	</sFloat32>
+																																</Attribute>
+																															</Value>
+																														</Element>
+																													</EngineSimulation-cTrainAirBrakeDataBlueprint>
+																												</Attribute>
 																											</Value>
 																										</Element>
-																									</EngineSimulation-cTrainEPBrakeDataBlueprint>
+																									</EngineSimulation-cTrainECPBrakeDataBlueprint>
 																								</Value>
 																							</Element>
-																						</__Indexed__EngineSimulation-cTrainEPBrakeDataBlueprint>
+																						</__Indexed__EngineSimulation-cTrainECPBrakeDataBlueprint>
 																					</Attribute>
 																				</Value>
 																			</Element>
-																		</EngineSimulation-cTrainEPBrakeBlueprint>
+																		</EngineSimulation-cTrainECPBrakeBlueprint>
 																	</Value>
 																</Element>
 															</__Indexed__EngineSimulation-cTrainBrakeSystemBlueprint>

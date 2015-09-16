@@ -42,7 +42,7 @@ function Setup()
 	JERK_LIMIT = 0.73
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.755
+	MAX_BRAKE_RELEASE = 0.725
 	MAX_SERVICE_BRAKE = 0.875
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
@@ -245,11 +245,11 @@ function Update(interval)
 				Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax )
 				if (TrackBrake > 0) then
 					Call( "*:SetControlValue", "Sander", 0, 1 )
-					Call( "*:SetControlValue", "HandBrake", 0, 1 )
+					Call( "*:SetControlValue", "HandBrakeCommand", 0, 1 )
 					tAccel = math.min(tAccel, 0.0)
 				else
 					Call( "*:SetControlValue", "Sander", 0, 0 )
-					Call( "*:SetControlValue", "HandBrake", 0, 0 )
+					Call( "*:SetControlValue", "HandBrakeCommand", 0, 0 )
 				end
 				gSetReg = 0.0
 				gSetDynamic = 0.0
@@ -261,7 +261,7 @@ function Update(interval)
 				end
 			else
 				Call( "*:SetControlValue", "Sander", 0, 0 )
-				Call( "*:SetControlValue", "HandBrake", 0, 0 )
+				Call( "*:SetControlValue", "HandBrakeCommand", 0, 0 )
 				
 				-- Cancel smooth-stop if train takes too long to stop
 				if (math.abs(TrainSpeed) < 3.0 and not ATOEnabled) then
@@ -470,7 +470,7 @@ function Update(interval)
 				Call( "*:SetControlValue", "DestinationSign", 0, 0 )
 				
 				Call( "*:SetControlValue", "TrainBrakeControl", 1.0 )
-				Call( "*:SetControlValue", "HandBrake", 1.0 )
+				Call( "*:SetControlValue", "HandBrakeCommand", 1.0 )
 				Call( "*:SetControlValue", "Regulator", 0.0 )
 				Call( "*:SetControlValue", "DynamicBrake", 0.0 )
 				

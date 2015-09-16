@@ -109,9 +109,11 @@ function Initialise()
 	gIsBCar = 0 -- Is this an "A" car or a "B" car?
 	gInit = false
 	gOnThirdRail = true
+	gBrakeCheckTime = 0.0
+	gParkingBrake = false
 	
 -- Moving average for acceleration
-	gMovingAvgSize = 50
+	gMovingAvgSize = 20
 	gMovingAvgList = { }
 	gMovingAvgIndex = 0 -- 0 - 9
 	gMovingAvg = 0
@@ -386,6 +388,28 @@ function Update(time)
 		
 	Call("*:SetTime", "body_tilt", gBodyTilt)
 	SetControlValue("BodyTilt", gBodyTilt - 1.0)
+	
+	-- Relay train brake command to this car's brakes and apply local handbrake as a parking brake
+	
+	HandBrake = GetControlValue("HandBrakeCommand")
+	BrakePressure = GetControlValue("TrainBrakeCylinderPressureBAR")
+	
+	gBrakeCheckTime = gBrakeCheckTime + time
+	lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
+	if (gBrakeCheckTime > 0.5 + lRandom) then
+		gBrakeCheckTime = 0
+		if (trainSpeed < 0.1 and BrakePressure >= 1.0) then
+			gParkingBrake = true
+		elseif (BrakePressure <= 0.01) then
+			gParkingBrake = false
+		end
+	end
+	
+	if (gParkingBrake) then
+		HandBrake = 1
+	end
+	
+	SetControlValue("HandBrake", HandBrake)
 	
 	-- Destination sign
 	

@@ -27,21 +27,21 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>0.8</Value>
+														<Value>0.9</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>2.65</Value>
+														<Value>2.6</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>5.8</Value>
+														<Value>5.75</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -92,21 +92,21 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>0.8</Value>
+														<Value>0.9</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>3</Value>
+														<Value>2.85</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>6</Value>
+														<Value>5.95</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -181,28 +181,28 @@
 							<Attribute name="WindowMaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.15</Value>
+										<Value>1.05</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringXCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.068</Value>
+										<Value>0.06</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringYCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.06</Value>
+										<Value>0.09</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SpringZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.075</Value>
+										<Value>0.06</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
