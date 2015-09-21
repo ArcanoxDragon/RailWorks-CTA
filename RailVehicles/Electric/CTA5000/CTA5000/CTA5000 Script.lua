@@ -398,7 +398,7 @@ function Update(time)
 	lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
 	if (gBrakeCheckTime > 0.5 + lRandom) then
 		gBrakeCheckTime = 0
-		if (trainSpeed < 0.1 and BrakePressure >= 1.0) then
+		if (math.abs(trainSpeed) < 0.1 and BrakePressure >= 0.2) then
 			gParkingBrake = true
 		elseif (BrakePressure <= 0.01) then
 			gParkingBrake = false
