@@ -91,10 +91,8 @@ function Update(interval)
 	-- Headlights
 	
 	if (Call("*:GetControlValue", "Startup", 0) > 0) then
-		Call("*:SetControlValue", "Headlights", 0, 1)
 		Call("*:SetControlValue", "ThirdRail", 0, 1)
 	else
-		Call("*:SetControlValue", "Headlights", 0, 0)
 		Call("*:SetControlValue", "ThirdRail", 0, 0)
 	end
 

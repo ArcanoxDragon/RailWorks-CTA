@@ -213,9 +213,16 @@ function Update(time)
 	
 		-- Headlights
 		
-		Headlights = GetControlValue( "Headlights" )
+		if math.abs(reverser) >= 0.15 then
+			Headlights = 1
+		else
+			Headlights = 0
+		end
+		
+		SetControlValue( "Headlights", Headlights )
+		
 		if (Headlights > 0.5 and IsEndCar) then
-			if (reverser > 0.5 and CarNum == 0) or (reverser < -0.5 and CarNum ~= 0) then -- Leading car (in direction of travel)
+			if CarNum == 0 then -- Leading car ("active cab")
 				Call( "HeadlightL:Activate", 1 )
 				Call( "HeadlightR:Activate", 1 )
 				Call( "TaillightL:Activate", 0 )
@@ -223,7 +230,7 @@ function Update(time)
 				
 				HeadlightOn = true
 				TaillightOn = false
-			elseif (reverser > 0.5 and CarNum ~= 0) or (reverser < -0.5 and CarNum == 0) then -- Trailing car (in direction of travel)
+			else -- Trailing car (opposite "active cab" end)
 				Call( "HeadlightL:Activate", 0 )
 				Call( "HeadlightR:Activate", 0 )
 				Call( "TaillightL:Activate", 1 )
@@ -373,7 +380,7 @@ function Update(time)
 	end
 	tiltMult = 1.0
 	if (gCamInside) then
-		tiltMult = 0.45
+		tiltMult = 0.2
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg * tiltMult, -1, 1)
 	dBodyTilt = 10 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.1, 1.0)
