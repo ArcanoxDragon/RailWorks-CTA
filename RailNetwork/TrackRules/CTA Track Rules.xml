@@ -298,7 +298,7 @@
 							<Attribute name="LineUnevenness">
 								<sFloat32>
 									<Element>
-										<Value>95</Value>
+										<Value>45</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
