@@ -7876,7 +7876,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleClickMinPower</Value>
+													<Value>ThrottleClickMinPowerUp</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -7920,14 +7920,14 @@
 										<Attribute name="TriggerType">
 											<kLoud-eTriggerType>
 												<Element>
-													<Value>ValueMovesPast</Value>
+													<Value>ValueIncreasePast</Value>
 												</Element>
 											</kLoud-eTriggerType>
 										</Attribute>
 										<Attribute name="TriggerValue">
 											<sFloat32>
 												<Element>
-													<Value>0.55</Value>
+													<Value>0.545</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -7969,7 +7969,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleClickMinBrake</Value>
+													<Value>ThrottleClickMinPowerDown</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -8013,14 +8013,14 @@
 										<Attribute name="TriggerType">
 											<kLoud-eTriggerType>
 												<Element>
-													<Value>ValueMovesPast</Value>
+													<Value>ValueDecreasePast</Value>
 												</Element>
 											</kLoud-eTriggerType>
 										</Attribute>
 										<Attribute name="TriggerValue">
 											<sFloat32>
 												<Element>
-													<Value>0.45</Value>
+													<Value>0.555</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8062,7 +8062,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleClickMaxPower</Value>
+													<Value>ThrottleClickCoastUp</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -8106,14 +8106,14 @@
 										<Attribute name="TriggerType">
 											<kLoud-eTriggerType>
 												<Element>
-													<Value>ValueMovesPast</Value>
+													<Value>ValueIncreasePast</Value>
 												</Element>
 											</kLoud-eTriggerType>
 										</Attribute>
 										<Attribute name="TriggerValue">
 											<sFloat32>
 												<Element>
-													<Value>0.99</Value>
+													<Value>0.495</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8155,7 +8155,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>ThrottleClickMaxBrake</Value>
+													<Value>ThrottleClickCoastDown</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -8199,14 +8199,200 @@
 										<Attribute name="TriggerType">
 											<kLoud-eTriggerType>
 												<Element>
-													<Value>ValueMovesPast</Value>
+													<Value>ValueDecreasePast</Value>
 												</Element>
 											</kLoud-eTriggerType>
 										</Attribute>
 										<Attribute name="TriggerValue">
 											<sFloat32>
 												<Element>
-													<Value>0.01</Value>
+													<Value>0.505</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="ValueIsChangingGateTime">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="InstanceGroup">
+											<kLoud-cInstanceGroup>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value>ThrottleClick</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cInstanceGroup>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cTriggeredOneshot>
+							<kLoud-cTriggeredOneshot>
+								<Element>
+									<Value>
+										<Attribute name="PlayState">
+											<ePlayState>
+												<Element>
+													<Value>INSIDE</Value>
+												</Element>
+											</ePlayState>
+										</Attribute>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>ThrottleClickMinBrakeUp</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="Sound">
+											<kLoud-cSound>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value>Click</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cSound>
+										</Attribute>
+										<Attribute name="ModifierChain">
+											<kLoud-cModifierChain>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cModifierChain>
+										</Attribute>
+										<Attribute name="ControllerName">
+											<cDeltaString>
+												<Element>
+													<Value>ThrottleLever</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TriggerType">
+											<kLoud-eTriggerType>
+												<Element>
+													<Value>ValueIncreasePast</Value>
+												</Element>
+											</kLoud-eTriggerType>
+										</Attribute>
+										<Attribute name="TriggerValue">
+											<sFloat32>
+												<Element>
+													<Value>0.445</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="ValueIsChangingGateTime">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="InstanceGroup">
+											<kLoud-cInstanceGroup>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value>ThrottleClick</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cInstanceGroup>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cTriggeredOneshot>
+							<kLoud-cTriggeredOneshot>
+								<Element>
+									<Value>
+										<Attribute name="PlayState">
+											<ePlayState>
+												<Element>
+													<Value>INSIDE</Value>
+												</Element>
+											</ePlayState>
+										</Attribute>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>ThrottleClickMinBrakeDown</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="Sound">
+											<kLoud-cSound>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value>Click</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cSound>
+										</Attribute>
+										<Attribute name="ModifierChain">
+											<kLoud-cModifierChain>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cModifierChain>
+										</Attribute>
+										<Attribute name="ControllerName">
+											<cDeltaString>
+												<Element>
+													<Value>ThrottleLever</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TriggerType">
+											<kLoud-eTriggerType>
+												<Element>
+													<Value>ValueDecreasePast</Value>
+												</Element>
+											</kLoud-eTriggerType>
+										</Attribute>
+										<Attribute name="TriggerValue">
+											<sFloat32>
+												<Element>
+													<Value>0.455</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
