@@ -330,7 +330,7 @@
 			<Attribute name="ParallelDistance">
 				<sFloat32>
 					<Element>
-						<Value>3.5</Value>
+						<Value>3.75</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
