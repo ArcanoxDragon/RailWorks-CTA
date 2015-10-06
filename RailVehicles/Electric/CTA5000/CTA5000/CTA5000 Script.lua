@@ -311,7 +311,6 @@ function Update(time)
 	if GetControlValue("ThirdRail") < 0.5 then
 		SetControlValue("OnThirdRail", 0)
 	else
-		debugPrint("gOnThirdRail: " .. tostring(gOnThirdRail))
 		SetControlValue("OnThirdRail", gOnThirdRail and 1 or 0)
 	end
 	
@@ -576,40 +575,41 @@ function OnConsistMessage ( msg, argument, direction )
 end
 
 function OnCustomSignalMessage(argument)
-	for msg, arg in string.gfind(tostring(argument), "([^=\n]+)=([^=\n]+)") do
-		if (tonumber(msg) == MSG_ATO_SPEED_LIMIT) then
-			local speedLimit = tonumber(arg)
-			if (speedLimit) then
-				SetControlValue("ATOSpeedLimit", speedLimit)
-			end
-		elseif (tonumber(msg) == MSG_SIGN_CHANGE) then
-			--debugPrint("Received sign change command")
-			if (GetControlValue("Active") > 0.5) then
-				local curSignIndex = GetControlValue("DestinationSign")
-				--debugPrint("Current sign: " .. tostring(curSignIndex))
-				if (curSignIndex < NUM_SIGNS and curSignIndex >= 0) then
-					local curSign = SIGNS[curSignIndex + 1]
-					--debugPrint("Changing to: " .. tostring(curSign.nextSign))
-					SetControlValue("DestinationSign", curSign.nextSign)
-					RVNumber = Call("*:GetRVNumber")
-					firstPart = "5001"
-					if (string.len(RVNumber) == 5) then
-						firstPart = string.sub(RVNumber, 1, 4)
-						Call("*:SetRVNumber", firstPart .. curSign.nextSign.id)
-					else
-						Call("*:SetRVNumber", "5001a")
+	if (type(argument) == "string") then
+		for msg, arg in string.gfind(tostring(argument), "([^=\n]+)=([^=\n]+)") do
+			if (tonumber(msg) == MSG_ATO_SPEED_LIMIT) then
+				local speedLimit = tonumber(arg)
+				if (speedLimit) then
+					SetControlValue("ATOSpeedLimit", speedLimit)
+				end
+			elseif (tonumber(msg) == MSG_SIGN_CHANGE) then
+				--debugPrint("Received sign change command")
+				if (GetControlValue("Active") > 0.5) then
+					local curSignIndex = GetControlValue("DestinationSign")
+					--debugPrint("Current sign: " .. tostring(curSignIndex))
+					if (curSignIndex < NUM_SIGNS and curSignIndex >= 0) then
+						local curSign = SIGNS[curSignIndex + 1]
+						--debugPrint("Changing to: " .. tostring(curSign.nextSign))
+						SetControlValue("DestinationSign", curSign.nextSign)
+						RVNumber = Call("*:GetRVNumber")
+						firstPart = "5001"
+						if (string.len(RVNumber) == 5) then
+							firstPart = string.sub(RVNumber, 1, 4)
+							Call("*:SetRVNumber", firstPart .. curSign.nextSign.id)
+						else
+							Call("*:SetRVNumber", "5001a")
+						end
 					end
 				end
+			--[[elseif (tonumber(msg) == MSG_THIRD_RAIL_OFF) then
+				SetControlValue("OnThirdRail", 0)
+				debugPrint("Car #" .. tostring(GetControlValue("CarNum")) .. ": Went off third rail")
+			elseif (tonumber(msg) == MSG_THIRD_RAIL_ON) then
+				SetControlValue("OnThirdRail", 1)
+				debugPrint("Car #" .. tostring(GetControlValue("CarNum")) .. ": Went on third rail")]]
 			end
-		--[[elseif (tonumber(msg) == MSG_THIRD_RAIL_OFF) then
-			SetControlValue("OnThirdRail", 0)
-			debugPrint("Car #" .. tostring(GetControlValue("CarNum")) .. ": Went off third rail")
-		elseif (tonumber(msg) == MSG_THIRD_RAIL_ON) then
-			SetControlValue("OnThirdRail", 1)
-			debugPrint("Car #" .. tostring(GetControlValue("CarNum")) .. ": Went on third rail")]]
 		end
 	end
-	
 end
 
 function OnControlValueChange( name, index, value )

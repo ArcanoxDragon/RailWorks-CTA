@@ -492,14 +492,14 @@
 											<Attribute name="Provider">
 												<cDeltaString>
 													<Element>
-														<Value />
+														<Value>briman0094</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
 											<Attribute name="Product">
 												<cDeltaString>
 													<Element>
-														<Value />
+														<Value>CTA</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -510,7 +510,7 @@
 							<Attribute name="BlueprintID">
 								<cDeltaString>
 									<Element>
-										<Value />
+										<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Sound</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>

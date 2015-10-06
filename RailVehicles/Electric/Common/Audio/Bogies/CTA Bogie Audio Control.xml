@@ -33,7 +33,7 @@
 										<Attribute name="IsLooped">
 											<bool>
 												<Element>
-													<Value>1</Value>
+													<Value>0</Value>
 												</Element>
 											</bool>
 										</Attribute>
@@ -47,7 +47,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>1</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -132,7 +132,7 @@
 										<Attribute name="IsLooped">
 											<bool>
 												<Element>
-													<Value>1</Value>
+													<Value>0</Value>
 												</Element>
 											</bool>
 										</Attribute>
@@ -146,7 +146,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.85</Value>
+													<Value>1</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1763,7 +1763,7 @@
 										<Attribute name="MaximumNumberOfInstances">
 											<sUInt32>
 												<Element>
-													<Value>1</Value>
+													<Value>4</Value>
 												</Element>
 											</sUInt32>
 										</Attribute>
@@ -2249,7 +2249,7 @@
 										<Attribute name="ActiveRangeStartValue">
 											<sFloat32>
 												<Element>
-													<Value>0.01</Value>
+													<Value>100</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2349,7 +2349,7 @@
 										<Attribute name="ActiveRangeStartValue">
 											<sFloat32>
 												<Element>
-													<Value>0.01</Value>
+													<Value>100</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2417,7 +2417,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>JunctionOnceInt</Value>
+																	<Value>JunctionLoopInt</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -2510,7 +2510,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>JunctionOnce</Value>
+																	<Value>JunctionLoop</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
