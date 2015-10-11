@@ -172,6 +172,9 @@ function Update(time)
 	local reverser = GetControlValue("Reverser")
 	local IsEndCar = GetControlValue( "IsEndCar" ) > 0
 	local CarNum = GetControlValue( "CarNum" )
+	local HandBrake = GetControlValue("HandBrakeCommand")
+	local TrueHandBrake = GetControlValue("HandBrake")
+	local BrakePressure = GetControlValue("TrainBrakeCylinderPressureBAR")
 	
 	if (not gInit) then
 		-- Set "DestinationSign" control to value from car number (allows scenarios to set destsign)
@@ -259,6 +262,27 @@ function Update(time)
 			Call("*:ActivateNode", "taillights", 1)
 		else
 			Call("*:ActivateNode", "taillights", 0)
+		end
+		
+		-- Door light clusters
+		
+		if GetControlValue("DoorsOpenCloseRight") > 0.5 then
+			Call("*:ActivateNode", "doorlights_right", 1)
+		end
+		
+		if GetControlValue("DoorsOpenCloseLeft") > 0.5 then
+			Call("*:ActivateNode", "doorlights_left", 1)
+		end
+		
+		if GetControlValue("DoorsOpen") < 0.5 then
+			Call("*:ActivateNode", "doorlights_right", 0)
+			Call("*:ActivateNode", "doorlights_left", 0)
+		end
+		
+		if BrakePressure >= 0.05 or TrueHandBrake > 0.5 then
+			Call("*:ActivateNode", "brakelights", 1)
+		else
+			Call("*:ActivateNode", "brakelights", 0)
 		end
 		
 		-- Cab speed
@@ -377,7 +401,7 @@ function Update(time)
 	if (mod(GetControlValue("CarNum"), 2) ~= 0) then
 		accelAvg = -accelAvg
 	end
-	tiltMult = 1.0
+	tiltMult = 0.6
 	if (gCamInside) then
 		tiltMult = 0.2
 	end
@@ -396,9 +420,6 @@ function Update(time)
 	SetControlValue("BodyTilt", gBodyTilt - 1.0)
 	
 	-- Relay train brake command to this car's brakes and apply local handbrake as a parking brake
-	
-	HandBrake = GetControlValue("HandBrakeCommand")
-	BrakePressure = GetControlValue("TrainBrakeCylinderPressureBAR")
 	
 	gBrakeCheckTime = gBrakeCheckTime + time
 	lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
