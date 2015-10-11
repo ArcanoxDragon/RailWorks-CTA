@@ -26,16 +26,66 @@ SIGNAL_THIRD_RAIL_ON = 31
 
 CAR_COUNT_TIME = 0.5 -- seconds
 
+LAST_CLASS_LIGHT_L = -1
+LAST_CLASS_LIGHT_R = -1
+
+CLASS_LIGHTS_L = { { "classlight_red_l", 	"classlight_red_l_on" },
+				   { "classlight_yellow_l", "classlight_yellow_l_on" },
+				   { "classlight_green_l", 	"classlight_green_l_on" },
+				   { "classlight_white_l", 	"classlight_white_l_on" } }
+
+CLASS_LIGHTS_R = { { "classlight_red_r", 	"classlight_red_r_on" },
+				   { "classlight_yellow_r", "classlight_yellow_r_on" },
+				   { "classlight_green_r", 	"classlight_green_r_on" },
+				   { "classlight_white_r", 	"classlight_white_r_on" } }
+				   
+local function setClassLight(classLight, on)
+	Call("*:ActivateNode", classLight[1], on and 0 or 1)
+	Call("*:ActivateNode", classLight[2], on and 1 or 0)
+end
+
+-- 0 = off
+-- 1 = red
+-- 2 = yellow
+-- 3 = green
+-- 4 = white
+local function setClassLights(left, right)
+	if left == LAST_CLASS_LIGHT_L and right == LAST_CLASS_LIGHT_R then -- Save on some iterations and Call()s
+		return
+	end
+	
+	--debugPrint("Setting class lights to: " .. tostring(left) .. ", " .. tostring(right))
+
+	for i = 1, 4 do
+		setClassLight(CLASS_LIGHTS_L[i], false)
+		setClassLight(CLASS_LIGHTS_R[i], false)
+	end
+	
+	if left and left > 0 and left <= 4 then
+		setClassLight(CLASS_LIGHTS_L[left], true)
+	end
+	
+	if right and right > 0 and right <= 4 then
+		setClassLight(CLASS_LIGHTS_R[right], true)
+	end
+	
+	LAST_CLASS_LIGHT_L = left
+	LAST_CLASS_LIGHT_R = right
+end
+
 local NUM_SIGNS = 0
 local SIGNS = { }
 
-local function addSign(texName, lightOn, lightColor, nextSign)
+local function addSign(texName, lightOn, lightColor, lMarker, rMarker, nextSign) -- lMarker and rMarker are left/right marker/class lights, left is when looking *towards* front of train car
 	local sign = { }
 	local nSign = nextSign or NUM_SIGNS -- Same sign by default
 	sign.id = texName
 	sign.hasLight = lightOn
 	sign.color = lightColor
 	sign.nextSign = nSign
+	sign.lMarker = lMarker
+	sign.rMarker = rMarker
+	
 	SIGNS[NUM_SIGNS + 1] = sign
 	NUM_SIGNS = NUM_SIGNS + 1
 end
@@ -53,36 +103,44 @@ local function getSignIndex(letter)
 	return 0
 end
 
---     ( id, light, lightColor, [ nextSign ] )
-addSign("a", false, nil)                   --[[  0 Off ]]
-addSign("b",  true, { 100, 100, 100 })     --[[  1 NIS ]]
-addSign("c",  true, { 100, 100, 100 })     --[[  2 Express ]]
-addSign("d",  true, { 255,  31,  31 })     --[[  3 Red Howard ]]
-addSign("e",  true, { 255,  31,  31 })     --[[  4 Red 95th ]]
-addSign("f",  true, { 255,  31,  31 })     --[[  5 Red Roosevelt ]]
-addSign("g",  true, { 255,  31,  31 })     --[[  6 Red 63rd ]]
-addSign("h",  true, { 165,  95,  35 }, 8)  --[[  7 Brown Loop ]]
-addSign("i",  true, { 165,  95,  35 })     --[[  8 Brown Kimball ]]
-addSign("j",  true, { 165,  95,  35 })     --[[  9 Brown Belmont ]]
-addSign("k",  true, { 255, 127,  63 }, 11) --[[ 10 Orange Loop ]]
-addSign("l",  true, { 255, 127,  63 })     --[[ 11 Orange Midway ]]
-addSign("m",  true, { 155,   0, 215 }, 14) --[[ 12 Purple Loop ]]
-addSign("n",  true, { 155,   0, 215 })     --[[ 13 Purple Howard ]]
-addSign("o",  true, { 155,   0, 215 })     --[[ 14 Purple Linden ]]
-addSign("p",  true, { 235,  90, 185 }, 16) --[[ 15 Pink Loop ]]
-addSign("q",  true, { 235,  90, 185 })     --[[ 16 Pink 54th/Cermak ]]
-addSign("r",  true, {  31, 255,  31 })     --[[ 17 Green Harlem ]]
-addSign("s",  true, { 191, 255, 191 })     --[[ 18 Green Cottage Grove ]]
-addSign("t",  true, {  31, 255,  31 })     --[[ 19 Green Ashland/63rd ]]
-addSign("u",  true, {  31, 255,  31 })     --[[ 20 Green Roosevelt ]]
-addSign("v",  true, {   0,  95, 235 })     --[[ 21 Blue O'Hare ]]
-addSign("w",  true, {   0,  95, 235 })     --[[ 22 Blue Forest Park ]]
-addSign("x",  true, { 191, 191, 255 })     --[[ 23 Blue UIC ]]
-addSign("y",  true, {   0,  95, 235 })     --[[ 24 Blue Rosemont ]]
-addSign("z",  true, {   0,  95, 235 })     --[[ 25 Blue Jefferson Park ]]
-addSign("A",  true, { 191, 191, 255 })     --[[ 26 Blue 54th/Cermak ]]
-addSign("B",  true, { 255, 255,   0 })     --[[ 27 Yellow Skokie ]]
-addSign("C",  true, { 255, 255,   0 })     --[[ 28 Yellow Howard ]]
+--     ( id, light, lightColor, lMarker, rMarker, [ nextSign ] )
+								--[[ Marker lights:
+									0 - Off
+									1 - Red
+									2 - Yellow
+									3 - Green
+									4 - White
+								  ]]
+addSign("a", false, nil, 0, 0)             		 --[[  0 Off ]]
+addSign("b",  true, { 100, 100, 100 }, 4, 4)     --[[  1 NIS ]]
+addSign("c",  true, { 100, 100, 100 }, 4, 4)     --[[  2 Express ]] -- This has special marker light behavior (flashing) but we code it in anyways for consistency
+addSign("d",  true, { 255,  31,  31 }, 2, 2)     --[[  3 Red Howard ]]
+addSign("e",  true, { 255,  31,  31 }, 2, 2)     --[[  4 Red 95th ]]
+addSign("f",  true, { 255,  31,  31 }, 2, 2)     --[[  5 Red Roosevelt ]]
+addSign("g",  true, { 255,  31,  31 }, 2, 3)     --[[  6 Red 63rd ]]
+addSign("h",  true, { 165,  95,  35 }, 3, 1, 8)  --[[  7 Brown Loop ]]
+addSign("i",  true, { 165,  95,  35 }, 3, 1)     --[[  8 Brown Kimball ]]
+addSign("j",  true, { 165,  95,  35 }, 2, 1)     --[[  9 Brown Belmont ]]
+addSign("k",  true, { 255, 127,  63 }, 1, 2, 11) --[[ 10 Orange Loop ]]
+addSign("l",  true, { 255, 127,  63 }, 1, 2)     --[[ 11 Orange Midway ]]
+addSign("m",  true, { 155,   0, 215 }, 4, 4, 14) --[[ 12 Purple Loop ]]
+addSign("n",  true, { 155,   0, 215 }, 2, 1)     --[[ 13 Purple Howard ]]
+addSign("o",  true, { 155,   0, 215 }, 4, 4)     --[[ 14 Purple Linden ]]
+addSign("p",  true, { 235,  90, 185 }, 4, 1, 16) --[[ 15 Pink Loop ]]
+addSign("q",  true, { 235,  90, 185 }, 4, 1)     --[[ 16 Pink 54th/Cermak ]]
+addSign("r",  true, {  31, 255,  31 }, 3, 3)     --[[ 17 Green Harlem ]]
+addSign("s",  true, { 191, 255, 191 }, 4, 3)     --[[ 18 Green Cottage Grove ]]
+addSign("t",  true, {  31, 255,  31 }, 3, 3)     --[[ 19 Green Ashland/63rd ]]
+addSign("u",  true, {  31, 255,  31 }, 3, 3)     --[[ 20 Green Roosevelt ]]
+addSign("D",  true, {  31, 255,  31 }, 2, 3)     --[[ 21 Green Loop ]]
+addSign("v",  true, {   0,  95, 235 }, 2, 2)     --[[ 22 Blue O'Hare ]]
+addSign("w",  true, {   0,  95, 235 }, 2, 2)     --[[ 23 Blue Forest Park ]]
+addSign("x",  true, { 191, 191, 255 }, 2, 3)     --[[ 24 Blue UIC ]]
+addSign("y",  true, {   0,  95, 235 }, 2, 3)     --[[ 25 Blue Rosemont ]]
+addSign("z",  true, {   0,  95, 235 }, 2, 3)     --[[ 26 Blue Jefferson Park ]]
+addSign("A",  true, { 191, 191, 255 }, 3, 3)     --[[ 27 Blue 54th/Cermak ]]
+addSign("B",  true, { 255, 255,   0 }, 3, 3)     --[[ 28 Yellow Skokie ]]
+addSign("C",  true, { 255, 255,   0 }, 3, 3)     --[[ 29 Yellow Howard ]]
 
 function Initialise()
 -- For AWS self test.
@@ -111,6 +169,8 @@ function Initialise()
 	gOnThirdRail = true
 	gBrakeCheckTime = 0.0
 	gParkingBrake = false
+	gExpressLightTimer = 0.0
+	gExpressLightsOn = false
 	
 -- Moving average for acceleration
 	gMovingAvgSize = 20
@@ -126,8 +186,9 @@ function Initialise()
 	
 	SetControlValue("OnThirdRail", 1)
 	
-	HeadlightOn = false
-	TaillightOn = false
+	HeadlightOn   = false
+	TaillightOn   = false
+	ClassLightsOn = false
 
 	Call( "BeginUpdate" )
 end
@@ -175,6 +236,7 @@ function Update(time)
 	local HandBrake = GetControlValue("HandBrakeCommand")
 	local TrueHandBrake = GetControlValue("HandBrake")
 	local BrakePressure = GetControlValue("TrainBrakeCylinderPressureBAR")
+	local DestSign = GetControlValue( "DestinationSign" )
 	
 	if (not gInit) then
 		-- Set "DestinationSign" control to value from car number (allows scenarios to set destsign)
@@ -231,16 +293,26 @@ function Update(time)
 				Call( "TaillightL:Activate", 0 )
 				Call( "TaillightR:Activate", 0 )
 				
-				HeadlightOn = true
-				TaillightOn = false
+				HeadlightOn   = true
+				TaillightOn   = false
+				
+				if DestSign > 0 then
+					ClassLightsOn = true
+				else
+					ClassLightsOn = false
+					setClassLights(0, 0)
+				end
 			else -- Trailing car (opposite "active cab" end)
 				Call( "HeadlightL:Activate", 0 )
 				Call( "HeadlightR:Activate", 0 )
 				Call( "TaillightL:Activate", 1 )
 				Call( "TaillightR:Activate", 1 )
 				
-				HeadlightOn = false
-				TaillightOn = true
+				HeadlightOn   = false
+				TaillightOn   = true
+				ClassLightsOn = false
+				
+				setClassLights(1, 1) -- Red, Red
 			end
 		else -- Either middle car or headlights were switched off
 			Call( "HeadlightL:Activate", 0 )
@@ -248,8 +320,11 @@ function Update(time)
 			Call( "TaillightL:Activate", 0 )
 			Call( "TaillightR:Activate", 0 )
 			
-			HeadlightOn = false
-			TaillightOn = false
+			HeadlightOn   = false
+			TaillightOn   = false
+			ClassLightsOn = false
+			
+			setClassLights(0, 0) -- Off, Off
 		end
 	
 		if HeadlightOn then
@@ -440,7 +515,6 @@ function Update(time)
 	
 	-- Destination sign
 	
-	DestSign = GetControlValue( "DestinationSign" )
 	RVNumber = Call("*:GetRVNumber")
 	firstPart = "5001"
 	if (string.len(RVNumber) == 5) then
@@ -464,11 +538,33 @@ function Update(time)
 		if (IsEndCar) then
 			Call("*:ActivateNode", "sign_off_front", 0)
 			
-			if (SIGNS[DestSign + 1].hasLight) then
+			if (sign.hasLight) then
 				Call( "SignLightFront:Activate", 1 )
-				Call( "SignLightFront:SetColour", SIGNS[DestSign + 1].color[1] / 255, SIGNS[DestSign + 1].color[2] / 255, SIGNS[DestSign + 1].color[3] / 255 )
+				Call( "SignLightFront:SetColour", sign.color[1] / 255, sign.color[2] / 255, sign.color[3] / 255 )
 			else
 				Call( "SignLightFront:Activate", 0 )
+			end
+			
+			if ClassLightsOn then -- Only on active cab; set earlier by "Headlights" code
+				if (DestSign == 2) then -- Express
+					gExpressLightTimer = gExpressLightTimer + time
+					
+					if gExpressLightTimer >= 1.0 then -- toggle lights every second
+						gExpressLightTimer = 0.0
+						gExpressLightsOn = not gExpressLightsOn
+						
+						if gExpressLightsOn then
+							setClassLights(4, 4) -- White, White
+						else
+							setClassLights(0, 0) -- Off, Off
+						end
+					end
+				else
+					gExpressLightTimer = 0.0
+					gExpressLightsOn = true
+				
+					setClassLights(sign.lMarker, sign.rMarker)
+				end
 			end
 		else
 			Call("*:ActivateNode", "sign_off_front", 1)

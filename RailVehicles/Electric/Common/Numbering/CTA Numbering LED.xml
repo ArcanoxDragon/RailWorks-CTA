@@ -793,6 +793,26 @@
 									</Value>
 								</Element>
 							</cNamedTextureSetBlueprint-sTextureEntry>
+							<cNamedTextureSetBlueprint-sTextureEntry>
+								<Element>
+									<Value>
+										<Attribute name="TextureName">
+											<cDeltaString>
+												<Element>
+													<Value>D</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="TextureID">
+											<cDeltaString>
+												<Element>
+													<Value>RailVehicles\Electric\CTA5000\CTA5000\textures\signs\leds\Green_Loop</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+									</Value>
+								</Element>
+							</cNamedTextureSetBlueprint-sTextureEntry>
 						</Value>
 					</Element>
 				</__Indexed__cNamedTextureSetBlueprint-sTextureEntry>
