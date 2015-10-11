@@ -560,8 +560,8 @@ function Update(time)
 						end
 					end
 				else
-					gExpressLightTimer = 0.0
-					gExpressLightsOn = true
+					gExpressLightTimer = 1.0
+					gExpressLightsOn = false
 				
 					setClassLights(sign.lMarker, sign.rMarker)
 				end
