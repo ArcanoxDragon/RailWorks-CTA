@@ -181,9 +181,9 @@ function UpdateATC(interval)
 	if enabled then
 		if (not ATOEnabled) then
 			-- The ATC can only display certain speed limits; allow the next lowest one above actual, and driver is responsible for following actual
-			if (targetSpeed >= 10) then
+			if (targetSpeed > 10) then
 				targetSpeed = getSpeedLimitAbove(targetSpeed)
-			else -- If it's below 10 (like end of track), we force them to obey it
+			else -- If speed limit is 10 or below (like end of track, or around corners in the loop), we force them to obey it by displaying "0" if they're above it
 				if (math.abs(TrainSpeed) > targetSpeed + 1) then
 					targetSpeed = getSpeedLimitBelow(targetSpeed)
 				else
@@ -197,7 +197,7 @@ function UpdateATC(interval)
 	
 	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
 	
-	-- Following section logic taken from CTA 7000-series RFP spec
+	-- Logic in following section taken from CTA 7000-series RFP spec
 	
 	throttle = CombinedLever * 2.0 - 1.0
 	
@@ -206,7 +206,7 @@ function UpdateATC(interval)
 		if (gBrakeApplication) then
 			Call("*:SetControlValue", "ATCBrakeApplication", 0, 1.0)
 			SetATCWarnMode(ATC_WARN_CONSTANT)
-			if (trainSpeed < 0.1 and throttle <= -0.99) then
+			if (trainSpeed < (2.0 * MPH_TO_MPS) and throttle <= -0.99) then
 				gBrakeApplication = false
 			end
 		else
