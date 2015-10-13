@@ -7,6 +7,7 @@ ANIMSTATE_RED_RED								= 3
 
 ATC_TARGET_DECELERATION = 1.20 -- meters/second/second
 ATC_REACTION_TIME = 2.5 -- seconds
+MAX_ACCEL = 1.5 -- m/s/s
 MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
 MPH_TO_MPS = 1.0 / MPS_TO_MPH
 MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
@@ -18,7 +19,7 @@ ATC_WARN_INTERMITTENT = 2.0
 DISPLAY_SPEEDS = { 0, 15, 25, 35, 45, 55, 70 }
 NUM_DISPLAY_SPEEDS = 7
 EST_REACTION_TIME = 3 -- Estimated reaction time of the driver for speed drops
-ACCEL_TIME = 2 -- The amount of time it takes to go from full power to full brake (with jerk limit)
+ACCEL_TIME = 2.5 -- The amount of time it takes to go from full power to full brake (with jerk limit)
 
 atcSigDirection = 0.0
 gLastSigDist = 0.0
@@ -65,11 +66,18 @@ function UpdateATC(interval)
 	local sigResult, sigState, sigDist, sigAspect
 
 	targetSpeed = Call("*:GetCurrentSpeedLimit")
+	ATOEnabled = (Call("*:GetControlValue", "ATOEnabled", 0) or -1) > 0.0
 	trackSpeed = targetSpeed
 	trainSpeed = math.abs(TrainSpeed) * MPH_TO_MPS
 	enabled = Call("*:GetControlValue", "ATCEnabled", 0) > 0
-	reactionTimeDistance = trackSpeed * (EST_REACTION_TIME + ACCEL_TIME)
-	stoppingDistance = getBrakingDistance(0, math.max(trainSpeed, 0.01), -ATC_TARGET_DECELERATION)
+	reactionTimeDistance = math.max(trackSpeed, trainSpeed) * (EST_REACTION_TIME + ACCEL_TIME)
+	
+	worstCaseSpeed = trainSpeed -- max speed the train could reach in the estimated reaction time with max acceleration
+	if not ATOEnabled then -- ATO will obey the speed limit, but the driver could accelerate past it if they aren't paying attention so we accomodate by taking the max speed they could reach in the max reaction time
+		worstCaseSpeed = worstCaseSpeed + (EST_REACTION_TIME + ACCEL_TIME) * MAX_ACCEL
+	end
+	
+	stoppingDistance = getBrakingDistance(0, math.max(worstCaseSpeed, 0.01), -ATC_TARGET_DECELERATION)
 	trackStoppingDistance = getBrakingDistance(0, math.max(trackSpeed, 0.01), -ATC_TARGET_DECELERATION)
 	
 	spdType, spdLimit, spdDist = Call("*:GetNextSpeedLimit", 0)
@@ -107,7 +115,7 @@ function UpdateATC(interval)
 		end
 	
 		if (spdType == 0) then -- End of line...stop the train
-			spdBuffer = (getBrakingDistance(0.0, trackSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance)
+			spdBuffer = (trackStoppingDistance + reactionTimeDistance)
 			--debugPrint("b: " .. tostring(spdBuffer) .. ", d: " .. tostring(spdDist))
 			Call("*:SetControlValue", "SpeedBuffer", 0, spdBuffer)
 			if (spdDist <= spdBuffer) then
@@ -119,7 +127,7 @@ function UpdateATC(interval)
 			end
 		elseif (spdType > 0) then
 			if (spdLimit < targetSpeed) then
-				spdBuffer = getBrakingDistance(spdLimit, trainSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance
+				spdBuffer = getBrakingDistance(spdLimit, worstCaseSpeed, -ATC_TARGET_DECELERATION) + reactionTimeDistance
 				if (spdDist <= spdBuffer) then
 					targetSpeed = math.min(targetSpeed, math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - reactionTimeDistance)), spdLimit))
 				end
@@ -145,8 +153,9 @@ function UpdateATC(interval)
 		else
 			searchDist = math.min(tSpdDist, tSigDist) + 0.1
 		end
+		
 		searchCount = searchCount + 1
-	until (searchDist > maxSearchDist or searchCount > 25 or (tSpdType < 0 and tSigResult < 0))
+	until (searchDist > maxSearchDist or searchCount > 50 or spdType == 0 --[[ End of line, stop searching ]] or (tSpdType < 0 and tSigResult < 0))
 	
 	gLastSigDistTime = gLastSigDistTime + interval
 	if (sigDist > gLastSigDist and gLastSigDistTime >= 1.0) then
@@ -163,8 +172,6 @@ function UpdateATC(interval)
 	end
 	
 	targetSpeed = math.floor((targetSpeed * MPS_TO_MPH * 10) + 0.5) / 10 -- Round to nearest 0.1
-	
-	ATOEnabled = (Call("*:GetControlValue", "ATOEnabled", 0) or -1) > 0.0
 	
 	if (targetSpeed > gLastSpeedLimit) then
 		if (gTimeSinceSpeedIncrease < 1.5) then -- Don't increase speed if it only increases for a split second (this avoids speed limit bugs in the engine)
