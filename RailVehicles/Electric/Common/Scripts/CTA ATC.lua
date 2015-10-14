@@ -74,7 +74,7 @@ function UpdateATC(interval)
 	
 	worstCaseSpeed = trainSpeed -- max speed the train could reach in the estimated reaction time with max acceleration
 	if not ATOEnabled then -- ATO will obey the speed limit, but the driver could accelerate past it if they aren't paying attention so we accomodate by taking the max speed they could reach in the max reaction time
-		worstCaseSpeed = worstCaseSpeed + (EST_REACTION_TIME + ACCEL_TIME) * MAX_ACCEL
+		worstCaseSpeed = worstCaseSpeed + EST_REACTION_TIME * MAX_ACCEL
 	end
 	
 	stoppingDistance = getBrakingDistance(0, math.max(worstCaseSpeed, 0.01), -ATC_TARGET_DECELERATION)

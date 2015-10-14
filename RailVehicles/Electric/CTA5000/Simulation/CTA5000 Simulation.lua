@@ -220,8 +220,15 @@ function Update(interval)
 			
 			gLastJerkLimit = tJerkLimit]]
 			
-			tJerkLimit = JERK_LIMIT * sign(tTAccel - tAccel)
-			tAccel = tAccel + (tJerkLimit * gTimeDelta)
+			tJerkLimit = JERK_LIMIT * gTimeDelta
+			
+			if tAccel < tTAccel - tJerkLimit then
+				tAccel = tAccel + tJerkLimit
+			elseif tAccel > tTAccel + tJerkLimit then
+				tAccel = tAccel - tJerkLimit
+			else
+				tAccel = tTAccel
+			end
 			
 			-- ATC took over braking due to control timeout
 			if (ATCBrakeApplication > 0) then
