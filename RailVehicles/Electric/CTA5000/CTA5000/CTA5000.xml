@@ -1597,7 +1597,7 @@
 											<Attribute name="NumberOfCabs">
 												<eNumberOfCabs>
 													<Element>
-														<Value>eNoCab</Value>
+														<Value>eSingleCab</Value>
 													</Element>
 												</eNumberOfCabs>
 											</Attribute>
@@ -1612,14 +1612,14 @@
 																			<Attribute name="Provider">
 																				<cDeltaString>
 																					<Element>
-																						<Value />
+																						<Value>briman0094</Value>
 																					</Element>
 																				</cDeltaString>
 																			</Attribute>
 																			<Attribute name="Product">
 																				<cDeltaString>
 																					<Element>
-																						<Value />
+																						<Value>CTA</Value>
 																					</Element>
 																				</cDeltaString>
 																			</Attribute>
@@ -1630,7 +1630,7 @@
 															<Attribute name="BlueprintID">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>RailVehicles\Electric\CTA5000\PassengerView\Passenger Camera.xml</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
