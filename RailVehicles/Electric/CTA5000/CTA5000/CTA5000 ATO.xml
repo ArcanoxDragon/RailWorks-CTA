@@ -680,21 +680,21 @@
 							<Attribute name="DryFriction">
 								<sFloat32>
 									<Element>
-										<Value>1.25</Value>
+										<Value>1.5</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="WetFriction">
 								<sFloat32>
 									<Element>
-										<Value>0.95</Value>
+										<Value>1.25</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="SnowFriction">
 								<sFloat32>
 									<Element>
-										<Value>0.65</Value>
+										<Value>0.95</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

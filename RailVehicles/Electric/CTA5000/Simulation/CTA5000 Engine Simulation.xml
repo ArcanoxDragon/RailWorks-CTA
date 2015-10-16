@@ -1074,7 +1074,7 @@
 																					<Attribute name="MaxForce">
 																						<sFloat32>
 																							<Element>
-																								<Value>41.5</Value>
+																								<Value>46</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
