@@ -164,6 +164,7 @@ function Initialise()
 	gBodyTilt = 0.0
 	gCamInside = false
 	gLastDir = 1
+	tLastDir = 1
 	gIsBCar = 0 -- Is this an "A" car or a "B" car?
 	gInit = false
 	gOnThirdRail = true
@@ -171,6 +172,7 @@ function Initialise()
 	gParkingBrake = false
 	gExpressLightTimer = 0.0
 	gExpressLightsOn = false
+	gLeadCarReversed = 1
 	
 -- Moving average for acceleration
 	gMovingAvgSize = 20
@@ -439,16 +441,25 @@ function Update(time)
 	
 	-- Direction
 	local realAccel = GetControlValue("Acceleration")
-	if (math.abs(trainSpeed) > 0.01 and math.abs(realAccel) > 0.1 and math.abs(accel) > 0.1) then
-		if (sign(accel) == sign(realAccel)) then
-			gLastDir = -1
-		else
-			gLastDir = 1
-		end
+	local signSpeed = sign(trainSpeed / GetControlValue("SpeedometerMPH"))
+	local signAccel = sign(accel / realAccel)
+	local evenCar = mod(GetControlValue("CarNum"), 2) == 0
+	if (math.abs(trainSpeed) > 0.01 and math.abs(realAccel) > 0.001 and math.abs(accel) > 0.001) then
+		gLastDir = -sign(accel / realAccel)
+		gLastDir = gLastDir * sign(signSpeed / signAccel)
 		if (GetControlValue("Active") > 0) then
-			SetControlValue("Direction", sign(trainSpeed))
+			SetControlValue("Direction", signSpeed)
 		end
 	end
+	
+	if (math.abs(trainSpeed) > 0.25 and math.abs(realAccel) > 0.1 and math.abs(accel) > 0.1) then
+		gLeadCarReversed = sign(signSpeed / signAccel)
+	end
+	
+	gLastDir = gLastDir * gLeadCarReversed
+	
+	SetControlValue("SignSpeed", signSpeed)
+	SetControlValue("SignAccel", signAccel)
 	
 	SetControlValue("Speed2", round(trainSpeed, 2))
 	
@@ -470,15 +481,15 @@ function Update(time)
 	UpdateMovingAverage(accel) -- MPH/s
 	local accelAvg = GetMovingAverage() -- Smooth out acceleration
 	SetControlValue("Accel2", accelAvg)
-	accelAvg = accelAvg / 3.7 -- Max accel for animation is 3.7 MPH/s
+	accelAvg = accelAvg / 5.25 -- Max accel for animation is 5.25 MPH/s (full emergency braking)
 	accelAvg = accelAvg * gLastDir
 	accelAvg = accelAvg * GetControlValue("Direction")
-	if (mod(GetControlValue("CarNum"), 2) ~= 0) then
+	if not evenCar then -- but is it really even a car, bro?
 		accelAvg = -accelAvg
 	end
 	tiltMult = 0.6
 	if (gCamInside) then
-		tiltMult = 0.2
+		tiltMult = 0.4
 	end
 	tBodyTilt = 1.0 + clamp(accelAvg * tiltMult, -1, 1)
 	dBodyTilt = 10 * clamp(math.abs(gBodyTilt - tBodyTilt) / 0.65, 0.1, 1.0)
