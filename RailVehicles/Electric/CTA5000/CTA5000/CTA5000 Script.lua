@@ -177,7 +177,7 @@ function Initialise()
 -- Moving average for acceleration
 	gMovingAvgSize = 20
 	gMovingAvgList = { }
-	gMovingAvgIndex = 0 -- 0 - 9
+	gMovingAvgIndex = 0 -- 0 - 19
 	gMovingAvg = 0
 	
 -- Misc. signal stuff

@@ -5,7 +5,7 @@
 			<Attribute name="WheelRadius">
 				<sFloat32>
 					<Element>
-						<Value>0.255</Value>
+						<Value>0.3556</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -40,7 +40,7 @@
 			<Attribute name="SuspensionStiffness">
 				<sFloat32>
 					<Element>
-						<Value>1E+17</Value>
+						<Value>1E+12</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -61,7 +61,7 @@
 										<Attribute name="Radius">
 											<sFloat32>
 												<Element>
-													<Value>0.42</Value>
+													<Value>0.3556</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -95,7 +95,7 @@
 										<Attribute name="Radius">
 											<sFloat32>
 												<Element>
-													<Value>0.42</Value>
+													<Value>0.3556</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
