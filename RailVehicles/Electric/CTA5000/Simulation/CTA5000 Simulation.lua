@@ -35,6 +35,7 @@ function Setup()
 	DYN_DELTA = 0.7
 	BRK_DELTA = 0.45
 	
+	MAX_ACCELERATION_MPHPS = 2.8
 	MAX_ACCELERATION = 1.0
 	MIN_ACCELERATION = 0.125
 	MAX_BRAKING = 1.0
@@ -49,6 +50,9 @@ function Setup()
 	MAX_CORRECTION = 1.0 - MAX_BRAKE_RELEASE
 	DYNAMIC_BRAKE_AMPS = 500.0
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to (WTF railworks, you can't do this yourself?)
+	ATO_COAST_TIME_OFFSET = 1.25
+	ATO_COAST_UPPER_LIMIT = 0.0 -- MPH above set speed that triggers coast command
+	ATO_COAST_LOWER_LIMIT = 2.0 -- MPH below set speed that cancels coast command and allows power
 	
 -- Propulsion system variables
 	realAccel = 0.0
@@ -63,11 +67,13 @@ function Setup()
 	gThrottleTime = 0.0
 	gAvgAccel = 0.0
 	gAvgAccelTime = 0.0
+	gAvgAccelCalculated = 0.0
 	gBrakeRelease = 0.0
 	brkAdjust = 0.0
 	gSign = 0
 	gLastAccelSign = 0
 	gLastJerkLimit = 0
+	gATOCoasting = false
 
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 8.0 -- seconds.
@@ -165,8 +171,9 @@ function Update(interval)
 			gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
 			gAvgAccelTime = gAvgAccelTime + gTimeDelta
 			-- Average out acceleration
-			if (gAvgAccelTime >= 1/15) then
-				Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccel / gAvgAccelTime, 2) )
+			if (gAvgAccelTime >= 1/15) then -- 15 times/sec
+				gAvgAccelCalculated = gAvgAccel / gAvgAccelTime
+				Call( "*:SetControlValue", "Acceleration", 0, round(gAvgAccelCalculated, 2) )
 				gAvgAccelTime = 0.0
 				gAvgAccel = 0.0
 			end
@@ -180,6 +187,28 @@ function Update(interval)
 			else
 				tThrottle = CombinedLever * 2.0 - 1.0
 				Call( "*:SetControlValue", "ThrottleLever", 0, CombinedLever )
+				
+				if (Call("*:GetControlValue", "ATCEnabled", 0) > 0) then
+					local restrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
+					
+					if not gATOCoasting then
+						-- Begin ATO coast-override subsystem (Section 13.23 in 7000-series RFP)
+						local timeToSetSpeed = ( ( restrictedSpeed + ATO_COAST_UPPER_LIMIT ) - TrainSpeed ) / math.max(math.abs(gAvgAccelCalculated), 0.01)
+						--local timeOffset = ATO_COAST_TIME_OFFSET * ( math.max(realAccel, 0.0) / MAX_ACCELERATION_MPHPS )
+						
+						if (timeToSetSpeed < ATO_COAST_TIME_OFFSET) then
+							gATOCoasting = true
+						end
+					else
+						tThrottle = math.min(tThrottle, 0.0) -- Coast
+						
+						if (TrainSpeed <= restrictedSpeed - ATO_COAST_LOWER_LIMIT or tThrottle < 0.0) then
+							gATOCoasting = false
+						end
+					end
+				else
+					gATOCoasting = false
+				end
 			end
 			
 			-- Round throttle to 0 if it's below 10% power/brake; widens "coast" gap
