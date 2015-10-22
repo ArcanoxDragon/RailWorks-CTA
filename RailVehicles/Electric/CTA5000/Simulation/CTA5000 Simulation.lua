@@ -189,7 +189,7 @@ function Update(interval)
 				Call( "*:SetControlValue", "ThrottleLever", 0, CombinedLever )
 				
 				if (Call("*:GetControlValue", "ATCEnabled", 0) > 0) then
-					local restrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
+					local restrictedSpeed = math.max(Call("*:GetControlValue", "ATCRestrictedSpeed", 0), 6)
 					
 					if not gATOCoasting then
 						-- Begin ATO coast-override subsystem (Section 13.23 in 7000-series RFP)
