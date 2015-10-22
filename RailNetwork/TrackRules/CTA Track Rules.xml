@@ -121,14 +121,14 @@
 														<Attribute name="Provider">
 															<cDeltaString>
 																<Element>
-																	<Value>RSC</Value>
+																	<Value>briman0094</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
 														<Attribute name="Product">
 															<cDeltaString>
 																<Element>
-																	<Value>NewYorkNewHaven</Value>
+																	<Value>CTA</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -139,7 +139,7 @@
 										<Attribute name="BlueprintID">
 											<cDeltaString>
 												<Element>
-													<Value>RailNetwork\Track\Track01</Value>
+													<Value>RailNetwork\Track\CTA Tunnel Track.xml</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
