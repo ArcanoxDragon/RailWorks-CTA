@@ -188,7 +188,7 @@ function UpdateATC(interval)
 	if enabled then
 		if (not ATOEnabled) then
 			-- The ATC can only display certain speed limits; allow the next lowest one above actual, and driver is responsible for following actual
-			if (targetSpeed > 10) then
+			if (targetSpeed >= 10) then
 				targetSpeed = getSpeedLimitAbove(targetSpeed)
 			else -- If speed limit is 10 or below (like end of track, or around corners in the loop), we force them to obey it by displaying "0" if they're above it
 				if (math.abs(TrainSpeed) > targetSpeed + 1) then

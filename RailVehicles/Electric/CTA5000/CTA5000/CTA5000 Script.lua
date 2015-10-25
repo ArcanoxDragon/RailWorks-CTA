@@ -76,7 +76,7 @@ end
 local NUM_SIGNS = 0
 local SIGNS = { }
 
-local function addSign(texName, lightOn, lightColor, lMarker, rMarker, nextSign) -- lMarker and rMarker are left/right marker/class lights, left is when looking *towards* front of train car
+local function addSign(texName, lightOn, lightColor, rMarker, lMarker, nextSign) -- rMarker and lMarker are right/left marker/class lights, left is when looking *towards* front of train car
 	local sign = { }
 	local nSign = nextSign or NUM_SIGNS -- Same sign by default
 	sign.id = texName
@@ -174,6 +174,11 @@ function Initialise()
 	gExpressLightsOn = false
 	gLeadCarReversed = 1
 	
+-- For controlling delayed doors interlocks.
+	DOORDELAYTIME = 8.0 -- seconds.
+	gDoorsDelay = DOORDELAYTIME
+	gLastDoorsOpen = false
+	
 -- Moving average for acceleration
 	gMovingAvgSize = 20
 	gMovingAvgList = { }
@@ -230,15 +235,31 @@ sigDist = 0
 sigAspect = 0
 
 function Update(time)
-	local trainSpeed = Call("GetSpeed") * MPS_TO_MPH
-	local accel = Call("GetAcceleration") * MPS_TO_MPH
-	local reverser = GetControlValue("Reverser")
-	local IsEndCar = GetControlValue( "IsEndCar" ) > 0
-	local CarNum = GetControlValue( "CarNum" )
-	local HandBrake = GetControlValue("HandBrakeCommand")
-	local TrueHandBrake = GetControlValue("HandBrake")
-	local BrakePressure = GetControlValue("TrainBrakeCylinderPressureBAR")
-	local DestSign = GetControlValue( "DestinationSign" )
+	trainSpeed = Call("GetSpeed") * MPS_TO_MPH
+	accel = Call("GetAcceleration") * MPS_TO_MPH
+	reverser = GetControlValue("Reverser")
+	IsEndCar = GetControlValue( "IsEndCar" ) > 0
+	CarNum = GetControlValue( "CarNum" )
+	HandBrake = GetControlValue("HandBrakeCommand")
+	TrueHandBrake = GetControlValue("HandBrake")
+	BrakePressure = GetControlValue("TrainBrakeCylinderPressureBAR")
+	DestSign = GetControlValue( "DestinationSign" )
+	DoorsLeft = GetControlValue( "DoorsOpenCloseLeft" ) > 0
+	DoorsRight = GetControlValue( "DoorsOpenCloseRight" ) > 0
+	DoorsOpen = DoorsLeft or DoorsRight
+		
+	-- Make script think doors are still open while the animation is finishing
+	if gLastDoorsOpen and not DoorsOpen then
+		gDoorsDelay = gDoorsDelay - time
+		if gDoorsDelay < 0 then
+			gDoorsDelay = DOORDELAYTIME
+		else
+			DoorsOpen = true
+		end
+	end
+	
+	SetControlValue( "DoorsOpen", DoorsOpen and 1 or 0 )
+	gLastDoorsOpen = DoorsOpen
 	
 	if (not gInit) then
 		-- Set "DestinationSign" control to value from car number (allows scenarios to set destsign)
@@ -343,15 +364,15 @@ function Update(time)
 		
 		-- Door light clusters
 		
-		if GetControlValue("DoorsOpenCloseRight") > 0.5 then
+		if DoorsRight then
 			Call("*:ActivateNode", "doorlights_right", 1)
 		end
 		
-		if GetControlValue("DoorsOpenCloseLeft") > 0.5 then
+		if DoorsLeft then
 			Call("*:ActivateNode", "doorlights_left", 1)
 		end
 		
-		if GetControlValue("DoorsOpen") < 0.5 then
+		if not DoorsOpen then
 			Call("*:ActivateNode", "doorlights_right", 0)
 			Call("*:ActivateNode", "doorlights_left", 0)
 		end
@@ -511,7 +532,7 @@ function Update(time)
 	lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
 	if (gBrakeCheckTime > 0.5 + lRandom) then
 		gBrakeCheckTime = 0
-		if (math.abs(trainSpeed) < 0.03 and BrakePressure >= 0.2) then
+		if (math.abs(trainSpeed) < 0.03 and BrakePressure >= 0.2) or DoorsOpen then
 			gParkingBrake = true
 		elseif (BrakePressure <= 0.01) then
 			gParkingBrake = false

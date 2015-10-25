@@ -109,7 +109,7 @@ function Update(interval)
 			CombinedLever = Call( "*:GetControlValue", "ThrottleAndBrake", 0 )
 			ReverserLever = Call( "*:GetControlValue", "Reverser", 0 )
 			TrackBrake = Call( "*:GetControlValue", "TrackBrake", 0 )
-			DoorsOpen = Call( "*:GetControlValue", "DoorsOpenCloseRight", 0 ) + Call( "*:GetControlValue", "DoorsOpenCloseLeft", 0 )
+			DoorsOpen = math.min(1, Call( "*:GetControlValue", "DoorsOpenCloseRight", 0 ) + Call( "*:GetControlValue", "DoorsOpenCloseLeft", 0 ) + Call( "*:GetControlValue", "DoorsOpen", 0 ))
 			PantoValue = Call( "*:GetControlValue", "PantographControl", 0 )
 			ThirdRailValue = Call( "*:GetControlValue", "ThirdRail", 0 )
 			TrainSpeed = Call( "*:GetControlValue", "SpeedometerMPH", 0 )
@@ -155,17 +155,6 @@ function Update(interval)
 				end
 			end
 			
-			-- Make script think doors are still open while the animation is finishing
-			if ( gLastDoorsOpen == TRUE ) and ( DoorsOpen == FALSE ) then
-				gDoorsDelay = gDoorsDelay - gTimeDelta
-				if gDoorsDelay < 0 then
-					gDoorsDelay = DOORDELAYTIME
-				else
-					DoorsOpen = TRUE
-				end
-			end
-			Call( "*:SetControlValue", "DoorsOpen", 0, math.min(DoorsOpen, 1) )
-		
 			-- Begin propulsion system
 			realAccel = (TrainSpeed - gLastSpeed) / gTimeDelta
 			gAvgAccel = gAvgAccel + (TrainSpeed - gLastSpeed)
