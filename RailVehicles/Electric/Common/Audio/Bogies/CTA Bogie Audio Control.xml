@@ -93,7 +93,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>Junction</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1545,7 +1545,7 @@
 																	<Attribute name="ControllerIsGlobal">
 																		<bool>
 																			<Element>
-																				<Value>0</Value>
+																				<Value>1</Value>
 																			</Element>
 																		</bool>
 																	</Attribute>

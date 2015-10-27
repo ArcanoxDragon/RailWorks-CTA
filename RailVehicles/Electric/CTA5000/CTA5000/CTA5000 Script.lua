@@ -247,6 +247,7 @@ function Update(time)
 	DoorsLeft = GetControlValue( "DoorsOpenCloseLeft" ) > 0
 	DoorsRight = GetControlValue( "DoorsOpenCloseRight" ) > 0
 	DoorsOpen = DoorsLeft or DoorsRight
+	TrainOn = GetControlValue("Startup") > 0
 		
 	-- Make script think doors are still open while the animation is finishing
 	if gLastDoorsOpen and not DoorsOpen then
@@ -372,12 +373,12 @@ function Update(time)
 			Call("*:ActivateNode", "doorlights_left", 1)
 		end
 		
-		if not DoorsOpen then
+		if not DoorsOpen or not TrainOn then
 			Call("*:ActivateNode", "doorlights_right", 0)
 			Call("*:ActivateNode", "doorlights_left", 0)
 		end
 		
-		if BrakePressure >= 0.05 or TrueHandBrake > 0.5 then
+		if TrainOn and ( BrakePressure >= 0.05 or TrueHandBrake > 0.5 ) then
 			Call("*:ActivateNode", "brakelights", 1)
 		else
 			Call("*:ActivateNode", "brakelights", 0)
