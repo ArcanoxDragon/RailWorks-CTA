@@ -851,7 +851,7 @@
 							<Attribute name="BogieAudioControlName">
 								<cDeltaString>
 									<Element>
-										<Value>RailVehicles\Electric\Common\Audio\Bogies\CTA Bogie Audio Control.xml</Value>
+										<Value>RailVehicles\Electric\Common\Audio\Bogies\CTABogieAudioControl</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
