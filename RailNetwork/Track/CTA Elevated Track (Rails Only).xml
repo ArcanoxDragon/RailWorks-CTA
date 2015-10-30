@@ -470,7 +470,7 @@
 										<Attribute name="BlueprintID">
 											<cDeltaString>
 												<Element>
-													<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Sound</Value>
+													<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Sound.xml</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -510,7 +510,7 @@
 							<Attribute name="BlueprintID">
 								<cDeltaString>
 									<Element>
-										<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Sound</Value>
+										<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Sound.xml</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>

@@ -12,21 +12,21 @@
 			<Attribute name="TingleAudioControlName">
 				<cDeltaString>
 					<Element>
-						<Value />
+						<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Audio Control</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
 			<Attribute name="JunctionAudioControlName">
 				<cDeltaString>
 					<Element>
-						<Value />
+						<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Audio Control</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
 			<Attribute name="DerailmentAudioControlName">
 				<cDeltaString>
 					<Element>
-						<Value />
+						<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Audio Control</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -70,7 +70,7 @@
 			<Attribute name="DistancebetweenJoints">
 				<sFloat32>
 					<Element>
-						<Value>7</Value>
+						<Value>200</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -99,7 +99,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Elevated Track Sounds</Value>
+														<Value>[CTA] Tunnel Track</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -273,21 +273,21 @@
 							<Attribute name="Red">
 								<sFloat32>
 									<Element>
-										<Value>0.6307054</Value>
+										<Value>0.1058092</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="Green">
 								<sFloat32>
 									<Element>
-										<Value>0.5477178</Value>
+										<Value>0.09336098</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="Blue">
 								<sFloat32>
 									<Element>
-										<Value>0.4448133</Value>
+										<Value>0.05726146</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>

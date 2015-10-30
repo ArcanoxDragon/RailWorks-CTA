@@ -785,7 +785,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>Junction</Value>
+																	<Value />
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -961,7 +961,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>Junction</Value>
+																	<Value />
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1064,6 +1064,105 @@
 									</Value>
 								</Element>
 							</kLoud-cRandomSampleSound>
+							<kLoud-cSingleSampleSound>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>Beep</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="IsLooped">
+											<bool>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</bool>
+										</Attribute>
+										<Attribute name="Priority">
+											<sUInt32>
+												<Element>
+													<Value>50</Value>
+												</Element>
+											</sUInt32>
+										</Attribute>
+										<Attribute name="BaseVolume">
+											<sFloat32>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="VolumeVariation">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="BasePitchShift">
+											<sFloat32>
+												<Element>
+													<Value>1</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="PitchShiftVariation">
+											<sFloat32>
+												<Element>
+													<Value>0</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="AttenuationStartDist">
+											<sFloat32>
+												<Element>
+													<Value>50</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="NoFutherAttenuationDist">
+											<sFloat32>
+												<Element>
+													<Value>300</Value>
+												</Element>
+											</sFloat32>
+										</Attribute>
+										<Attribute name="InstanceGroup">
+											<kLoud-cInstanceGroup>
+												<Element>
+													<Value>
+														<Attribute name="Name">
+															<cDeltaString>
+																<Element>
+																	<Value />
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cInstanceGroup>
+										</Attribute>
+										<Attribute name="Sample">
+											<kLoud-cSampleID>
+												<Element>
+													<Value>
+														<Attribute name="Filename">
+															<cDeltaString>
+																<Element>
+																	<Value>RailVehicles\Electric\Common\Audio\Bogies\beep.wav</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+													</Value>
+												</Element>
+											</kLoud-cSampleID>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cSingleSampleSound>
 						</Value>
 					</Element>
 				</__Indexed__kLoud-cSound>
@@ -1119,7 +1218,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.5</Value>
+																				<Value>0.75</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -1139,7 +1238,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0.9</Value>
+																				<Value>0.95</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -1200,7 +1299,7 @@
 																	<Attribute name="Y">
 																		<sFloat32>
 																			<Element>
-																				<Value>0</Value>
+																				<Value>0.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -1213,7 +1312,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>11.17</Value>
+																				<Value>18.17</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -1233,7 +1332,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>24.58</Value>
+																				<Value>54.58</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -1545,7 +1644,7 @@
 																	<Attribute name="ControllerIsGlobal">
 																		<bool>
 																			<Element>
-																				<Value>1</Value>
+																				<Value>0</Value>
 																			</Element>
 																		</bool>
 																	</Attribute>
@@ -2150,206 +2249,6 @@
 											<sFloat32>
 												<Element>
 													<Value>0.006</Value>
-												</Element>
-											</sFloat32>
-										</Attribute>
-										<Attribute name="ActiveRangeEndValue">
-											<sFloat32>
-												<Element>
-													<Value>100</Value>
-												</Element>
-											</sFloat32>
-										</Attribute>
-										<Attribute name="ValueIsChangingGateTime">
-											<sFloat32>
-												<Element>
-													<Value>0</Value>
-												</Element>
-											</sFloat32>
-										</Attribute>
-										<Attribute name="InstanceGroup">
-											<kLoud-cInstanceGroup>
-												<Element>
-													<Value>
-														<Attribute name="Name">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</kLoud-cInstanceGroup>
-										</Attribute>
-									</Value>
-								</Element>
-							</kLoud-cControlledLoop>
-							<kLoud-cControlledLoop>
-								<Element>
-									<Value>
-										<Attribute name="PlayState">
-											<ePlayState>
-												<Element>
-													<Value>OUTSIDE</Value>
-												</Element>
-											</ePlayState>
-										</Attribute>
-										<Attribute name="Name">
-											<cDeltaString>
-												<Element>
-													<Value>JunctionLoopOutside</Value>
-												</Element>
-											</cDeltaString>
-										</Attribute>
-										<Attribute name="Sound">
-											<kLoud-cSound>
-												<Element>
-													<Value>
-														<Attribute name="Name">
-															<cDeltaString>
-																<Element>
-																	<Value>JunctionLoop</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</kLoud-cSound>
-										</Attribute>
-										<Attribute name="ModifierChain">
-											<kLoud-cModifierChain>
-												<Element>
-													<Value>
-														<Attribute name="Name">
-															<cDeltaString>
-																<Element>
-																	<Value>JunctionLoop</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</kLoud-cModifierChain>
-										</Attribute>
-										<Attribute name="ControllerName">
-											<cDeltaString>
-												<Element>
-													<Value>AbsoluteSpeed</Value>
-												</Element>
-											</cDeltaString>
-										</Attribute>
-										<Attribute name="LoopCondition">
-											<kLoud-cControlledLoop-eLoopCondition>
-												<Element>
-													<Value>ValueInRange</Value>
-												</Element>
-											</kLoud-cControlledLoop-eLoopCondition>
-										</Attribute>
-										<Attribute name="ActiveRangeStartValue">
-											<sFloat32>
-												<Element>
-													<Value>100</Value>
-												</Element>
-											</sFloat32>
-										</Attribute>
-										<Attribute name="ActiveRangeEndValue">
-											<sFloat32>
-												<Element>
-													<Value>100</Value>
-												</Element>
-											</sFloat32>
-										</Attribute>
-										<Attribute name="ValueIsChangingGateTime">
-											<sFloat32>
-												<Element>
-													<Value>0</Value>
-												</Element>
-											</sFloat32>
-										</Attribute>
-										<Attribute name="InstanceGroup">
-											<kLoud-cInstanceGroup>
-												<Element>
-													<Value>
-														<Attribute name="Name">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</kLoud-cInstanceGroup>
-										</Attribute>
-									</Value>
-								</Element>
-							</kLoud-cControlledLoop>
-							<kLoud-cControlledLoop>
-								<Element>
-									<Value>
-										<Attribute name="PlayState">
-											<ePlayState>
-												<Element>
-													<Value>INSIDE</Value>
-												</Element>
-											</ePlayState>
-										</Attribute>
-										<Attribute name="Name">
-											<cDeltaString>
-												<Element>
-													<Value>JunctionLoopInside</Value>
-												</Element>
-											</cDeltaString>
-										</Attribute>
-										<Attribute name="Sound">
-											<kLoud-cSound>
-												<Element>
-													<Value>
-														<Attribute name="Name">
-															<cDeltaString>
-																<Element>
-																	<Value>JunctionLoopInt</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</kLoud-cSound>
-										</Attribute>
-										<Attribute name="ModifierChain">
-											<kLoud-cModifierChain>
-												<Element>
-													<Value>
-														<Attribute name="Name">
-															<cDeltaString>
-																<Element>
-																	<Value>JunctionLoop</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-													</Value>
-												</Element>
-											</kLoud-cModifierChain>
-										</Attribute>
-										<Attribute name="ControllerName">
-											<cDeltaString>
-												<Element>
-													<Value>AbsoluteSpeed</Value>
-												</Element>
-											</cDeltaString>
-										</Attribute>
-										<Attribute name="LoopCondition">
-											<kLoud-cControlledLoop-eLoopCondition>
-												<Element>
-													<Value>ValueInRange</Value>
-												</Element>
-											</kLoud-cControlledLoop-eLoopCondition>
-										</Attribute>
-										<Attribute name="ActiveRangeStartValue">
-											<sFloat32>
-												<Element>
-													<Value>100</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>

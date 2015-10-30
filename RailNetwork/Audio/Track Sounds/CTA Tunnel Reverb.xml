@@ -5,14 +5,14 @@
 			<Attribute name="SendLevel">
 				<sInt32>
 					<Element>
-						<Value>-200</Value>
+						<Value>-800</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
 			<Attribute name="EnvironmentSize">
 				<sFloat32>
 					<Element>
-						<Value>2</Value>
+						<Value>20</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -26,49 +26,49 @@
 			<Attribute name="Room">
 				<sInt32>
 					<Element>
-						<Value>0</Value>
+						<Value>-500</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
 			<Attribute name="RoomHF">
 				<sInt32>
 					<Element>
-						<Value>-1000</Value>
+						<Value>-1500</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
 			<Attribute name="RoomLF">
 				<sInt32>
 					<Element>
-						<Value>-100</Value>
+						<Value>-400</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
 			<Attribute name="DecayTime">
 				<sFloat32>
 					<Element>
-						<Value>8</Value>
+						<Value>7</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="DecayHFratio">
 				<sFloat32>
 					<Element>
-						<Value>0.9</Value>
+						<Value>0.7</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="DecayLFratio">
 				<sFloat32>
 					<Element>
-						<Value>1</Value>
+						<Value>0.1</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="Reflections">
 				<sInt32>
 					<Element>
-						<Value>-6000</Value>
+						<Value>-50</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
@@ -103,14 +103,14 @@
 			<Attribute name="Reverb">
 				<sInt32>
 					<Element>
-						<Value>200</Value>
+						<Value>4</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
 			<Attribute name="ReverbDelay">
 				<sFloat32>
 					<Element>
-						<Value>0.011</Value>
+						<Value>0.05</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -138,21 +138,21 @@
 			<Attribute name="EchoTime">
 				<sFloat32>
 					<Element>
-						<Value>0.25</Value>
+						<Value>0.1</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="EchoDepth">
 				<sFloat32>
 					<Element>
-						<Value>0.5</Value>
+						<Value>0</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="ModulationTime">
 				<sFloat32>
 					<Element>
-						<Value>0.25</Value>
+						<Value>0.1</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -173,28 +173,28 @@
 			<Attribute name="HFreference">
 				<sFloat32>
 					<Element>
-						<Value>5000</Value>
+						<Value>3000</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="LFreference">
 				<sFloat32>
 					<Element>
-						<Value>250</Value>
+						<Value>500</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="RoomRollOffFactor">
 				<sFloat32>
 					<Element>
-						<Value>0</Value>
+						<Value>10</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="DecayTimeScale">
 				<bool>
 					<Element>
-						<Value>0</Value>
+						<Value>1</Value>
 					</Element>
 				</bool>
 			</Attribute>

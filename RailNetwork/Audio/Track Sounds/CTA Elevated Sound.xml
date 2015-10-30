@@ -12,21 +12,21 @@
 			<Attribute name="TingleAudioControlName">
 				<cDeltaString>
 					<Element>
-						<Value />
+						<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Audio Control</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
 			<Attribute name="JunctionAudioControlName">
 				<cDeltaString>
 					<Element>
-						<Value />
+						<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Audio Control</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
 			<Attribute name="DerailmentAudioControlName">
 				<cDeltaString>
 					<Element>
-						<Value />
+						<Value>RailNetwork\Audio\Track Sounds\CTA Elevated Audio Control</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -70,7 +70,7 @@
 			<Attribute name="DistancebetweenJoints">
 				<sFloat32>
 					<Element>
-						<Value>7</Value>
+						<Value>35</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>

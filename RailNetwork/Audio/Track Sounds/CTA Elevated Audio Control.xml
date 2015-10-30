@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cTrackAudioControl>
+<cGenericAudioControl>
 	<Element>
 		<Value>
 			<Attribute name="ProxyControlRevision">
@@ -391,6 +391,13 @@
 					</Element>
 				</__Indexed__kLoud-cControlledLoop>
 			</Attribute>
+			<Attribute name="Oneshot">
+				<__Indexed__kLoud-cTriggeredOneshot>
+					<Element>
+						<Value />
+					</Element>
+				</__Indexed__kLoud-cTriggeredOneshot>
+			</Attribute>
 		</Value>
 	</Element>
-</cTrackAudioControl>
+</cGenericAudioControl>

@@ -70,7 +70,7 @@
 			<Attribute name="DistancebetweenJoints">
 				<sFloat32>
 					<Element>
-						<Value>150</Value>
+						<Value>350</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -99,7 +99,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Grade Track</Value>
+														<Value>[CTA] Grade Track (Jointless)</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -251,7 +251,7 @@
 							<Attribute name="Category">
 								<iBrowseableBlueprint-eBrowseableCategory>
 									<Element>
-										<Value>eUncategorised</Value>
+										<Value>eExcludeFromBrowserList</Value>
 									</Element>
 								</iBrowseableBlueprint-eBrowseableCategory>
 							</Attribute>
