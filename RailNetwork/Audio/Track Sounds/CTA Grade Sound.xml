@@ -77,7 +77,7 @@
 			<Attribute name="JunctionClatterDistance">
 				<sFloat32>
 					<Element>
-						<Value>5</Value>
+						<Value>1</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>

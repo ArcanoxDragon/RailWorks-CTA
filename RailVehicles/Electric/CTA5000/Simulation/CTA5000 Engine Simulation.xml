@@ -313,7 +313,7 @@
 																																			<Attribute name="MaxForce">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>4550</Value>
+																																						<Value>6000</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -919,7 +919,7 @@
 														<Attribute name="QuickPowerOffAtZeroThrottle">
 															<eBoolean>
 																<Element>
-																	<Value>eFalse</Value>
+																	<Value>eTrue</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -1060,7 +1060,7 @@
 																					<Attribute name="AutomaticCutInSpeed">
 																						<sFloat32>
 																							<Element>
-																								<Value>100</Value>
+																								<Value>0</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>

@@ -839,7 +839,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>1</Value>
+													<Value>0.75</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1631,7 +1631,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.1</Value>
+													<Value>0.08</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -7068,7 +7068,7 @@
 														<Attribute name="Name">
 															<cDeltaString>
 																<Element>
-																	<Value>AirConExt</Value>
+																	<Value />
 																</Element>
 															</cDeltaString>
 														</Attribute>

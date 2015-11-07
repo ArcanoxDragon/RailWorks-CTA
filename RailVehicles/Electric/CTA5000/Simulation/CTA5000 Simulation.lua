@@ -364,7 +364,7 @@ function Update(interval)
 				local finalRegulator = gSetReg
 				
 				if (gSetDynamic < 0.001 and math.abs(TrainSpeed) > 0.1 and tAccel >= 0.0) then
-					finalRegulator = math.max(finalRegulator, 0.001) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
+					--finalRegulator = math.max(finalRegulator, 0.001) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
 				end
 				
 				finalRegulator = finalRegulator * (NumCarsOnPower / NumCars)
