@@ -116,6 +116,7 @@ function UpdateATO(interval)
 	local atoActive, atoThrottle, targetSpeed, trackSpeed, trainSpeed, doorsLeft, doorsRight, tThrottle, distCorrection, spdBuffer, trainSpeedMPH
 	local sigType, sigState, sigDist, sigAspect
 	local t, p, i, d
+	local distBuffer
 	
 	local TrackBrake = Call("*:GetControlValue", "TrackBrake", 0)
 	if TrackBrake and TrackBrake > 0.5 then
@@ -141,13 +142,14 @@ function UpdateATO(interval)
 		
 		trainSpeed = Call("*:GetSpeed")
 		trainSpeedMPH = trainSpeed * MPS_TO_MPH
+		distBuffer = 2.0 + ( clamp( ( trainSpeedMPH - 8.0 ) * 0.5, 0.0, 20.0 ) )
 		doors = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
 		tThrottle = Call("*:GetControlValue", "TrueThrottle", 0)
 		
 		ATCRestrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
 		targetSpeed = ATCRestrictedSpeed * MPH_TO_MPS
 		
-		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0)
+		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0) + distBuffer
 		
 		accelBuff = ((tAccel - (-1)) / ACCEL_PER_SECOND) -- Estimated time to reach full brakes (-1) from current throttle (tAccel)
 		accelBuff = accelBuff * trainSpeed -- Estimated meters covered in the time taken to reach full brakes
@@ -199,8 +201,7 @@ function UpdateATO(interval)
 		end
 		
 		if (atoStopping > 0) then
-			local distBuffer = 2.0
-			targetSpeed = math.min(ATCRestrictedSpeed * MPH_TO_MPS, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - (sigDist - distBuffer)), 1.0 * MPH_TO_MPS))
+			targetSpeed = math.min(ATCRestrictedSpeed * MPH_TO_MPS, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - sigDist), 1.0 * MPH_TO_MPS))
 				
 			statStopTime = statStopTime + interval
 			
