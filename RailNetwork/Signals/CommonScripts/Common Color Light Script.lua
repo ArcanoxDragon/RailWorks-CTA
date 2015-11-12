@@ -108,8 +108,8 @@ function DefaultSetLights ( newState )
 		SwitchLight( LIGHT_NODE_RED,		0 )
 		SwitchLight( LIGHT_NODE_RED2,		1 )
 		
-		Call(    "TopGlow:SetColour",  31, 255,  31 )
-		Call( "BottomGlow:SetColour", 255,  31,  31 )
+		Call(    "TopGlow:SetColour",  60, 160,  31 )
+		Call( "BottomGlow:SetColour", 160,  31,  31 )
 
 		DebugPrint("State: Green Over Red")
 	elseif (newState == ANIMSTATE_RED_GREEN) then
@@ -120,8 +120,8 @@ function DefaultSetLights ( newState )
 		SwitchLight( LIGHT_NODE_RED,		1 )
 		SwitchLight( LIGHT_NODE_RED2,		0 )
 		
-		Call(    "TopGlow:SetColour", 255,  31,  31 )
-		Call( "BottomGlow:SetColour",  31, 255,  31 )
+		Call(    "TopGlow:SetColour", 160,  31,  31 )
+		Call( "BottomGlow:SetColour",  60, 160,  31 )
 
 		DebugPrint("State: Red Over Green")
 	elseif (newState == ANIMSTATE_YELLOW_RED) then
@@ -132,8 +132,8 @@ function DefaultSetLights ( newState )
 		SwitchLight( LIGHT_NODE_RED,		0 )
 		SwitchLight( LIGHT_NODE_RED2,		1 )
 		
-		Call(    "TopGlow:SetColour", 255, 255,  31 )
-		Call( "BottomGlow:SetColour", 255,  31,  31 )
+		Call(    "TopGlow:SetColour", 160, 120,  31 )
+		Call( "BottomGlow:SetColour", 160,  31,  31 )
 
 		DebugPrint("State: Yellow Over Red")
 	elseif (newState == ANIMSTATE_RED_YELLOW) then
@@ -144,8 +144,8 @@ function DefaultSetLights ( newState )
 		SwitchLight( LIGHT_NODE_RED,		1 )
 		SwitchLight( LIGHT_NODE_RED2,		0 )
 		
-		Call(    "TopGlow:SetColour", 255,  31,  31 )
-		Call( "BottomGlow:SetColour", 255, 255,  31 )
+		Call(    "TopGlow:SetColour", 160,  31,  31 )
+		Call( "BottomGlow:SetColour", 160, 120,  31 )
 
 		DebugPrint("State: Red Over Yellow")
 	elseif (newState == ANIMSTATE_RED_RED) then
@@ -156,8 +156,8 @@ function DefaultSetLights ( newState )
 		SwitchLight( LIGHT_NODE_RED,		1 )
 		SwitchLight( LIGHT_NODE_RED2,		1 )
 		
-		Call(    "TopGlow:SetColour", 255,  31,  31 )
-		Call( "BottomGlow:SetColour", 255,  31,  31 )
+		Call(    "TopGlow:SetColour", 160,  31,  31 )
+		Call( "BottomGlow:SetColour", 160,  31,  31 )
 		
 		DebugPrint("State: Red Over Red")
 	else

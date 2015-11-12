@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value />
+														<Value>[CTA] Interior Light</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -172,7 +172,7 @@
 							<Attribute name="Category">
 								<iBrowseableBlueprint-eBrowseableCategory>
 									<Element>
-										<Value>eUncategorised</Value>
+										<Value>eExcludeFromBrowserList</Value>
 									</Element>
 								</iBrowseableBlueprint-eBrowseableCategory>
 							</Attribute>
@@ -403,7 +403,7 @@
 							<Attribute name="Radius">
 								<sFloat32>
 									<Element>
-										<Value>20</Value>
+										<Value>6</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -414,21 +414,21 @@
 											<Attribute name="Red">
 												<sFloat32>
 													<Element>
-														<Value>0.4336099</Value>
+														<Value>0.7240663</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Green">
 												<sFloat32>
 													<Element>
-														<Value>0.4190872</Value>
+														<Value>0.6721992</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Blue">
 												<sFloat32>
 													<Element>
-														<Value>0.4564316</Value>
+														<Value>0.7427387</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>

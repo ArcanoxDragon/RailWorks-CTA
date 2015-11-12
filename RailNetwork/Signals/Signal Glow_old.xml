@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cSpotLightBlueprint>
+<cPointLightBlueprint>
 	<Element>
 		<Value>
 			<Attribute name="Name">
@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Signal Glow</Value>
+														<Value />
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -397,27 +397,13 @@
 				</cPosOriBlueprint>
 			</Attribute>
 			<Attribute name="LightComponent">
-				<cSpotLightComponentBlueprint>
+				<cPointLightComponentBlueprint>
 					<Element>
 						<Value>
 							<Attribute name="Radius">
 								<sFloat32>
 									<Element>
 										<Value>0.8</Value>
-									</Element>
-								</sFloat32>
-							</Attribute>
-							<Attribute name="Phi">
-								<sFloat32>
-									<Element>
-										<Value>50</Value>
-									</Element>
-								</sFloat32>
-							</Attribute>
-							<Attribute name="Theta">
-								<sFloat32>
-									<Element>
-										<Value>30</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -428,14 +414,14 @@
 											<Attribute name="Red">
 												<sFloat32>
 													<Element>
-														<Value>0.1825726</Value>
+														<Value>0.3983402</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Green">
 												<sFloat32>
 													<Element>
-														<Value>0.01244813</Value>
+														<Value>0.01659752</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -467,7 +453,7 @@
 							<Attribute name="DayNightCycle">
 								<bool>
 									<Element>
-										<Value>0</Value>
+										<Value>1</Value>
 									</Element>
 								</bool>
 							</Attribute>
@@ -487,8 +473,8 @@
 							</Attribute>
 						</Value>
 					</Element>
-				</cSpotLightComponentBlueprint>
+				</cPointLightComponentBlueprint>
 			</Attribute>
 		</Value>
 	</Element>
-</cSpotLightBlueprint>
+</cPointLightBlueprint>

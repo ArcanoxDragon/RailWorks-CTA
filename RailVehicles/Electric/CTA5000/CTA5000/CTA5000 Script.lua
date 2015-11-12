@@ -28,6 +28,7 @@ CAR_COUNT_TIME = 0.5 -- seconds
 
 LAST_CLASS_LIGHT_L = -1
 LAST_CLASS_LIGHT_R = -1
+LAST_TAILLIGHTS = false
 
 CLASS_LIGHTS_L = { { "classlight_red_l", 	"classlight_red_l_on" },
 				   { "classlight_yellow_l", "classlight_yellow_l_on" },
@@ -49,12 +50,14 @@ end
 -- 2 = yellow
 -- 3 = green
 -- 4 = white
-local function setClassLights(left, right)
-	if left == LAST_CLASS_LIGHT_L and right == LAST_CLASS_LIGHT_R then -- Save on some iterations and Call()s
+local function setClassLights(left, right, tailLights)
+	if left == LAST_CLASS_LIGHT_L and right == LAST_CLASS_LIGHT_R and tailLights == LAST_TAILLIGHTS then -- Save on some iterations and Call()s
 		return
 	end
 	
-	--debugPrint("Setting class lights to: " .. tostring(left) .. ", " .. tostring(right))
+	LAST_CLASS_LIGHT_L = left
+	LAST_CLASS_LIGHT_R = right
+	LAST_TAILLIGHTS = tailLights
 
 	for i = 1, 4 do
 		setClassLight(CLASS_LIGHTS_L[i], false)
@@ -69,8 +72,10 @@ local function setClassLights(left, right)
 		setClassLight(CLASS_LIGHTS_R[right], true)
 	end
 	
-	LAST_CLASS_LIGHT_L = left
-	LAST_CLASS_LIGHT_R = right
+	if ( tailLights ) then -- Enable taillights too
+		setClassLight(CLASS_LIGHTS_L[1], true)
+		setClassLight(CLASS_LIGHTS_R[1], true)
+	end
 end
 
 local NUM_SIGNS = 0
@@ -172,6 +177,7 @@ function Initialise()
 	gParkingBrake = false
 	gExpressLightTimer = 0.0
 	gExpressLightsOn = false
+	gLastATCEnabled = true
 	gLeadCarReversed = 1
 	
 -- For controlling delayed doors interlocks.
@@ -248,6 +254,7 @@ function Update(time)
 	DoorsRight = GetControlValue( "DoorsOpenCloseRight" ) > 0
 	DoorsOpen = DoorsLeft or DoorsRight
 	TrainOn = GetControlValue("Startup") > 0
+	ATCEnabled = GetControlValue( "ATCEnabled" ) > 0
 		
 	-- Make script think doors are still open while the animation is finishing
 	if gLastDoorsOpen and not DoorsOpen then
@@ -300,7 +307,17 @@ function Update(time)
 			gPrevDynamic = dynamic
 		end
 	
-		-- Headlights
+		-- Headlights/Interior Lights
+		
+		if TrainOn then
+			Call( "IntLightFront:Activate" , 1 )
+			Call( "IntLightMiddle:Activate", 1 )
+			Call( "IntLightBack:Activate"  , 1 )
+		else
+			Call( "IntLightFront:Activate" , 0 )
+			Call( "IntLightMiddle:Activate", 0 )
+			Call( "IntLightBack:Activate"  , 0 )
+		end
 		
 		if math.abs(reverser) >= 0.15 then
 			Headlights = 1
@@ -314,17 +331,17 @@ function Update(time)
 			if CarNum == 0 then -- Leading car ("active cab")
 				Call( "HeadlightL:Activate", 1 )
 				Call( "HeadlightR:Activate", 1 )
-				Call( "TaillightL:Activate", 0 )
-				Call( "TaillightR:Activate", 0 )
+				Call( "TaillightL:Activate", ATCEnabled and 0 or 1 )
+				Call( "TaillightR:Activate", ATCEnabled and 0 or 1 )
 				
 				HeadlightOn   = true
-				TaillightOn   = false
+				TaillightOn   = not ATCEnabled
 				
 				if DestSign > 0 then
 					ClassLightsOn = true
 				else
 					ClassLightsOn = false
-					setClassLights(0, 0)
+					setClassLights(0, 0, false)
 				end
 			else -- Trailing car (opposite "active cab" end)
 				Call( "HeadlightL:Activate", 0 )
@@ -336,7 +353,7 @@ function Update(time)
 				TaillightOn   = true
 				ClassLightsOn = false
 				
-				setClassLights(1, 1) -- Red, Red
+				setClassLights(1, 1, false) -- Red, Red
 			end
 		else -- Either middle car or headlights were switched off
 			Call( "HeadlightL:Activate", 0 )
@@ -348,7 +365,7 @@ function Update(time)
 			TaillightOn   = false
 			ClassLightsOn = false
 			
-			setClassLights(0, 0) -- Off, Off
+			setClassLights(0, 0, false) -- Off, Off
 		end
 	
 		if HeadlightOn then
@@ -582,21 +599,25 @@ function Update(time)
 				if (DestSign == 2) then -- Express
 					gExpressLightTimer = gExpressLightTimer + time
 					
-					if gExpressLightTimer >= 1.0 then -- toggle lights every second
-						gExpressLightTimer = 0.0
-						gExpressLightsOn = not gExpressLightsOn
+					if gExpressLightTimer >= 1.0 or ATCEnabled ~= gLastATCEnabled then -- toggle lights every second
+						if (gExpressLightTimer >= 1.0) then
+							gExpressLightTimer = 0.0
+							gExpressLightsOn = not gExpressLightsOn
+						end
+						
+						local left, right = 0, 0
 						
 						if gExpressLightsOn then
-							setClassLights(4, 4) -- White, White
-						else
-							setClassLights(0, 0) -- Off, Off
+							left, right = 4, 4
 						end
+						
+						setClassLights(left, right, not ATCEnabled)
 					end
 				else
 					gExpressLightTimer = 1.0
 					gExpressLightsOn = false
 				
-					setClassLights(sign.lMarker, sign.rMarker)
+					setClassLights(sign.lMarker, sign.rMarker, not ATCEnabled)
 				end
 			end
 		else
@@ -612,6 +633,8 @@ function Update(time)
 		Call("*:ActivateNode", "sign_off_front", 1)
 		Call("*:ActivateNode", "side_displays", 0)
 	end
+	
+	gLastATCEnabled = ATCEnabled
 	
 	if (Call("GetIsPlayer") == 0) then
 		SetControlValue("DestinationSign", DestSign)
