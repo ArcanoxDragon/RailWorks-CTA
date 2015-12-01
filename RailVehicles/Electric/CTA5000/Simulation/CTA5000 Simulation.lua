@@ -40,7 +40,7 @@ function Setup()
 	MIN_ACCELERATION = 0.125
 	MAX_BRAKING = 1.0
 	MIN_BRAKING = 0.2
-	JERK_LIMIT = 0.785
+	JERK_LIMIT = 0.85
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
 	MAX_BRAKE_RELEASE = 0.725
@@ -52,7 +52,7 @@ function Setup()
 	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 2.0
 	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 4.5
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to (WTF railworks, you can't do this yourself?)
-	ATO_COAST_TIME_OFFSET = 1.25
+	ATO_COAST_TIME_OFFSET = 1.05
 	ATO_COAST_UPPER_LIMIT = 0.0 -- MPH above set speed that triggers coast command
 	ATO_COAST_LOWER_LIMIT = 2.0 -- MPH below set speed that cancels coast command and allows power
 	
