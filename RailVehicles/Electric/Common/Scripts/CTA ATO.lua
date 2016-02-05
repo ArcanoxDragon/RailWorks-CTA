@@ -187,7 +187,7 @@ function UpdateATO(interval)
 		--Call("*:SetControlValue", "NextSignalAspect", 0, sigAspect)
 		
 		if (sigAspect == SIGNAL_STATE_STATION) then
-			if (sigDist <= spdBuffer and sigDist >= 15 --[[ we don't want to stop at stations we're too close to ]] and sigDist < gLastSigDist) then
+			if (sigDist <= spdBuffer and sigDist >= 15 --[[ we don't want to stop at stations we're too close to ]] and sigDist < gLastSigDist and trainSpeedMPH >= 3.0) then
 				if (atoStopping < 0.25) then
 					statStopStartingSpeed = trainSpeed
 					statStopSpeedLimit = targetSpeed
@@ -205,7 +205,7 @@ function UpdateATO(interval)
 				
 			statStopTime = statStopTime + interval
 			
-			if (sigDist < 2.0 or (atoOverrunDist > 0 and atoOverrunDist < 5.0)) then
+			if (sigDist < 1.75 or (atoOverrunDist > 0 and atoOverrunDist < 5.0)) then
 				targetSpeed = 0.0
 				if (trainSpeed <= 0.025) then
 					if (atoIsStopped < 0.25) then
@@ -269,6 +269,10 @@ function UpdateATO(interval)
 			-- pid(tD, kP, kI, kD, e, minErr, maxErr)
 			atoK_P = 1.0 / 4.0
 			if (atoStopping > 0) then atoK_P = atoK_P * 2.0 end
+			
+			-- Prevents I buildup while brakes are releasing, etc
+			if (trainSpeedMPH < 5.0 and atoThrottle > 0.0) then resetPid("ato") end
+			
 			--t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -5.0, 5.0, 2.0, pidTargetSpeed)
 			t, p, i, d = pid("ato", interval, atoK_P, atoK_I, atoK_D, targetSpeed, trainSpeedMPH, -5.0, 5.0)
 			--atoThrottle = clamp(t, -1.0 - (1/8), 1.0 + (1/8))

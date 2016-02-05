@@ -44,6 +44,7 @@ function Setup()
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
 	MAX_BRAKE_RELEASE = 0.725
+	MAX_BRAKE_RELEASE_VAR = 0.125 -- The brakes release in random amounts on real-life trains, so let's simulate that
 	MAX_SERVICE_BRAKE = 0.875
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
@@ -71,6 +72,8 @@ function Setup()
 	gAvgAccelTime = 0.0
 	gAvgAccelCalculated = 0.0
 	gBrakeRelease = 0.0
+	gMaxBrakeRelease = MAX_BRAKE_RELEASE
+	gGotBrakeRelease = false
 	brkAdjust = 0.0
 	gSign = 0
 	gLastAccelSign = 0
@@ -80,6 +83,12 @@ function Setup()
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 8.0 -- seconds.
 	gDoorsDelay = DOORDELAYTIME
+	
+	math.randomseed( os.time() )
+end
+
+function getBrakeRelease()
+	return MAX_BRAKE_RELEASE + ( MAX_BRAKE_RELEASE_VAR * math.random() )
 end
 
 ------------------------------------------------------------
@@ -289,7 +298,7 @@ function Update(interval)
 				Call( "*:SetControlValue", "HandBrakeCommand", 0, 0 )
 				
 				-- Cancel smooth-stop if train takes too long to stop
-				if (math.abs(TrainSpeed) < 3.0 and not ATOEnabled) then
+				if (math.abs(TrainSpeed) < 3.0) then
 					gStoppingTime = gStoppingTime + gTimeDelta
 				else
 					gStoppingTime = 0
@@ -341,23 +350,29 @@ function Update(interval)
 						
 						if (math.abs(TrainSpeed) < 3.0) then
 							if (tThrottle < 0.0) then
+								if ( not gGotBrakeRelease ) then
+									gGotBrakeRelease = true
+									gMaxBrakeRelease = getBrakeRelease()
+								end
+							
 								if (gStoppingTime < MAX_STOPPING_TIME) then
 									gBrakeRelease = clamp((2.75 - math.abs(TrainSpeed)) / 2.0, 0.0, 1.0)
 								else
 									gBrakeRelease = 0.0
 								end
 							else
+								gGotBrakeRelease = false
+							
 								if not ATOEnabled then
 									gStoppingTime = MAX_STOPPING_TIME
 								end
 							end
 						else
+							gGotBrakeRelease = false
 							gBrakeRelease = 0.0
 						end
 						
-						Call("*:SetControlValue", "Misc1", 0, gBrakeRelease)
-						
-						gSetBrake = gSetBrake - (gBrakeRelease * MAX_BRAKE_RELEASE * gSetBrake)
+						gSetBrake = gSetBrake - (gBrakeRelease * gMaxBrakeRelease * gSetBrake)
 					end
 				end
 				

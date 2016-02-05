@@ -4130,7 +4130,7 @@
 										<Attribute name="Name">
 											<cDeltaString>
 												<Element>
-													<Value>BrakeVolume</Value>
+													<Value>BrakeVolumeSpeed</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -4192,6 +4192,87 @@
 																		<sFloat32>
 																			<Element>
 																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+													</Value>
+												</Element>
+											</__Indexed__kLoud-cRVector2>
+										</Attribute>
+									</Value>
+								</Element>
+							</kLoud-cCurve>
+							<kLoud-cCurve>
+								<Element>
+									<Value>
+										<Attribute name="Name">
+											<cDeltaString>
+												<Element>
+													<Value>BrakeVolumeAmount</Value>
+												</Element>
+											</cDeltaString>
+										</Attribute>
+										<Attribute name="CurvePoint">
+											<__Indexed__kLoud-cRVector2>
+												<Element>
+													<Value>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.0625</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>0.8</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																</Value>
+															</Element>
+														</kLoud-cRVector2>
+														<kLoud-cRVector2>
+															<Element>
+																<Value>
+																	<Attribute name="X">
+																		<sFloat32>
+																			<Element>
+																				<Value>1</Value>
+																			</Element>
+																		</sFloat32>
+																	</Attribute>
+																	<Attribute name="Y">
+																		<sFloat32>
+																			<Element>
+																				<Value>1</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -5076,7 +5157,7 @@
 																					<Attribute name="Name">
 																						<cDeltaString>
 																							<Element>
-																								<Value>BrakeVolume</Value>
+																								<Value>BrakeVolumeSpeed</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
@@ -5087,7 +5168,7 @@
 																</Value>
 															</Element>
 														</kLoud-cVolumeCurveModifier>
-														<kLoud-cLinearVolumeModifier>
+														<kLoud-cVolumeCurveModifier>
 															<Element>
 																<Value>
 																	<Attribute name="ControllerIsGlobal">
@@ -5104,9 +5185,24 @@
 																			</Element>
 																		</cDeltaString>
 																	</Attribute>
+																	<Attribute name="Curve">
+																		<kLoud-cCurve>
+																			<Element>
+																				<Value>
+																					<Attribute name="Name">
+																						<cDeltaString>
+																							<Element>
+																								<Value>BrakeVolumeAmount</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</kLoud-cCurve>
+																	</Attribute>
 																</Value>
 															</Element>
-														</kLoud-cLinearVolumeModifier>
+														</kLoud-cVolumeCurveModifier>
 													</Value>
 												</Element>
 											</__Indexed__kLoud-cModifier>
@@ -5681,7 +5777,7 @@
 																					<Attribute name="Name">
 																						<cDeltaString>
 																							<Element>
-																								<Value>BrakeVolume</Value>
+																								<Value>BrakeVolumeSpeed</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
