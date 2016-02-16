@@ -188,7 +188,7 @@
 							<Attribute name="SpringXCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.09</Value>
+										<Value>0.12</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -202,7 +202,7 @@
 							<Attribute name="SpringZCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.06</Value>
+										<Value>0.1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
