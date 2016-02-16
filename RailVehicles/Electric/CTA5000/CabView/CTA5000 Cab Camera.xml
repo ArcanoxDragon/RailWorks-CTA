@@ -146,7 +146,7 @@
 							<Attribute name="verticalDirectionalFreedom">
 								<sFloat32>
 									<Element>
-										<Value>1.5</Value>
+										<Value>1.9</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
