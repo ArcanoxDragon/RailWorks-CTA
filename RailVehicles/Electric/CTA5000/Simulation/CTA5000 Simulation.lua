@@ -358,7 +358,7 @@ function Update( interval )
 										gMaxBrakeRelease = GetRandomBrakeRelease( interval )
 									end
 									
-									gBrakeRelease = clamp( (2.75 - math.abs( TrainSpeed ) ) / 2.0, 0.0, 1.0 )
+									gBrakeRelease = clamp( (2.75 - math.abs( TrainSpeed ) ) / 2.25, 0.0, 1.0 )
 								else
 									gBrakeRelease = 0.0
 									gMaxBrakeRelease = -1.0
