@@ -40,14 +40,14 @@
 			<Attribute name="SuspensionStiffness">
 				<sFloat32>
 					<Element>
-						<Value>1E+12</Value>
+						<Value>1E+09</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="SuspensionDamping">
 				<sFloat32>
 					<Element>
-						<Value>500000</Value>
+						<Value>5000</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
