@@ -61,7 +61,7 @@
 										<Attribute name="Radius">
 											<sFloat32>
 												<Element>
-													<Value>0.3556</Value>
+													<Value>0.15</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -75,7 +75,7 @@
 										<Attribute name="NodeId">
 											<cDeltaString>
 												<Element>
-													<Value>bo01wh01</Value>
+													<Value>wheel_f1</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -95,7 +95,7 @@
 										<Attribute name="Radius">
 											<sFloat32>
 												<Element>
-													<Value>0.3556</Value>
+													<Value>0.15</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -109,7 +109,7 @@
 										<Attribute name="NodeId">
 											<cDeltaString>
 												<Element>
-													<Value>bo01wh02</Value>
+													<Value>wheel_f2</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
