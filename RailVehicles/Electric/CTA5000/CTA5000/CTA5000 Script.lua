@@ -748,8 +748,10 @@ function OnConsistMessage ( msg, argument, direction )
 end
 
 function OnCustomSignalMessage( argument )
+	debugPrint( "OnCustomSignalMessage: " .. tostring( argument ) )
+
 	if ( type( argument ) == "string" ) then
-		for msg, arg in string.gfind( tostring( argument ), "( [^=\n]+ )=( [^=\n]+ )" ) do
+		for msg, arg in string.gfind( tostring( argument ), "([^=\n]+)=([^=\n]+)" ) do
 			debugPrint( "Signal message: " .. msg .. " | " .. arg )
 		
 			if ( tonumber( msg ) == MSG_ATO_SPEED_LIMIT ) then
