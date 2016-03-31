@@ -750,19 +750,21 @@ end
 function OnCustomSignalMessage( argument )
 	if ( type( argument ) == "string" ) then
 		for msg, arg in string.gfind( tostring( argument ), "( [^=\n]+ )=( [^=\n]+ )" ) do
+			debugPrint( "Signal message: " .. msg .. " | " .. arg )
+		
 			if ( tonumber( msg ) == MSG_ATO_SPEED_LIMIT ) then
 				local speedLimit = tonumber( arg )
 				if ( speedLimit ) then
 					SetControlValue( "ATOSpeedLimit", speedLimit )
 				end
 			elseif ( tonumber( msg ) == MSG_SIGN_CHANGE ) then
-				--debugPrint( "Received sign change command" )
+				debugPrint( "Received sign change command" )
 				if ( GetControlValue( "Active" ) > 0.5 ) then
 					local curSignIndex = GetControlValue( "DestinationSign" )
-					--debugPrint( "Current sign: " .. tostring( curSignIndex ) )
+					debugPrint( "Current sign: " .. tostring( curSignIndex ) )
 					if ( curSignIndex < NUM_SIGNS and curSignIndex >= 0 ) then
 						local curSign = SIGNS[curSignIndex + 1]
-						--debugPrint( "Changing to: " .. tostring( curSign.nextSign ) )
+						debugPrint( "Changing to: " .. tostring( curSign.nextSign ) )
 						SetControlValue( "DestinationSign", curSign.nextSign )
 						RVNumber = Call( "*:GetRVNumber" )
 						firstPart = "5001"
