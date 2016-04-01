@@ -128,7 +128,6 @@ function UpdateATC(interval)
 		elseif (spdType > 0) then
 			if (spdLimit < targetSpeed) then
 				if (spdDist <= spdBuffer) then
-				
 					targetSpeed = math.min(targetSpeed, math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - SIGNAL_DISTANCE_BUFFER)), spdLimit))
 				end
 			end

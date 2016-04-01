@@ -169,12 +169,14 @@ function UpdateATO(interval)
 		end
 		
 		searchDist = sigDist + 0.1
-		while (searchDist < spdBuffer and sigAspect ~= SIGNAL_STATE_STATION) do
+		saerchCount = 0
+		while (searchDist < spdBuffer and sigAspect ~= SIGNAL_STATE_STATION and searchCount < 20) do -- To avoid potential infinite loops at the end of the track, don't search more than 20 "signals" away
 			tSigType, tSigState, tSigDist, tSigAspect = Call("*:GetNextRestrictiveSignal", atoSigDirection, searchDist)
 			if (tSigAspect == SIGNAL_STATE_STATION) then
 				sigType, sigState, sigDist, sigAspect = tSigType, tSigState, tSigDist, tSigAspect
 			end
 			searchDist = tSigDist + 0.1
+			searchCount = searchCount + 1
 		end
 		
 		if (gLastSigDistTime >= 1.0) then
