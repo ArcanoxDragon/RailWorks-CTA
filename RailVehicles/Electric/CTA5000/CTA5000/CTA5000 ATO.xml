@@ -596,7 +596,7 @@
 							<Attribute name="EaseOfDerailment">
 								<sFloat32>
 									<Element>
-										<Value>0.45</Value>
+										<Value>0.42</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
