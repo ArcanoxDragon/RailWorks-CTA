@@ -43,8 +43,8 @@ function Setup()
 	JERK_LIMIT = 1.0
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.84
-	MIN_BRAKE_RELEASE = 0.74
+	MAX_BRAKE_RELEASE = 0.88
+	MIN_BRAKE_RELEASE = 0.78
 	MAX_SERVICE_BRAKE = 0.875
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
@@ -358,7 +358,7 @@ function Update( interval )
 										gMaxBrakeRelease = GetRandomBrakeRelease( interval )
 									end
 									
-									gBrakeRelease = clamp( (2.75 - math.abs( TrainSpeed ) ) / 2.25, 0.0, 1.0 )
+									gBrakeRelease = clamp( (2.0 - math.abs( TrainSpeed ) ) / 1.5, 0.0, 1.0 )
 								else
 									gBrakeRelease = 0.0
 									gMaxBrakeRelease = -1.0

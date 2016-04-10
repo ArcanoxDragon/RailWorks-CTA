@@ -61,14 +61,14 @@
 										<Attribute name="MinDistance">
 											<sFloat32>
 												<Element>
-													<Value>0.097</Value>
+													<Value>0.098</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="MaxDistance">
 											<sFloat32>
 												<Element>
-													<Value>0.103</Value>
+													<Value>0.102</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -89,7 +89,7 @@
 										<Attribute name="Damping">
 											<sFloat32>
 												<Element>
-													<Value>10000</Value>
+													<Value>1000000</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
