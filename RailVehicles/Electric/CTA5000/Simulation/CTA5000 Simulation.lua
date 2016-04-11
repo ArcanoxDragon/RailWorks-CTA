@@ -1,5 +1,5 @@
 --include=..\..\Common\Scripts\CTA ATC.lua
---include=..\..\Common\Scripts\CTA ATO.lua
+--include=..\..\Common\Scripts\CTA ATO AC.lua
 --include=..\..\..\..\Common\Scripts\CTA Util.lua
 
 ------------------------------------------------------------
@@ -56,6 +56,7 @@ function Setup()
 	ATO_COAST_TIME_OFFSET = 1.05
 	ATO_COAST_UPPER_LIMIT = 0.0 -- MPH above set speed that triggers coast command
 	ATO_COAST_LOWER_LIMIT = 2.0 -- MPH below set speed that cancels coast command and allows power
+	ATC_REQUIRED_BRAKE = 0.9
 	
 -- Propulsion system variables
 	realAccel = 0.0

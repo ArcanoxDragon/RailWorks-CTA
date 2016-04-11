@@ -222,7 +222,7 @@ function UpdateATC(interval)
 			end
 		else
 			Call("*:SetControlValue", "ATCBrakeApplication", 0, 0.0)
-			if (throttle <= -0.9) then -- 90% brake application
+			if (throttle <= -ATC_REQUIRED_BRAKE) then -- 90% brake application
 				SetATCWarnMode(ATC_WARN_INTERMITTENT)
 			else
 				gBrakeTime = gBrakeTime + interval
