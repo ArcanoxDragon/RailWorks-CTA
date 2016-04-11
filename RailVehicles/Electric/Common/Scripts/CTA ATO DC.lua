@@ -151,7 +151,7 @@ function UpdateATO(interval)
 		
 		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0) + distBuffer
 		
-		accelBuff = ((tAccel - (-1)) / ACCEL_PER_SECOND) -- Estimated time to reach full brakes (-1) from current throttle (tAccel)
+		accelBuff = 1.2 -- Estimated time to reach full brakes from whatever the throttle currently is
 		accelBuff = accelBuff * trainSpeed -- Estimated meters covered in the time taken to reach full brakes
 		
 		spdBuffer = spdBuffer + accelBuff -- Accomodate for jerk limit

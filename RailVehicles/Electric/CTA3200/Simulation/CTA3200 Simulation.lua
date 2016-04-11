@@ -1,5 +1,5 @@
 --include=..\..\Common\Scripts\CTA ATC.lua
---include=..\..\Common\Scripts\CTA ATO AC.lua
+--include=..\..\Common\Scripts\CTA ATO DC.lua
 --include=..\..\..\..\Common\Scripts\CTA Util.lua
 
 ------------------------------------------------------------
@@ -33,7 +33,7 @@ function Setup()
 	MIN_SERVICE_BRAKE = 0.0
 	DYNAMIC_BRAKE_AMPS = 500.0
 	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 1.0
-	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 3.75
+	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 5.75
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to ( WTF railworks, you can't do this yourself? )
 	ATC_REQUIRED_BRAKE = 0.624
 	
@@ -55,7 +55,7 @@ function Setup()
 	gLastThrottle = 0.0
 	gCoastDelay = 0.0
 	gBrakeDelay = 0.0
-	gDynamicFadeDelay = 0.0
+	gDynamicFadeDelay = DYNAMIC_FADE_DELAY
 	
 -- Other misc. variables
 	gRandSeeded = false
@@ -163,18 +163,10 @@ function Update( interval )
 			
 			-- Set throttle based on ATO or not
 			if ATOEnabled then
-				tThrottle = math.min( ATOThrottle, math.max( ATOThrottle - 0.025, tThrottle ) )
+				tThrottle = math.min( ATOThrottle + 0.01, math.max( ATOThrottle - 0.025, tThrottle ) )
 				Call( "*:SetControlValue", "ThrottleLever", 0, 0 )
 			else
 				tThrottle = CombinedLever * 2.0 - 1.0
-				
-				if ( tThrottle > 0.01 ) then
-					tThrottle = Round( tThrottle, 3 ) -- 3 points of power
-				elseif ( tThrottle < -0.01 ) then
-					tThrottle = -Round( -tThrottle, 4 ) -- 4 points of braking
-				else
-					tThrottle = 0.0
-				end
 				
 				Call( "*:SetControlValue", "ThrottleLever", 0, CombinedLever )
 				
@@ -188,7 +180,15 @@ function Update( interval )
 				tThrottle = 0.0
 			end
 			
-			tTAccel = clamp( tThrottle, -1.0, 1.0 )
+			if ( tThrottle > 0.01 ) then
+				tTAccel = Round( tThrottle, 3 ) -- 3 points of power
+			elseif ( tThrottle < -0.01 ) then
+				tTAccel = -Round( -tThrottle, 4 ) -- 4 points of braking
+			else
+				tTAccel = 0.0
+			end
+			
+			tTAccel = clamp( tTAccel, -1.0, 1.0 )
 			
 			if ( tTAccel < -0.01 ) then
 				if ( gBrakeDelay < BRAKE_DELAY_TIME ) then
@@ -197,10 +197,14 @@ function Update( interval )
 					if ( gCoastDelay < COAST_DELAY_TIME ) then
 						gCoastDelay = gCoastDelay + gTimeDelta
 					else
-						tAccel = 0.0
+						tAccel = math.min( tAccel, 0.0 )
 					end
 				else
 					tAccel = tTAccel
+				end
+				
+				if ( math.abs( tTAccel - gLastThrottle ) > 0.01 and gBrakeDelay > BRAKE_DELAY_TIME ) then
+					gBrakeDelay = 0.0
 				end
 			else
 				gBrakeDelay = 0.0
@@ -210,7 +214,7 @@ function Update( interval )
 					tAccel = tAccel + regDelta
 					gCoastDelay = 0.0
 				elseif ( tAccel > tTAccel ) then
-					if ( math.abs( tThrottle - gLastThrottle ) > 0.01 ) then
+					if ( math.abs( tTAccel - gLastThrottle ) > 0.01 ) then
 						gCoastDelay = 0.0
 					else
 						if ( gCoastDelay < COAST_DELAY_TIME ) then
@@ -285,15 +289,16 @@ function Update( interval )
 							dynEffective = 1.0
 						end
 						
-						if ( dynEffective < 0.375 ) then
+						if ( TrainSpeed < 2.0 and tAccel < 0 ) then
 							if ( gDynamicFadeDelay < DYNAMIC_FADE_DELAY ) then
 								gDynamicFadeDelay = gDynamicFadeDelay + gTimeDelta
-								gSetBrake = gSetDynamic * 0.125
+								gSetBrake = gSetDynamic * 0.05
 							else
 								gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 							end
 						else
 							gDynamicFadeDelay = 0.0
+							gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 						end
 						
 						
@@ -346,7 +351,7 @@ function Update( interval )
 
 			gLastDoorsOpen = DoorsOpen
 			gLastSpeed = TrainSpeed
-			gLastThrottle = tThrottle
+			gLastThrottle = tTAccel
 			gTimeDelta = 0
 		end
 	else -- trail engine.
