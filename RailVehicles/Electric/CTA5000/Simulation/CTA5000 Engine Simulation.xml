@@ -313,7 +313,7 @@
 																																			<Attribute name="MaxForce">
 																																				<sFloat32>
 																																					<Element>
-																																						<Value>6000</Value>
+																																						<Value>8000</Value>
 																																					</Element>
 																																				</sFloat32>
 																																			</Attribute>
@@ -919,7 +919,7 @@
 														<Attribute name="QuickPowerOffAtZeroThrottle">
 															<eBoolean>
 																<Element>
-																	<Value>eTrue</Value>
+																	<Value>eFalse</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -940,7 +940,7 @@
 														<Attribute name="CylinderPressureForBrakeToCutPower">
 															<sFloat32>
 																<Element>
-																	<Value>40</Value>
+																	<Value>900</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -1067,7 +1067,7 @@
 																					<Attribute name="MinimumUsableSpeed">
 																						<sFloat32>
 																							<Element>
-																								<Value>2.5</Value>
+																								<Value>2</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>

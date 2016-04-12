@@ -93,7 +93,7 @@ function Update( interval )
 		Call( "*:SetControlValue", "ThirdRail", 0, 0 )
 	end
 
-	if Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
+	if true then --Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
 
 		if Call( "IsExpertMode" ) == TRUE then -- Expert mode only.
 		
@@ -107,10 +107,13 @@ function Update( interval )
 			BrakeCylBAR = Call( "*:GetControlValue", "TrainBrakeCylinderPressureBAR", 0 )
 			ATCBrakeApplication = Call( "*:GetControlValue", "ATCBrakeApplication", 0 )
 			IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
+			CarNum = Call( "*:GetControlValue", "CarNum", 0 )
 			NumCars = Call( "*:GetControlValue", "NumCars", 0 )
 			NumCarsOnPower = Call( "*:GetControlValue", "NumCarsOnPower", 0 )
 			ATOEnabled = ( Call( "*:GetControlValue", "ATOEnabled", 0 ) or -1 ) > 0.5
 			ATOThrottle = ( Call( "*:GetControlValue", "ATOThrottle", 0 ) or -1 )
+			Active = Call( "*:GetControlValue", "Active", 0 ) > 0
+			Regulator = Call( "*:GetControlValue", "Regulator", 0 )
 			
 			DestSignNext = Call( "*:GetControlValue", "DestSignNext", 0 ) > 0
 			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
@@ -309,10 +312,17 @@ function Update( interval )
 				finalRegulator = finalRegulator * ( NumCarsOnPower / NumCars )
 				
 				Call( "*:SetControlValue", "TAccel", 0, tAccel )
-				Call( "*:SetControlValue", "Regulator", 0, finalRegulator )
+				if ( Active ) then Call( "*:SetControlValue", "Regulator", 0, finalRegulator ) end
 				Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 ) )
 				Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
 				Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
+			
+				--[[if ( not Active ) then
+					Call( "*:SetPowerProportion", CarNum, 0.0 )
+					Call( "*:SetControlValue", "HandBrake", 0, Regulator - finalRegulator )
+				else
+					Call( "*:SetPowerProportion", CarNum, 1.0 )
+				end]]
 			end
 
 			-- End propulsion system
