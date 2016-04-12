@@ -47,7 +47,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.5</Value>
+													<Value>0.25</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1631,7 +1631,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.08</Value>
+													<Value>0.04</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1730,7 +1730,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.55</Value>
+													<Value>0.4</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1829,7 +1829,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.1</Value>
+													<Value>0.04</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1857,14 +1857,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>380</Value>
+													<Value>40</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2027,7 +2027,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.1</Value>
+													<Value>0.04</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2055,14 +2055,14 @@
 										<Attribute name="AttenuationStartDist">
 											<sFloat32>
 												<Element>
-													<Value>50</Value>
+													<Value>5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="NoFutherAttenuationDist">
 											<sFloat32>
 												<Element>
-													<Value>380</Value>
+													<Value>40</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>

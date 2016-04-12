@@ -426,12 +426,14 @@ function Update( interval )
 		
 		-- Begin ATC system
 		
-		if UpdateATC then
-			UpdateATC( gTimeDelta )
-		end
-		
-		if UpdateATO then
-			UpdateATO( gTimeDelta )
+		if ( Active ) then
+			if UpdateATC then
+				UpdateATC( gTimeDelta )
+			end
+			
+			if UpdateATO then
+				UpdateATO( gTimeDelta )
+			end
 		end
 		
 		-- End ATC system

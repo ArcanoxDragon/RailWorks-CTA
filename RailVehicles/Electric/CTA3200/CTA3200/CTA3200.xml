@@ -1649,14 +1649,14 @@
 																			<Attribute name="Provider">
 																				<cDeltaString>
 																					<Element>
-																						<Value />
+																						<Value>briman0094</Value>
 																					</Element>
 																				</cDeltaString>
 																			</Attribute>
 																			<Attribute name="Product">
 																				<cDeltaString>
 																					<Element>
-																						<Value />
+																						<Value>CTA</Value>
 																					</Element>
 																				</cDeltaString>
 																			</Attribute>
@@ -1667,7 +1667,7 @@
 															<Attribute name="BlueprintID">
 																<cDeltaString>
 																	<Element>
-																		<Value />
+																		<Value>RailVehicles\Electric\CTA3200\Audio\CTA3200 Cab Occlusion</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -5573,7 +5573,7 @@
 														<Attribute name="ApplyToConsist">
 															<eBoolean>
 																<Element>
-																	<Value>eFalse</Value>
+																	<Value>eTrue</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>

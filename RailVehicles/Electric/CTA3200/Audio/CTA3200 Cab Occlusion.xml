@@ -5,14 +5,14 @@
 			<Attribute name="Occlusion">
 				<sInt32>
 					<Element>
-						<Value>-6500</Value>
+						<Value>-4500</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
 			<Attribute name="OcclusionLFratio">
 				<sFloat32>
 					<Element>
-						<Value>0.01</Value>
+						<Value>0.25</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -26,7 +26,7 @@
 			<Attribute name="OcclusionDirectRatio">
 				<sFloat32>
 					<Element>
-						<Value>0.5</Value>
+						<Value>1</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>

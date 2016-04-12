@@ -12,7 +12,7 @@
 			<Attribute name="EnvironmentSize">
 				<sFloat32>
 					<Element>
-						<Value>20</Value>
+						<Value>50</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -33,7 +33,7 @@
 			<Attribute name="RoomHF">
 				<sInt32>
 					<Element>
-						<Value>-1500</Value>
+						<Value>-3500</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
@@ -75,7 +75,7 @@
 			<Attribute name="ReflectionsDelay">
 				<sFloat32>
 					<Element>
-						<Value>0.007</Value>
+						<Value>0.01</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
@@ -103,7 +103,7 @@
 			<Attribute name="Reverb">
 				<sInt32>
 					<Element>
-						<Value>4</Value>
+						<Value>400</Value>
 					</Element>
 				</sInt32>
 			</Attribute>
@@ -138,14 +138,14 @@
 			<Attribute name="EchoTime">
 				<sFloat32>
 					<Element>
-						<Value>0.1</Value>
+						<Value>0.4</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
 			<Attribute name="EchoDepth">
 				<sFloat32>
 					<Element>
-						<Value>0</Value>
+						<Value>0.2</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>

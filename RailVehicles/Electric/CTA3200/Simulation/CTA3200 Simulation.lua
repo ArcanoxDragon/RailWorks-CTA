@@ -28,12 +28,12 @@ function Setup()
 	THROTTLE_PICKUP_SPEED = 1.0 / 2.0
 	BRAKE_DELAY_TIME = 1.0
 	COAST_DELAY_TIME = 0.25
-	DYNAMIC_FADE_DELAY = 2.0
+	DYNAMIC_FADE_DELAY = 1.5
 	MAX_SERVICE_BRAKE = 0.6
 	MIN_SERVICE_BRAKE = 0.0
 	DYNAMIC_BRAKE_AMPS = 500.0
-	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 1.0
-	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 5.75
+	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 9.0
+	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 14.0
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to ( WTF railworks, you can't do this yourself? )
 	ATC_REQUIRED_BRAKE = 0.624
 	
@@ -292,15 +292,17 @@ function Update( interval )
 							dynEffective = 1.0
 						end
 						
-						if ( TrainSpeed < 2.0 and tAccel < 0 ) then
+						if ( TrainSpeed < 2.5 and tAccel < 0 ) then
 							if ( gDynamicFadeDelay < DYNAMIC_FADE_DELAY ) then
 								gDynamicFadeDelay = gDynamicFadeDelay + gTimeDelta
-								gSetBrake = gSetDynamic * 0.05
+								gSetBrake = gSetDynamic * 0.2
 							else
 								gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 							end
 						else
-							gDynamicFadeDelay = 0.0
+							if ( tAccel > 0 ) then
+								gDynamicFadeDelay = 0.0
+							end
 							gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 						end
 						
@@ -345,12 +347,14 @@ function Update( interval )
 			
 			-- Begin ATC system
 			
-			if UpdateATC then
-				UpdateATC( gTimeDelta )
-			end
-			
-			if UpdateATO then
-				UpdateATO( gTimeDelta )
+			if ( Active ) then
+				if UpdateATC then
+					UpdateATC( gTimeDelta )
+				end
+				
+				if UpdateATO then
+					UpdateATO( gTimeDelta )
+				end
 			end
 			
 			-- End ATC system

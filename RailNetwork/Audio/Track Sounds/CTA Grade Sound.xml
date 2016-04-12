@@ -70,7 +70,7 @@
 			<Attribute name="DistancebetweenJoints">
 				<sFloat32>
 					<Element>
-						<Value>150</Value>
+						<Value>0</Value>
 					</Element>
 				</sFloat32>
 			</Attribute>
