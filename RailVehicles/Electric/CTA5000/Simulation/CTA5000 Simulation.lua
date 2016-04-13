@@ -302,7 +302,7 @@ function Update( interval )
 			Call( "*:SetControlValue", "HandBrakeCommand", 0, 0 )
 			
 			-- Cancel smooth-stop if train takes too long to stop
-			if ( math.abs( TrainSpeed ) < 3.0 and not ATOEnabled ) then
+			if ( math.abs( TrainSpeed ) < 3.0 ) then
 				gStoppingTime = gStoppingTime + gTimeDelta
 			else
 				gStoppingTime = 0
@@ -365,13 +365,11 @@ function Update( interval )
 								gMaxBrakeRelease = -1.0
 							end
 						else
-							if not ATOEnabled then
-								if ( gStoppingTime < MAX_STOPPING_TIME ) then
-									tAccel = 0.0 -- Prevents jerkiness when going brake -> coast -> brake quickly
-								end
-								
-								gStoppingTime = MAX_STOPPING_TIME
+							if ( gStoppingTime < MAX_STOPPING_TIME ) then
+								tAccel = 0.0 -- Prevents jerkiness when going brake -> coast -> brake quickly
 							end
+							
+							gStoppingTime = MAX_STOPPING_TIME
 						end
 					else
 						gBrakeRelease = 0.0
