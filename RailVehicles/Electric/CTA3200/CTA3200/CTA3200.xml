@@ -13098,7 +13098,7 @@
 														<Attribute name="ParentNodeName">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>front_cap</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>

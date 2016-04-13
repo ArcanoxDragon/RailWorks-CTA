@@ -282,11 +282,13 @@ function Update( time )
 		gInit = true
 	end
 
-	--if ( Call( "GetIsPlayer" ) == 1 ) then
-		gTimeSinceCarCount = gTimeSinceCarCount + time
-		if ( gTimeSinceCarCount >= CAR_COUNT_TIME ) then
-			gTimeSinceCarCount = 0
-			CountCars()
+	--if ( Call( "*:GetIsPlayer" ) == 1 ) then
+		if ( Call( "*:GetIsPlayer" ) >= 1 ) then
+			gTimeSinceCarCount = gTimeSinceCarCount + time
+			if ( gTimeSinceCarCount >= CAR_COUNT_TIME ) then
+				gTimeSinceCarCount = 0
+				CountCars()
+			end
 		end
 			
 		local whine = GetControlValue( "TractionWhine" )
@@ -426,32 +428,34 @@ function Update( time )
 		end
 	--end
 	
-	-- Third rail signal
-	sigType, sigState, sigDist, sigAspect = Call( "*:GetNextRestrictiveSignal", mod( GetControlValue( "CarNum" ), 2 ) )
-	SetControlValue( "NextSignalAspect", sigAspect )
-	SetControlValue( "NextSignalDist", sigDist )
-	if ( sigDist < 1.0 ) then
-		if ( sigDist < gLastSignalDist - 0.01 ) then
-			if ( sigAspect == SIGNAL_THIRD_RAIL_OFF ) then
-				gOnThirdRail = false
-			elseif ( sigAspect == SIGNAL_THIRD_RAIL_ON ) then
-				gOnThirdRail = true
-			end
-		elseif ( sigDist > gLastSignalDist + 0.01 ) then
-			if ( sigAspect == SIGNAL_THIRD_RAIL_OFF ) then
-				gOnThirdRail = true
-			elseif ( sigAspect == SIGNAL_THIRD_RAIL_ON ) then
-				gOnThirdRail = false
-			end
+	if ( Call( "*:GetIsPlayer" ) >= 1 ) then
+		-- Third rail signal
+		sigType, sigState, sigDist, sigAspect = Call( "*:GetNextRestrictiveSignal", mod( GetControlValue( "CarNum" ), 2 ) )
+		SetControlValue( "NextSignalAspect", sigAspect )
+		SetControlValue( "NextSignalDist", sigDist )
+		if ( sigDist < 1.0 ) then
+			if ( sigDist < gLastSignalDist - 0.01 ) then
+				if ( sigAspect == SIGNAL_THIRD_RAIL_OFF ) then
+					gOnThirdRail = false
+				elseif ( sigAspect == SIGNAL_THIRD_RAIL_ON ) then
+					gOnThirdRail = true
+				end
+			elseif ( sigDist > gLastSignalDist + 0.01 ) then
+				if ( sigAspect == SIGNAL_THIRD_RAIL_OFF ) then
+					gOnThirdRail = true
+				elseif ( sigAspect == SIGNAL_THIRD_RAIL_ON ) then
+					gOnThirdRail = false
+				end
 
+			end
 		end
-	end
-	gLastSignalDist = sigDist
-	
-	if GetControlValue( "ThirdRail" ) < 0.5 then
-		SetControlValue( "OnThirdRail", 0 )
-	else
-		SetControlValue( "OnThirdRail", gOnThirdRail and 1 or 0 )
+		gLastSignalDist = sigDist
+		
+		if GetControlValue( "ThirdRail" ) < 0.5 then
+			SetControlValue( "OnThirdRail", 0 )
+		else
+			SetControlValue( "OnThirdRail", gOnThirdRail and 1 or 0 )
+		end
 	end
 	
 	-- Inverter whine based on current
@@ -472,7 +476,7 @@ function Update( time )
 		gWhine = tWhine
 	end
 	
-	if ( Call( "GetIsPlayer" ) < 0.5 ) then
+	if ( Call( "*:GetIsPlayer" ) < 0.5 ) then
 		SetControlValue( "TractionWhine", 1.0 )
 	else
 		SetControlValue( "TractionWhine", clamp( gWhine, 0.0, 1.0 ) )
@@ -572,7 +576,7 @@ function Update( time )
 		firstPart = string.sub( RVNumber, 1, 4 )
 		lastPart = string.sub( RVNumber, 5, 5 )
 		
-		if ( Call( "GetIsPlayer" ) == 0 ) then
+		if ( Call( "*:GetIsPlayer" ) == 0 ) then
 			DestSign = getSignIndex( string.lower( lastPart ) ) - 1
 		end
 	else
@@ -627,7 +631,7 @@ function Update( time )
 			Call( "SignLightFront:Activate", 0 )
 		end
 	else
-		if ( Call( "GetIsPlayer" ) == 0 ) then
+		if ( Call( "*:GetIsPlayer" ) == 0 ) then
 			Call( "*:SetRVNumber", firstPart .. "a" )
 		end
 		Call( "SignLightFront:Activate", 0 )
@@ -637,7 +641,7 @@ function Update( time )
 	
 	gLastATCEnabled = ATCEnabled
 	
-	if ( Call( "GetIsPlayer" ) == 0 ) then
+	if ( Call( "*:GetIsPlayer" ) == 0 ) then
 		SetControlValue( "DestinationSign", DestSign )
 	end
 end

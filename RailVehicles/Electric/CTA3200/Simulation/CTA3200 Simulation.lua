@@ -347,7 +347,7 @@ function Update( interval )
 			
 			-- Begin ATC system
 			
-			if ( Active ) then
+			if ( Active and Call( "*:GetIsPlayer" ) >= 1 ) then
 				if UpdateATC then
 					UpdateATC( gTimeDelta )
 				end
