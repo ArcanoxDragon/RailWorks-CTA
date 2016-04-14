@@ -610,7 +610,7 @@
 							<Attribute name="FrontPivotY">
 								<sFloat32>
 									<Element>
-										<Value>0</Value>
+										<Value>-1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -624,7 +624,7 @@
 							<Attribute name="BackPivotY">
 								<sFloat32>
 									<Element>
-										<Value>0</Value>
+										<Value>-1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -666,14 +666,14 @@
 							<Attribute name="DragCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>7.2</Value>
+										<Value>7</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="RollingFrictionCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.001</Value>
+										<Value>0.004</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -722,7 +722,7 @@
 														<Attribute name="BogeyPivotY">
 															<sFloat32>
 																<Element>
-																	<Value>0.5</Value>
+																	<Value>0</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -779,7 +779,7 @@
 														<Attribute name="BogeyPivotY">
 															<sFloat32>
 																<Element>
-																	<Value>0.5</Value>
+																	<Value>0</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
