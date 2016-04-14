@@ -5,7 +5,7 @@
 			<Attribute name="Name">
 				<cDeltaString>
 					<Element>
-						<Value>[CTA] Morrison-Knudsen 3200-series</Value>
+						<Value>[CTA] Bombardier 5000-series (DO NOT USE)</Value>
 					</Element>
 				</cDeltaString>
 			</Attribute>
@@ -20,7 +20,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Morrison-Knudsen 3200-series</Value>
+														<Value>[CTA] Bombardier 5000-series</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -106,7 +106,7 @@
 											<Attribute name="CsvFile">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA3200\CTA3200\CTA3200_numbers.csv</Value>
+														<Value>RailVehicles\Electric\CTA5000\CTA5000\CTA5000_numbers.csv</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -157,7 +157,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA3200\Couplings\CTA3200 Coupler Front.xml</Value>
+														<Value>RailVehicles\Electric\CTA5000\Couplings\CTA5000 Coupler Front.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -194,7 +194,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA3200\Couplings\CTA3200 Coupler Rear.xml</Value>
+														<Value>RailVehicles\Electric\CTA5000\Couplings\CTA5000 Coupler Rear.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -666,14 +666,14 @@
 							<Attribute name="DragCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>3.6</Value>
+										<Value>7.2</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
 							<Attribute name="RollingFrictionCoefficient">
 								<sFloat32>
 									<Element>
-										<Value>0.0008</Value>
+										<Value>0.001</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -755,7 +755,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\Bogies\CTA3200_bogie_01_power.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\Bogies\CTA5000_bogie_01_power.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -812,7 +812,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\Bogies\CTA3200_bogie_02_power.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\Bogies\CTA5000_bogie_02_power.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -837,21 +837,21 @@
 							<Attribute name="IntermediateRemapper">
 								<cDeltaString>
 									<Element>
-										<Value>CTA3200</Value>
+										<Value>CTA5000</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
 							<Attribute name="ExpertRemapper">
 								<cDeltaString>
 									<Element>
-										<Value>CTA3200</Value>
+										<Value>CTA5000</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
 							<Attribute name="BogieAudioControlName">
 								<cDeltaString>
 									<Element>
-										<Value>RailVehicles\Electric\Common\Audio\Bogies\CTABogieAudioControl</Value>
+										<Value>RailVehicles\Electric\Common\Audio\Bogies\CTABogieAudioControl.xml</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -893,7 +893,7 @@
 							<Attribute name="EngineName">
 								<cDeltaString>
 									<Element>
-										<Value>[CTA] Morrison-Knudsen 3200-series</Value>
+										<Value>[CTA] Bombardier 5000-series</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -904,7 +904,7 @@
 											<Attribute name="English">
 												<cDeltaString>
 													<Element>
-														<Value>[CTA] Morrison-Knudsen 3200-series</Value>
+														<Value>[CTA] Bombardier 5000-series</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -1107,7 +1107,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA3200\CabView\CTA3200 Headout Camera.xml</Value>
+														<Value>RailVehicles\Electric\CTA5000\CabView\CTA5000 Headout Camera.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -1221,7 +1221,7 @@
 							<Attribute name="GeometryID">
 								<cDeltaString>
 									<Element>
-										<Value>RailVehicles\Electric\CTA3200\CTA3200\CTA3200.igs</Value>
+										<Value>RailVehicles\Electric\CTA5000\CTA5000\CTA5000.igs</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -1355,7 +1355,7 @@
 														<Attribute name="AnimationName">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA3200\CTA3200\doors_left.ia</Value>
+																	<Value>RailVehicles\Electric\CTA5000\CTA5000\doors_left.ia</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1382,7 +1382,7 @@
 														<Attribute name="AnimationName">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA3200\CTA3200\doors_right.ia</Value>
+																	<Value>RailVehicles\Electric\CTA5000\CTA5000\doors_right.ia</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1409,7 +1409,7 @@
 														<Attribute name="AnimationName">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA3200\CTA3200\body_tilt.ia</Value>
+																	<Value>RailVehicles\Electric\CTA5000\CTA5000\body_tilt.ia</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -1471,7 +1471,7 @@
 											<Attribute name="BlueprintID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA3200\Simulation\CTA3200 Engine Simulation.xml</Value>
+														<Value>RailVehicles\Electric\CTA5000\Simulation\CTA5000 Engine Simulation.xml</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -1494,7 +1494,7 @@
 											<Attribute name="InteriorGeometryID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA3200\CabView\CTA3200 Cab</Value>
+														<Value>RailVehicles\Electric\CTA5000\CabView\CTA5000 Cab</Value>
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -1534,7 +1534,7 @@
 															<Attribute name="BlueprintID">
 																<cDeltaString>
 																	<Element>
-																		<Value>RailVehicles\Electric\CTA3200\CabView\CTA3200 Cab Camera.xml</Value>
+																		<Value>RailVehicles\Electric\CTA5000\CabView\CTA5000 Cab Camera.xml</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -1571,7 +1571,7 @@
 															<Attribute name="BlueprintID">
 																<cDeltaString>
 																	<Element>
-																		<Value>RailVehicles\Electric\CTA3200\Audio\CTA3200 Cab Occlusion</Value>
+																		<Value>RailVehicles\Electric\CTA5000\Audio\CTA5000 Cab Occlusion</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -1630,7 +1630,7 @@
 															<Attribute name="BlueprintID">
 																<cDeltaString>
 																	<Element>
-																		<Value>RailVehicles\Electric\CTA3200\PassengerView\Passenger Camera.xml</Value>
+																		<Value>RailVehicles\Electric\CTA5000\PassengerView\Passenger Camera.xml</Value>
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -1649,14 +1649,14 @@
 																			<Attribute name="Provider">
 																				<cDeltaString>
 																					<Element>
-																						<Value>briman0094</Value>
+																						<Value />
 																					</Element>
 																				</cDeltaString>
 																			</Attribute>
 																			<Attribute name="Product">
 																				<cDeltaString>
 																					<Element>
-																						<Value>CTA</Value>
+																						<Value />
 																					</Element>
 																				</cDeltaString>
 																			</Attribute>
@@ -1667,7 +1667,7 @@
 															<Attribute name="BlueprintID">
 																<cDeltaString>
 																	<Element>
-																		<Value>RailVehicles\Electric\CTA3200\Audio\CTA3200 Cab Occlusion</Value>
+																		<Value />
 																	</Element>
 																</cDeltaString>
 															</Attribute>
@@ -2334,7 +2334,7 @@
 																					<Attribute name="AnimationName">
 																						<cDeltaString>
 																							<Element>
-																								<Value>RailVehicles\Electric\CTA3200\CabView\speed_indicator</Value>
+																								<Value>RailVehicles\Electric\CTA5000\CabView\speed_indicator</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
@@ -2495,7 +2495,7 @@
 														<Attribute name="ApplyToConsist">
 															<eBoolean>
 																<Element>
-																	<Value>eTrue</Value>
+																	<Value>eFalse</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -3160,7 +3160,7 @@
 														<Attribute name="ApplyToConsist">
 															<eBoolean>
 																<Element>
-																	<Value>eTrue</Value>
+																	<Value>eFalse</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -3258,7 +3258,7 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>B4</Value>
+																															<Value>Max Brake</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
@@ -3278,14 +3278,14 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>B3</Value>
+																															<Value>80% Brake</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
 																												<Attribute name="Value">
 																													<sFloat32>
 																														<Element>
-																															<Value>0.125</Value>
+																															<Value>0.1</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -3298,7 +3298,47 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>B2</Value>
+																															<Value>70% Brake</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.15</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>60% Brake</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.2</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>50% Brake</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
@@ -3318,14 +3358,74 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>B1</Value>
+																															<Value>40% Brake</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
 																												<Attribute name="Value">
 																													<sFloat32>
 																														<Element>
-																															<Value>0.375</Value>
+																															<Value>0.3</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>30% Brake</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.35</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>20% Brake</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.4</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>Min Brake</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.45</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -3358,14 +3458,14 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>P1</Value>
+																															<Value>Min Power</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
 																												<Attribute name="Value">
 																													<sFloat32>
 																														<Element>
-																															<Value>0.6666667</Value>
+																															<Value>0.55</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -3378,14 +3478,14 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>P2</Value>
+																															<Value>20% Power</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
 																												<Attribute name="Value">
 																													<sFloat32>
 																														<Element>
-																															<Value>0.8333333</Value>
+																															<Value>0.6</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>
@@ -3398,7 +3498,147 @@
 																												<Attribute name="Identifier">
 																													<cDeltaString>
 																														<Element>
-																															<Value>P3</Value>
+																															<Value>30% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.65</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>40% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.7</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>50% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.75</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>60% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.8</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>70% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.85</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>80% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.9</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>90% Power</Value>
+																														</Element>
+																													</cDeltaString>
+																												</Attribute>
+																												<Attribute name="Value">
+																													<sFloat32>
+																														<Element>
+																															<Value>0.95</Value>
+																														</Element>
+																													</sFloat32>
+																												</Attribute>
+																											</Value>
+																										</Element>
+																									</cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																									<cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData>
+																										<Element>
+																											<Value>
+																												<Attribute name="Identifier">
+																													<cDeltaString>
+																														<Element>
+																															<Value>100% Power</Value>
 																														</Element>
 																													</cDeltaString>
 																												</Attribute>
@@ -3748,14 +3988,14 @@
 																					<Attribute name="AnalogInputSensitivity">
 																						<sFloat32>
 																							<Element>
-																								<Value>3</Value>
+																								<Value>5</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
 																					<Attribute name="DigitalInputSensitivity">
 																						<sFloat32>
 																							<Element>
-																								<Value>3</Value>
+																								<Value>5</Value>
 																							</Element>
 																						</sFloat32>
 																					</Attribute>
@@ -5573,7 +5813,7 @@
 														<Attribute name="ApplyToConsist">
 															<eBoolean>
 																<Element>
-																	<Value>eTrue</Value>
+																	<Value>eFalse</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -11956,7 +12196,7 @@
 														<Attribute name="ApplyToConsist">
 															<eBoolean>
 																<Element>
-																	<Value>eTrue</Value>
+																	<Value>eFalse</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -12313,7 +12553,7 @@
 																					<Attribute name="AnimationName">
 																						<cDeltaString>
 																							<Element>
-																								<Value>RailVehicles\Electric\CTA3200\CabView\body_tilt.ia</Value>
+																								<Value>RailVehicles\Electric\CTA5000\CabView\body_tilt.ia</Value>
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>
@@ -12328,300 +12568,6 @@
 																			</Element>
 																		</cControlContainerBlueprint-cInteriorLever>
 																	</Value>
-																</Element>
-															</__Indexed__cControlContainerBlueprint-cElement>
-														</Attribute>
-													</Value>
-												</Element>
-											</cControlContainerBlueprint-cControlValue>
-											<cControlContainerBlueprint-cControlValue>
-												<Element>
-													<Value>
-														<Attribute name="ControlName">
-															<cDeltaString>
-																<Element>
-																	<Value>SignSpeed</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="DefaultValue">
-															<sFloat32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="MinimumValue">
-															<sFloat32>
-																<Element>
-																	<Value>-1</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="MaximumValue">
-															<sFloat32>
-																<Element>
-																	<Value>1</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="BriefDescription">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="LocalisedControlName">
-															<Localisation-cUserLocalisedString>
-																<Element>
-																	<Value>
-																		<Attribute name="English">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="French">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Italian">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="German">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Spanish">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Dutch">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Polish">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Russian">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Other">
-																			<__Indexed__Localisation-cUserLocalisedString-cOtherStringLangPair>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</__Indexed__Localisation-cUserLocalisedString-cOtherStringLangPair>
-																		</Attribute>
-																		<Attribute name="Key">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																	</Value>
-																</Element>
-															</Localisation-cUserLocalisedString>
-														</Attribute>
-														<Attribute name="DetailedDescription">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="ApplyToConsist">
-															<eBoolean>
-																<Element>
-																	<Value>eFalse</Value>
-																</Element>
-															</eBoolean>
-														</Attribute>
-														<Attribute name="HUDControlID">
-															<sUInt32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sUInt32>
-														</Attribute>
-														<Attribute name="InterfaceElements">
-															<__Indexed__cControlContainerBlueprint-cElement>
-																<Element>
-																	<Value />
-																</Element>
-															</__Indexed__cControlContainerBlueprint-cElement>
-														</Attribute>
-													</Value>
-												</Element>
-											</cControlContainerBlueprint-cControlValue>
-											<cControlContainerBlueprint-cControlValue>
-												<Element>
-													<Value>
-														<Attribute name="ControlName">
-															<cDeltaString>
-																<Element>
-																	<Value>SignAccel</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="DefaultValue">
-															<sFloat32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="MinimumValue">
-															<sFloat32>
-																<Element>
-																	<Value>-1</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="MaximumValue">
-															<sFloat32>
-																<Element>
-																	<Value>1</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="BriefDescription">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="LocalisedControlName">
-															<Localisation-cUserLocalisedString>
-																<Element>
-																	<Value>
-																		<Attribute name="English">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="French">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Italian">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="German">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Spanish">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Dutch">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Polish">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Russian">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Other">
-																			<__Indexed__Localisation-cUserLocalisedString-cOtherStringLangPair>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</__Indexed__Localisation-cUserLocalisedString-cOtherStringLangPair>
-																		</Attribute>
-																		<Attribute name="Key">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																	</Value>
-																</Element>
-															</Localisation-cUserLocalisedString>
-														</Attribute>
-														<Attribute name="DetailedDescription">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="ApplyToConsist">
-															<eBoolean>
-																<Element>
-																	<Value>eFalse</Value>
-																</Element>
-															</eBoolean>
-														</Attribute>
-														<Attribute name="HUDControlID">
-															<sUInt32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sUInt32>
-														</Attribute>
-														<Attribute name="InterfaceElements">
-															<__Indexed__cControlContainerBlueprint-cElement>
-																<Element>
-																	<Value />
 																</Element>
 															</__Indexed__cControlContainerBlueprint-cElement>
 														</Attribute>
@@ -12781,153 +12727,6 @@
 														<Attribute name="ControlName">
 															<cDeltaString>
 																<Element>
-																	<Value>DynamicBrakeEfficiency</Value>
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="DefaultValue">
-															<sFloat32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="MinimumValue">
-															<sFloat32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="MaximumValue">
-															<sFloat32>
-																<Element>
-																	<Value>1</Value>
-																</Element>
-															</sFloat32>
-														</Attribute>
-														<Attribute name="BriefDescription">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="LocalisedControlName">
-															<Localisation-cUserLocalisedString>
-																<Element>
-																	<Value>
-																		<Attribute name="English">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="French">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Italian">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="German">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Spanish">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Dutch">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Polish">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Russian">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																		<Attribute name="Other">
-																			<__Indexed__Localisation-cUserLocalisedString-cOtherStringLangPair>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</__Indexed__Localisation-cUserLocalisedString-cOtherStringLangPair>
-																		</Attribute>
-																		<Attribute name="Key">
-																			<cDeltaString>
-																				<Element>
-																					<Value />
-																				</Element>
-																			</cDeltaString>
-																		</Attribute>
-																	</Value>
-																</Element>
-															</Localisation-cUserLocalisedString>
-														</Attribute>
-														<Attribute name="DetailedDescription">
-															<cDeltaString>
-																<Element>
-																	<Value />
-																</Element>
-															</cDeltaString>
-														</Attribute>
-														<Attribute name="ApplyToConsist">
-															<eBoolean>
-																<Element>
-																	<Value>eTrue</Value>
-																</Element>
-															</eBoolean>
-														</Attribute>
-														<Attribute name="HUDControlID">
-															<sUInt32>
-																<Element>
-																	<Value>0</Value>
-																</Element>
-															</sUInt32>
-														</Attribute>
-														<Attribute name="InterfaceElements">
-															<__Indexed__cControlContainerBlueprint-cElement>
-																<Element>
-																	<Value />
-																</Element>
-															</__Indexed__cControlContainerBlueprint-cElement>
-														</Attribute>
-													</Value>
-												</Element>
-											</cControlContainerBlueprint-cControlValue>
-											<cControlContainerBlueprint-cControlValue>
-												<Element>
-													<Value>
-														<Attribute name="ControlName">
-															<cDeltaString>
-																<Element>
 																	<Value>PantographControl</Value>
 																</Element>
 															</cDeltaString>
@@ -12956,7 +12755,7 @@
 														<Attribute name="BriefDescription">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>Raise/Lower Pantograph</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -13041,14 +12840,14 @@
 														<Attribute name="DetailedDescription">
 															<cDeltaString>
 																<Element>
-																	<Value />
+																	<Value>Raise/Lower Pantograph</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
 														<Attribute name="ApplyToConsist">
 															<eBoolean>
 																<Element>
-																	<Value>eFalse</Value>
+																	<Value>eTrue</Value>
 																</Element>
 															</eBoolean>
 														</Attribute>
@@ -13062,7 +12861,77 @@
 														<Attribute name="InterfaceElements">
 															<__Indexed__cControlContainerBlueprint-cElement>
 																<Element>
-																	<Value />
+																	<Value>
+																		<cControlContainerBlueprint-cInteriorPushButton>
+																			<Element>
+																				<Value>
+																					<Attribute name="ElementName">
+																						<cDeltaString>
+																							<Element>
+																								<Value>Untitled</Value>
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="DifficultyType">
+																						<cControlContainerBlueprint-cElement-eDifficultyType>
+																							<Element>
+																								<Value>StopGo</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cElement-eDifficultyType>
+																					</Attribute>
+																					<Attribute name="PickTransformName">
+																						<cDeltaString>
+																							<Element>
+																								<Value />
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="MovementType">
+																						<cControlContainerBlueprint-cInternalInteriorGeometryInput-eMovementType>
+																							<Element>
+																								<Value>PushButton</Value>
+																							</Element>
+																						</cControlContainerBlueprint-cInternalInteriorGeometryInput-eMovementType>
+																					</Attribute>
+																					<Attribute name="AnalogInputSensitivity">
+																						<sFloat32>
+																							<Element>
+																								<Value>1</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="DigitalInputSensitivity">
+																						<sFloat32>
+																							<Element>
+																								<Value>1</Value>
+																							</Element>
+																						</sFloat32>
+																					</Attribute>
+																					<Attribute name="AnimationName">
+																						<cDeltaString>
+																							<Element>
+																								<Value />
+																							</Element>
+																						</cDeltaString>
+																					</Attribute>
+																					<Attribute name="OutputInterface">
+																						<cControlContainerBlueprint-eInterfaceType>
+																							<Element>
+																								<Value>eCab</Value>
+																							</Element>
+																						</cControlContainerBlueprint-eInterfaceType>
+																					</Attribute>
+																					<Attribute name="AutoRelease">
+																						<eBoolean>
+																							<Element>
+																								<Value>eFalse</Value>
+																							</Element>
+																						</eBoolean>
+																					</Attribute>
+																				</Value>
+																			</Element>
+																		</cControlContainerBlueprint-cInteriorPushButton>
+																	</Value>
 																</Element>
 															</__Indexed__cControlContainerBlueprint-cElement>
 														</Attribute>
@@ -13138,7 +13007,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\Audio\CTA3200 Sound.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\Audio\CTA5000 Sound.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -13245,7 +13114,7 @@
 														<Attribute name="ParentNodeName">
 															<cDeltaString>
 																<Element>
-																	<Value>front_cap</Value>
+																	<Value />
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -13291,7 +13160,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\Headlight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\Headlight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -13444,7 +13313,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\Headlight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\Headlight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -13597,7 +13466,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\SignLight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\SignLight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -13750,7 +13619,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\Taillight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\Taillight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -13903,7 +13772,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\Taillight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\Taillight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -14056,7 +13925,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\IntLight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\IntLight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -14209,7 +14078,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\IntLight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\IntLight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -14362,7 +14231,7 @@
 																		<Attribute name="BlueprintID">
 																			<cDeltaString>
 																				<Element>
-																					<Value>RailVehicles\Electric\CTA3200\CommonLights\IntLight.xml</Value>
+																					<Value>RailVehicles\Electric\CTA5000\CommonLights\IntLight.xml</Value>
 																				</Element>
 																			</cDeltaString>
 																		</Attribute>
@@ -14491,7 +14360,7 @@
 							<Attribute name="Name">
 								<cDeltaString>
 									<Element>
-										<Value>RailVehicles\Electric\CTA3200\CTA3200\CTA3200 Script.lua</Value>
+										<Value>RailVehicles\Electric\CTA5000\CTA5000\CTA5000 Script.lua</Value>
 									</Element>
 								</cDeltaString>
 							</Attribute>
@@ -14541,7 +14410,7 @@
 														<Attribute name="RatePerSecond">
 															<sFloat32>
 																<Element>
-																	<Value>1</Value>
+																	<Value>2</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -14582,7 +14451,7 @@
 														<Attribute name="RatePerSecond">
 															<sFloat32>
 																<Element>
-																	<Value>1</Value>
+																	<Value>2</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -14623,7 +14492,7 @@
 														<Attribute name="RatePerSecond">
 															<sFloat32>
 																<Element>
-																	<Value>1</Value>
+																	<Value>2</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
@@ -14664,7 +14533,7 @@
 														<Attribute name="RatePerSecond">
 															<sFloat32>
 																<Element>
-																	<Value>1</Value>
+																	<Value>2</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>
