@@ -3413,7 +3413,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.6</Value>
+													<Value>0.8</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -3512,7 +3512,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.35</Value>
+													<Value>0.5</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>

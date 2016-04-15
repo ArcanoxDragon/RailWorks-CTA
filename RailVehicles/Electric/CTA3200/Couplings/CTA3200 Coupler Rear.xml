@@ -61,14 +61,14 @@
 										<Attribute name="MinDistance">
 											<sFloat32>
 												<Element>
-													<Value>0.05</Value>
+													<Value>0.0499</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
 										<Attribute name="MaxDistance">
 											<sFloat32>
 												<Element>
-													<Value>0.05</Value>
+													<Value>0.0501</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>

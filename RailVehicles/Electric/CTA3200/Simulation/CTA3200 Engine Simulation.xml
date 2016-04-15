@@ -236,7 +236,7 @@
 																												<Attribute name="MaxForcePercentOfVehicleWeight">
 																													<sFloat32>
 																														<Element>
-																															<Value>150</Value>
+																															<Value>170</Value>
 																														</Element>
 																													</sFloat32>
 																												</Attribute>

@@ -17,6 +17,7 @@ function Setup()
 	gLastDoorsOpen = 0
 	gSetReg = 0
 	gSetDynamic = 0
+	gTargetBrake = 0
 	gSetBrake = 0
 	gLastSpeed = 0
 	gTimeDelta = 0
@@ -26,9 +27,11 @@ function Setup()
 	gDestSignPrev = false
 	
 	THROTTLE_PICKUP_SPEED = 1.0 / 2.0
-	BRAKE_DELAY_TIME = 1.0
-	COAST_DELAY_TIME = 0.25
-	DYNAMIC_FADE_DELAY = 1.5
+	BRAKE_DELAY_TIME_COAST = 0.85
+	BRAKE_DELAY_TIME_BRAKING = 0.5
+	COAST_DELAY_TIME = 0.4
+	DYNAMIC_FADE_DELAY = 2.5
+	DYNAMIC_FADE_TIMEOUT = 3.0
 	MAX_SERVICE_BRAKE = 0.6
 	MIN_SERVICE_BRAKE = 0.0
 	DYNAMIC_BRAKE_AMPS = 500.0
@@ -103,7 +106,7 @@ function Update( interval )
 			DoorsOpen = math.min( 1, Call( "*:GetControlValue", "DoorsOpenCloseRight", 0 ) + Call( "*:GetControlValue", "DoorsOpenCloseLeft", 0 ) + Call( "*:GetControlValue", "DoorsOpen", 0 ) )
 			PantoValue = Call( "*:GetControlValue", "PantographControl", 0 )
 			ThirdRailValue = Call( "*:GetControlValue", "ThirdRail", 0 )
-			TrainSpeed = Call( "*:GetControlValue", "SpeedometerMPH", 0 )
+			TrainSpeed = math.abs( Call( "*:GetControlValue", "SpeedometerMPH", 0 ) )
 			BrakeCylBAR = Call( "*:GetControlValue", "TrainBrakeCylinderPressureBAR", 0 )
 			ATCBrakeApplication = Call( "*:GetControlValue", "ATCBrakeApplication", 0 )
 			IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
@@ -191,33 +194,50 @@ function Update( interval )
 				tTAccel = 0.0
 			end
 			
+			Call( "*:SetControlValue", "DisplayThrottle", 0, ( tTAccel + 1 ) / 2 );
+			
 			tTAccel = clamp( tTAccel, -1.0, 1.0 )
 			
-			if ( tTAccel < -0.01 ) then
-				if ( gBrakeDelay < BRAKE_DELAY_TIME ) then
-					gBrakeDelay = gBrakeDelay + gTimeDelta
-					
-					if ( gCoastDelay < COAST_DELAY_TIME ) then
-						gCoastDelay = gCoastDelay + gTimeDelta
-					else
-						tAccel = math.min( tAccel, 0.0 )
-					end
+			brakesApplied = BrakeCylBAR >= 0.001 or gCurrent < -5
+			
+			if ( not brakesApplied ) then gBrakeDelayTime = BRAKE_DELAY_TIME_COAST
+			else gBrakeDelayTime = BRAKE_DELAY_TIME_BRAKING end
+			
+			if ( tTAccel < 0.0 ) then
+				if ( gLastThrottle >= 0.0 ) then
+					gCoastDelay = 0.0
+				end
+			
+				if ( gCoastDelay < COAST_DELAY_TIME ) then
+					gCoastDelay = gCoastDelay + gTimeDelta
 				else
 					tAccel = tTAccel
 				end
 				
-				if ( math.abs( tTAccel - gLastThrottle ) > 0.01 and gBrakeDelay > BRAKE_DELAY_TIME ) then
+				if ( tAccel > 0.0 or ( math.abs( tTAccel - gLastThrottle ) > 0.01 and gBrakeDelay > gBrakeDelayTime ) ) then
 					gBrakeDelay = 0.0
 				end
 			else
-				gBrakeDelay = 0.0
+				if ( gLastThrottle < 0.0 ) then
+					gBrakeDelay = 0.0
+				end
+				
 				local regDelta = gTimeDelta * THROTTLE_PICKUP_SPEED
 				
-				if ( tAccel < tTAccel - regDelta ) then
-					tAccel = tAccel + regDelta
+				if ( tAccel <= tTAccel ) then
+					if ( not brakesApplied ) then
+						if ( tAccel < tTAccel - regDelta ) then
+							tAccel = tAccel + regDelta
+						else
+							tAccel = tTAccel
+						end
+					else
+						tAccel = math.max( tAccel, 0.0 )
+					end
+					
 					gCoastDelay = 0.0
 				elseif ( tAccel > tTAccel ) then
-					if ( math.abs( tTAccel - gLastThrottle ) > 0.01 ) then
+					if ( math.abs( tTAccel - gLastThrottle ) > 0.01 and gCoastDelay > COAST_DELAY_TIME ) then
 						gCoastDelay = 0.0
 					else
 						if ( gCoastDelay < COAST_DELAY_TIME ) then
@@ -227,12 +247,10 @@ function Update( interval )
 						end
 					end
 				end
-				
-				if ( BrakeCylBAR > 0.001 ) then
-					tAccel = math.min( tAccel, 0.0 )
-					gCoastDelay = 0.0
-				end
 			end
+			
+			Call( "*:SetControlValue", "BrakeDelayTime", 0, gBrakeDelay )
+			Call( "*:SetControlValue", "CoastDelayTime", 0, gCoastDelay )
 			
 			-- ATC took over braking due to control timeout
 			if ( ATCBrakeApplication > 0 ) then
@@ -277,36 +295,43 @@ function Update( interval )
 				else
 					if ( math.abs( tAccel ) < 0.01 ) then
 						gSetReg = 0.0
-						gSetDynamic = 0.0
+						gTargetBrake = 0.0
 						gSetBrake = 0.0
 					else
 						gSetReg = Round( clamp( tAccel, 0.0, 1.0 ), 3 )
-						gSetDynamic = Round( clamp( -tAccel, 0.0, 1.0 ), 4 )
-						
-						targetAmps = DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic
+						gTargetBrake = Round( clamp( -tAccel, 0.0, 1.0 ), 4 )
 						
 						-- We used to calculate this based on current, but it was too inconsistent, so now we calculate it from the spec speed
 						dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0 )
 						dynEffective = clamp( dynEffective, 0.001, 1.0 )
-						if ( gSetDynamic < 0.001 ) then
+						if ( gTargetBrake < 0.001 ) then
 							dynEffective = 1.0
 						end
 						
 						if ( TrainSpeed < 2.5 and tAccel < 0 ) then
-							if ( gDynamicFadeDelay < DYNAMIC_FADE_DELAY ) then
+							if ( gDynamicFadeDelay < DYNAMIC_FADE_TIMEOUT ) then
 								gDynamicFadeDelay = gDynamicFadeDelay + gTimeDelta
-								gSetBrake = gSetDynamic * 0.2
+								
+								gSetBrake = gTargetBrake * 0.2
 							else
-								gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
+								gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 							end
 						else
 							if ( tAccel > 0 ) then
-								gDynamicFadeDelay = 0.0
+								if ( TrainSpeed > 2.5 ) then
+									gDynamicFadeDelay = 0.0
+								else
+									gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT - DYNAMIC_FADE_DELAY -- If already slow, reduce delay
+								end
 							end
-							gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
+							gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 						end
+					end
 						
-						
+					if ( gBrakeDelay < gBrakeDelayTime ) then
+						gBrakeDelay = gBrakeDelay + gTimeDelta
+					else
+						gSetDynamic = gTargetBrake
 					end
 				end
 				
