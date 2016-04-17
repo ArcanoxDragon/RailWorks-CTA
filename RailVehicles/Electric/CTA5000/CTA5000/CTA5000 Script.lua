@@ -487,7 +487,7 @@ function Update( time )
 	local signSpeed = sign( trainSpeed / GetControlValue( "SpeedometerMPH" ) )
 	local signAccel = sign( accel / realAccel )
 	local evenCar = mod( GetControlValue( "CarNum" ), 2 ) == 0
-	if ( math.abs( trainSpeed ) > 0.01 and math.abs( realAccel ) > 0.001 and math.abs( accel ) > 0.001 ) then
+	if ( math.abs( trainSpeed ) > 0.001 and math.abs( realAccel ) > 0.0025 and math.abs( accel ) > 0.0025 ) then
 		gLastDir = -sign( accel / realAccel )
 		gLastDir = gLastDir * sign( signSpeed / signAccel )
 		if ( GetControlValue( "Active" ) > 0 ) then
@@ -522,6 +522,7 @@ function Update( time )
 	-- Acceleration tilt
 	
 	UpdateMovingAverage( accel ) -- MPH/s
+	
 	local accelAvg = GetMovingAverage() -- Smooth out acceleration
 	SetControlValue( "Accel2", accelAvg )
 	accelAvg = accelAvg / 5.25 -- Max accel for animation is 5.25 MPH/s ( full emergency braking )
@@ -530,14 +531,18 @@ function Update( time )
 	if not evenCar then -- but is it really even a car, bro?
 		accelAvg = -accelAvg
 	end
+	
 	tiltMult = 0.6
 	if ( gCamInside ) then
-		tiltMult = 0.15
+		tiltMult = 0.3
 	end
+	
 	tBodyTilt = 1.0 + clamp( accelAvg * tiltMult, -1, 1 )
-	tBodyTilt = sign( tBodyTilt ) * math.max( 0.0, math.abs( tBodyTilt ) - 0.25 )
-	dBodyTilt = 10 * clamp( math.abs( gBodyTilt - tBodyTilt ) / 0.65, 0.1, 1.0 )
+	tBodyTilt = sign( tBodyTilt ) * math.max( 0.0, math.abs( tBodyTilt ) - 0.65 )
+	
+	dBodyTilt = 7.5 * clamp( math.abs( gBodyTilt - tBodyTilt ) / 0.45, 0.1, 1.0 )
 	dBodyTilt = dBodyTilt * time
+	
 	if ( gBodyTilt < tBodyTilt - dBodyTilt ) then
 		gBodyTilt = gBodyTilt + dBodyTilt
 	elseif ( gBodyTilt > tBodyTilt + dBodyTilt ) then
@@ -555,7 +560,7 @@ function Update( time )
 	lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
 	if ( gBrakeCheckTime > 0.5 + lRandom ) then
 		gBrakeCheckTime = 0
-		if ( math.abs( trainSpeed ) < 0.03 and BrakePressure >= 0.2 ) or DoorsOpen then
+		if ( math.abs( trainSpeed ) < 0.03 and BrakePressure >= 0.01 ) or DoorsOpen then
 			gParkingBrake = true
 		elseif ( BrakePressure <= 0.01 ) then
 			gParkingBrake = false

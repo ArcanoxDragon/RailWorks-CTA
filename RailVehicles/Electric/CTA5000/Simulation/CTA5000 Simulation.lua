@@ -80,6 +80,9 @@ function Setup()
 	gLastJerkLimit = 0
 	gATOCoasting = false
 	gRandSeeded = false
+	
+-- One-shot variables
+	gMovingInterlocks = false
 
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 8.0 -- seconds.
@@ -124,7 +127,7 @@ function Update( interval )
 		DoorsOpen = math.min( 1, Call( "*:GetControlValue", "DoorsOpenCloseRight", 0 ) + Call( "*:GetControlValue", "DoorsOpenCloseLeft", 0 ) + Call( "*:GetControlValue", "DoorsOpen", 0 ) )
 		PantoValue = Call( "*:GetControlValue", "PantographControl", 0 )
 		ThirdRailValue = Call( "*:GetControlValue", "ThirdRail", 0 )
-		TrainSpeed = Call( "*:GetControlValue", "SpeedometerMPH", 0 )
+		TrainSpeed = math.abs( Call( "*:GetControlValue", "SpeedometerMPH", 0 ) )
 		BrakeCylBAR = Call( "*:GetControlValue", "TrainBrakeCylinderPressureBAR", 0 )
 		ATCBrakeApplication = Call( "*:GetControlValue", "ATCBrakeApplication", 0 )
 		IsEndCar = Call( "*:GetControlValue", "IsEndCar", 0 ) > 0
@@ -139,6 +142,22 @@ function Update( interval )
 		DestSignNext = Call( "*:GetControlValue", "DestSignNext", 0 ) > 0
 		DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
 		DestSign     = Call( "*:GetControlValue", "DestinationSign", 0 )
+		
+		if ( TrainSpeed > 0.1 ) then
+			if ( not gMovingInterlocks ) then
+				Call( "*:LockControl", "ATC_R64"   , 0, 1 )
+				Call( "*:LockControl", "ATCEnabled", 0, 1 )
+				Call( "*:LockControl", "Reverser"  , 0, 1 )
+				gMovingInterlocks = true
+			end
+		else
+			if ( gMovingInterlocks ) then
+				Call( "*:LockControl", "ATC_R64"   , 0, 0 )
+				Call( "*:LockControl", "ATCEnabled", 0, 0 )
+				Call( "*:LockControl", "Reverser"  , 0, 0 )
+				gMovingInterlocks = false
+			end
+		end
 		
 		-- Destination Sign
 		
@@ -165,9 +184,9 @@ function Update( interval )
 		if ( math.abs( ReverserLever ) >= 0.95 ) then
 			gLastReverser = sign( ReverserLever )
 		else
-			if ( TrainSpeed > 0.1 ) then
+			--[[if ( TrainSpeed > 0.1 ) then
 				Call( "*:SetControlValue", "Reverser", 0, gLastReverser )
-			end
+			end]]
 		end
 		
 		-- Begin propulsion system
@@ -283,7 +302,7 @@ function Update( interval )
 			Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax )
 			if ( TrackBrake > 0 ) then
 				Call( "*:SetControlValue", "Sander", 0, 1 )
-				Call( "*:SetControlValue", "HandBrakeCommand", 0, 1 )
+				Call( "*:SetControlValue", "HandBrakeCommand", 0, 0.5 )
 				tAccel = math.min( tAccel, 0.0 )
 			else
 				Call( "*:SetControlValue", "Sander", 0, 0 )
