@@ -188,8 +188,8 @@ function Initialise()
 -- Moving average for acceleration
 	gMovingAvgSize = 20
 	gMovingAvgList = { }
-	gMovingAvgIndex = 0 -- 0 - 19
-	gMovingAvg = 0
+	gMovingAvgIndex = { } -- 0 - 19
+	gMovingAvg = { }
 	
 -- Misc. signal stuff
 	gLastSignalDist = 0
@@ -215,16 +215,22 @@ function SetControlValue( name, value )
 	gControlCache[name] = value
 end
 
-function UpdateMovingAverage( value ) -- Updates the moving average for acceleration
-	local i = gMovingAvgIndex + 1
-	gMovingAvg = gMovingAvg - ( gMovingAvgList[i] or 0 )
-	gMovingAvgList[i] = value
-	gMovingAvg = gMovingAvg + value
-	gMovingAvgIndex = mod( gMovingAvgIndex + 1, gMovingAvgSize )
+function InitMovingAverage( name )
+	gMovingAvgList[ name ] = {}
+	gMovingAvgIndex[ name ] = 0
+	gMovingAvg[ name ] = 0
 end
 
-function GetMovingAverage()
-	return gMovingAvg / gMovingAvgSize
+function UpdateMovingAverage( name, value ) -- Updates the moving average for acceleration
+	local i = gMovingAvgIndex[ name ] + 1
+	gMovingAvg[ name ] = gMovingAvg[ name ] - ( gMovingAvgList[ name ][ i ] or 0 )
+	gMovingAvgList[ name ][ i ] = value
+	gMovingAvg[ name ] = gMovingAvg[ name ] + value
+	gMovingAvgIndex[ name ] = mod( gMovingAvgIndex[ name ] + 1, gMovingAvgSize )
+end
+
+function GetMovingAverage( name )
+	return gMovingAvg[ name ] / gMovingAvgSize
 end
 
 function OnCameraEnter( camEnd, carriageCam )
@@ -270,6 +276,9 @@ function Update( time )
 	gLastDoorsOpen = DoorsOpen
 	
 	if ( not gInit ) then
+		InitMovingAverage( "accel" )
+		InitMovingAverage( "timeDelta" )
+	
 		-- Set "DestinationSign" control to value from car number ( allows scenarios to set destsign )
 		RVNumber = Call( "*:GetRVNumber" )
 		if ( string.len( RVNumber ) == 5 ) then
@@ -521,8 +530,11 @@ function Update( time )
 	
 	-- Acceleration tilt
 	
-	UpdateMovingAverage( accel ) -- MPH/s
-	local accelAvg = GetMovingAverage() -- Smooth out acceleration
+	UpdateMovingAverage( "timeDelta", time )
+	local avgTimeDelta = GetMovingAverage( "timeDelta" )
+	
+	UpdateMovingAverage( "accel", accel ) -- MPH/s
+	local accelAvg = GetMovingAverage( "accel" ) -- Smooth out acceleration
 	SetControlValue( "Accel2", accelAvg )
 	accelAvg = accelAvg / 5.25 -- Max accel for animation is 5.25 MPH/s ( full emergency braking )
 	accelAvg = accelAvg * gLastDir
@@ -546,8 +558,13 @@ function Update( time )
 		gBodyTilt = tBodyTilt
 	end
 		
-	Call( "*:SetTime", "body_tilt", gBodyTilt )
-	SetControlValue( "BodyTilt", gBodyTilt - 1.0 )
+	if ( avgTimeDelta >= 10 ) then -- FPS is not running smoothly enough for body tilt to work correctly
+		Call( "*:SetTime", "body_tilt", 1.0 )
+		SetControlValue( "BodyTilt", 0.0 )
+	else
+		Call( "*:SetTime", "body_tilt", gBodyTilt )
+		SetControlValue( "BodyTilt", gBodyTilt - 1.0 )
+	end
 	
 	-- Relay train brake command to this car's brakes and apply local handbrake as a parking brake
 	
