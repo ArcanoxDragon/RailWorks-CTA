@@ -32,7 +32,7 @@ function Setup()
 	COAST_DELAY_TIME = 0.4
 	DYNAMIC_FADE_DELAY = 2.5
 	DYNAMIC_FADE_TIMEOUT = 3.0
-	MAX_SERVICE_BRAKE = 0.6
+	MAX_SERVICE_BRAKE = 0.7
 	MIN_SERVICE_BRAKE = 0.0
 	DYNAMIC_BRAKE_AMPS = 500.0
 	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 9.0
@@ -260,8 +260,8 @@ function Update( interval )
 			
 			-- ATC took over braking due to control timeout
 			if ( ATCBrakeApplication > 0 ) then
-				tAccel = -1 -- Instant max braking
-				tThrottle = -1 -- Force 100% Braking throttle input
+				tAccel = -0.75 -- Instant max braking
+				tThrottle = -0.75 -- Force 100% Service Braking throttle input
 				gSetReg = 0.0 -- Drop power instantly
 			end
 			
@@ -317,11 +317,11 @@ function Update( interval )
 						
 						if ( tThrottle < -0.901 ) then
 							dynEffective = 0.001 -- Force friction brakes to apply
-							gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT
 							gMaxServiceBrake = 0.8
+							if ( TrainSpeed < 2.0 ) then gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT end
 						end
 						
-						if ( TrainSpeed < 2.5 and tAccel < 0 ) then
+						if ( TrainSpeed < 2.0 and tAccel < 0 ) then
 							if ( gDynamicFadeDelay < DYNAMIC_FADE_TIMEOUT ) then
 								gDynamicFadeDelay = gDynamicFadeDelay + gTimeDelta
 								
@@ -331,7 +331,7 @@ function Update( interval )
 							end
 						else
 							if ( tAccel >= 0 ) then
-								if ( TrainSpeed > 2.5 ) then
+								if ( TrainSpeed > 2.0 ) then
 									gDynamicFadeDelay = 0.0
 								else
 									gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT - DYNAMIC_FADE_DELAY -- If already slow, reduce delay

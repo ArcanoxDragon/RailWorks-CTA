@@ -239,7 +239,7 @@ function UpdateATC(interval)
 		if (gBrakeApplication) then
 			Call("*:SetControlValue", "ATCBrakeApplication", 0, 1.0)
 			SetATCWarnMode(ATC_WARN_CONSTANT)
-			if (trainSpeed < (2.0 * MPH_TO_MPS) and throttle <= -0.99) then
+			if (trainSpeed < (2.0 * MPH_TO_MPS) and throttle <= -ATC_REQUIRED_BRAKE) then
 				gBrakeApplication = false
 			end
 		else
@@ -265,7 +265,7 @@ function UpdateATC(interval)
 		end
 	end
 	
-	if (TrainSpeed < (targetSpeed + 1) and throttle <= -0.9) then
+	if (TrainSpeed < (targetSpeed + 1) and throttle <= -ATC_REQUIRED_BRAKE) then
 		gAlertAcknowledged = true
 	end
 end
