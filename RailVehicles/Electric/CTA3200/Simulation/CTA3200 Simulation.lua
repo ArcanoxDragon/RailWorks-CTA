@@ -38,7 +38,7 @@ function Setup()
 	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 9.0
 	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 14.0
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to ( WTF railworks, you can't do this yourself? )
-	ATC_REQUIRED_BRAKE = 0.624
+	ATC_REQUIRED_BRAKE = 0.7
 	
 -- Propulsion system variables
 	realAccel = 0.0
@@ -189,6 +189,12 @@ function Update( interval )
 			if ( tThrottle > 0.01 ) then
 				tTAccel = Round( tThrottle, 3 ) -- 3 points of power
 			elseif ( tThrottle < -0.01 ) then
+				if ( tThrottle <= -0.7 and tThrottle > -0.95 ) then
+					tThrottle = -0.75
+				elseif ( tThrottle <= -0.375 and tThrottle > -0.07 ) then
+					tThrottle = -0.5
+				end
+			
 				tTAccel = -Round( -tThrottle, 4 ) -- 4 points of braking
 			else
 				tTAccel = 0.0
@@ -300,6 +306,7 @@ function Update( interval )
 					else
 						gSetReg = Round( clamp( tAccel, 0.0, 1.0 ), 3 )
 						gTargetBrake = Round( clamp( -tAccel, 0.0, 1.0 ), 4 )
+						gMaxServiceBrake = MAX_SERVICE_BRAKE
 						
 						-- We used to calculate this based on current, but it was too inconsistent, so now we calculate it from the spec speed
 						dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0 )
@@ -308,23 +315,29 @@ function Update( interval )
 							dynEffective = 1.0
 						end
 						
+						if ( tThrottle < -0.901 ) then
+							dynEffective = 0.001 -- Force friction brakes to apply
+							gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT
+							gMaxServiceBrake = 0.8
+						end
+						
 						if ( TrainSpeed < 2.5 and tAccel < 0 ) then
 							if ( gDynamicFadeDelay < DYNAMIC_FADE_TIMEOUT ) then
 								gDynamicFadeDelay = gDynamicFadeDelay + gTimeDelta
 								
 								gSetBrake = gTargetBrake * 0.2
 							else
-								gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
+								gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, gMaxServiceBrake )
 							end
 						else
-							if ( tAccel > 0 ) then
+							if ( tAccel >= 0 ) then
 								if ( TrainSpeed > 2.5 ) then
 									gDynamicFadeDelay = 0.0
 								else
 									gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT - DYNAMIC_FADE_DELAY -- If already slow, reduce delay
 								end
 							end
-							gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
+							gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, gMaxServiceBrake )
 						end
 					end
 						

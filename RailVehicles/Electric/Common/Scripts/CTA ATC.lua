@@ -16,8 +16,8 @@ M_TO_MI = 1.0 / MI_TO_M -- Meters to Miles
 ATC_WARN_OFF = 0.0
 ATC_WARN_CONSTANT = 1.0
 ATC_WARN_INTERMITTENT = 2.0
-DISPLAY_SPEEDS = { 0, 15, 25, 35, 45, 55, 70 }
-NUM_DISPLAY_SPEEDS = 7
+DISPLAY_SPEEDS = { 0, 15, 25, 35, 55, 70 }
+NUM_DISPLAY_SPEEDS = 6
 EST_REACTION_TIME = 3 -- Estimated reaction time of the driver for speed drops
 SIGNAL_DISTANCE_BUFFER = 3.00
 ACCEL_TIME = 2.5 -- The amount of time it takes to go from full power to full brake (with jerk limit)
@@ -62,6 +62,14 @@ function getSpeedLimitBelow(speed)
 	return DISPLAY_SPEEDS[1]
 end
 
+function getClosestSpeedLimit( speed )
+	if ( speed > 35 and speed < 55 ) then
+		return getSpeedLimitBelow( speed )
+	else
+		return getSpeedLimitAbove( speed )
+	end
+end
+
 function UpdateATC(interval)
 	local targetSpeed, trainSpeed, enabled, throttle
 	local spdType, spdLimit, spdDist, spdBuffer
@@ -102,7 +110,8 @@ function UpdateATC(interval)
 	maxSearchDist = reactionTimeDistance + trackStoppingDistance
 	setAspect = false
 	repeat
-		if (sigAspect < 20 and setAspect == false) then
+		-- Apparently the in-cab aspect display does not actually reflect the true aspect of the next signal, but rather is relative to the current allowed speed
+		--[[if (sigAspect < 20 and setAspect == false) then
 			if (sigAspect == ANIMSTATE_GREEN_RED or sigAspect == ANIMSTATE_RED_GREEN) then -- Clear signals are actually at warning so the script system sees them (honestly, DTG...can you not make a way to find clear signals?)
 				Call("*:SetControlValue", "ATCAspect", 0, 0)
 			else
@@ -111,7 +120,7 @@ function UpdateATC(interval)
 			
 			Call("*:SetControlValue", "NextSignalAspect", sigAspect)
 			setAspect = true
-		end
+		end]]
 			
 		if (sigResult > 0 and sigState == 2 and sigDist < maxSearchDist) then -- Treat a red signal as "end of track"
 			spdType = 0
@@ -120,8 +129,13 @@ function UpdateATC(interval)
 	
 		if (spdType == 0) then -- End of line...stop the train
 			if (spdDist <= spdBuffer) then
-				targetSpeed = math.min( targetSpeed, math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - SIGNAL_DISTANCE_BUFFER)), 6.0 * MPH_TO_MPS) )
-				if (spdDist < 15) then
+				if ( ATOEnabled ) then
+					targetSpeed = math.min( targetSpeed, math.max(getStoppingSpeed(trackSpeed, -ATC_TARGET_DECELERATION, spdBuffer - (spdDist - SIGNAL_DISTANCE_BUFFER)), 6.0 * MPH_TO_MPS) )
+					
+					if (spdDist < 15) then
+						targetSpeed = 0
+					end
+				else
 					targetSpeed = 0
 				end
 			end
@@ -192,7 +206,7 @@ function UpdateATC(interval)
 			else
 				-- The ATC can only display certain speed limits; allow the next lowest one above actual, and driver is responsible for following actual
 				if (targetSpeed >= 10) then
-					targetSpeed = getSpeedLimitAbove(targetSpeed)
+					targetSpeed = getClosestSpeedLimit(targetSpeed)
 				else -- If speed limit is 10 or below (like end of track, or around corners in the loop), we force them to obey it by displaying "0" if they're above it
 					if (math.abs(TrainSpeed) > targetSpeed + 1) then
 						targetSpeed = getSpeedLimitBelow(targetSpeed)
@@ -207,6 +221,14 @@ function UpdateATC(interval)
 	end
 	
 	Call("*:SetControlValue", "ATCRestrictedSpeed", 0, targetSpeed)
+	
+	if ( targetSpeed >= 55 ) then
+		Call( "*:SetControlValue", "ATCAspect", 0, 0 )
+	elseif ( targetSpeed > 0 ) then
+		Call( "*:SetControlValue", "ATCAspect", 0, 1 )
+	else
+		Call( "*:SetControlValue", "ATCAspect", 0, 2 )
+	end
 	
 	-- Logic in following section taken from CTA 7000-series RFP spec
 	

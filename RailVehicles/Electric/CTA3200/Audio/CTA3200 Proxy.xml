@@ -8565,7 +8565,7 @@
 										<Attribute name="TriggerValue">
 											<sFloat32>
 												<Element>
-													<Value>0.0625</Value>
+													<Value>0.025</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8658,7 +8658,7 @@
 										<Attribute name="TriggerValue">
 											<sFloat32>
 												<Element>
-													<Value>0.1875</Value>
+													<Value>0.15</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
