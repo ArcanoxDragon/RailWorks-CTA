@@ -27,21 +27,21 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>0.9</Value>
+														<Value>0.84</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>2.6</Value>
+														<Value>2.65</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>5.65</Value>
+														<Value>5.8</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -92,21 +92,21 @@
 											<Attribute name="X">
 												<sFloat32>
 													<Element>
-														<Value>0.9</Value>
+														<Value>0.84</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Y">
 												<sFloat32>
 													<Element>
-														<Value>2.85</Value>
+														<Value>3</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
 											<Attribute name="Z">
 												<sFloat32>
 													<Element>
-														<Value>5.85</Value>
+														<Value>5.95</Value>
 													</Element>
 												</sFloat32>
 											</Attribute>
@@ -167,7 +167,7 @@
 							<Attribute name="MaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.05</Value>
+										<Value>1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -181,7 +181,7 @@
 							<Attribute name="WindowMaxFOV">
 								<sFloat32>
 									<Element>
-										<Value>1.05</Value>
+										<Value>1</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
@@ -241,21 +241,21 @@
 																		<Attribute name="X">
 																			<sFloat32>
 																				<Element>
-																					<Value>-0.9</Value>
+																					<Value>-0.84</Value>
 																				</Element>
 																			</sFloat32>
 																		</Attribute>
 																		<Attribute name="Y">
 																			<sFloat32>
 																				<Element>
-																					<Value>2.85</Value>
+																					<Value>3</Value>
 																				</Element>
 																			</sFloat32>
 																		</Attribute>
 																		<Attribute name="Z">
 																			<sFloat32>
 																				<Element>
-																					<Value>5.75</Value>
+																					<Value>5.95</Value>
 																				</Element>
 																			</sFloat32>
 																		</Attribute>
@@ -330,7 +330,7 @@
 														<Attribute name="MaxFOV">
 															<sFloat32>
 																<Element>
-																	<Value>1.05</Value>
+																	<Value>1</Value>
 																</Element>
 															</sFloat32>
 														</Attribute>

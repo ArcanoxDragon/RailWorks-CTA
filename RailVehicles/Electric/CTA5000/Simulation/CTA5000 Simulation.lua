@@ -37,10 +37,10 @@ function Setup()
 	
 	MAX_ACCELERATION_MPHPS = 2.8
 	MAX_ACCELERATION = 1.0
-	MIN_ACCELERATION = 0.125
+	MIN_ACCELERATION = 0.13
 	MAX_BRAKING = 1.0
-	MIN_BRAKING = 0.2
-	JERK_LIMIT = 1.0
+	MIN_BRAKING = 0.15
+	JERK_LIMIT = 0.8
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
 	MAX_BRAKE_RELEASE = 0.90
@@ -53,7 +53,7 @@ function Setup()
 	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 2.0
 	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 4.5
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to ( WTF railworks, you can't do this yourself? )
-	ATO_COAST_TIME_OFFSET = 1.05
+	ATO_COAST_TIME_OFFSET = 0.95
 	ATO_COAST_UPPER_LIMIT = 0.0 -- MPH above set speed that triggers coast command
 	ATO_COAST_LOWER_LIMIT = 2.0 -- MPH below set speed that cancels coast command and allows power
 	ATC_REQUIRED_BRAKE = 0.9
@@ -194,7 +194,7 @@ function Update( interval )
 		gAvgAccel = gAvgAccel + ( TrainSpeed - gLastSpeed )
 		gAvgAccelTime = gAvgAccelTime + gTimeDelta
 		-- Average out acceleration
-		if ( gAvgAccelTime >= 1/15 ) then -- 15 times/sec
+		if ( gAvgAccelTime >= 1/8 ) then -- 8 times/sec
 			gAvgAccelCalculated = gAvgAccel / gAvgAccelTime
 			Call( "*:SetControlValue", "Acceleration", 0, round( gAvgAccelCalculated, 2 ) )
 			gAvgAccelTime = 0.0
@@ -216,7 +216,7 @@ function Update( interval )
 				
 				if not gATOCoasting then
 					-- Begin ATO coast-override subsystem ( Section 13.23 in 7000-series RFP )
-					local timeToSetSpeed = ( ( restrictedSpeed + ATO_COAST_UPPER_LIMIT ) - TrainSpeed ) / math.max( math.abs( gAvgAccelCalculated ), 0.01 )
+					local timeToSetSpeed = math.pow( ( ( restrictedSpeed + ATO_COAST_UPPER_LIMIT ) - TrainSpeed ) / math.max( math.abs( gAvgAccelCalculated ), 0.01 ), 2 )
 					--local timeOffset = ATO_COAST_TIME_OFFSET * ( math.max( realAccel, 0.0 ) / MAX_ACCELERATION_MPHPS )
 					
 					if ( timeToSetSpeed < ATO_COAST_TIME_OFFSET ) then
@@ -372,7 +372,7 @@ function Update( interval )
 					gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 					
 					if ( math.abs( TrainSpeed ) < 3.0 ) then
-						if ( tThrottle < 0.0 ) then
+						if ( tThrottle < -0.15 ) then
 							if ( gStoppingTime < MAX_STOPPING_TIME ) then
 								if ( gMaxBrakeRelease < 0.0 ) then
 									gMaxBrakeRelease = GetRandomBrakeRelease( interval )
@@ -389,6 +389,7 @@ function Update( interval )
 							end
 							
 							gStoppingTime = MAX_STOPPING_TIME
+							gBrakeRelease = 0.0
 						end
 					else
 						gBrakeRelease = 0.0

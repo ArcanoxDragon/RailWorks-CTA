@@ -534,7 +534,7 @@ function Update( time )
 	
 	tiltMult = 0.6
 	if ( gCamInside ) then
-		tiltMult = 0.3
+		tiltMult = 0.0
 	end
 	
 	tBodyTilt = 1.0 + clamp( accelAvg * tiltMult, -1, 1 )
