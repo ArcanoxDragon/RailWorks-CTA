@@ -26,6 +26,9 @@ SIGNAL_THIRD_RAIL_ON = 31
 
 CAR_COUNT_TIME = 0.5 -- seconds
 
+DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 2.0
+DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 4.5
+
 LAST_CLASS_LIGHT_L = -1
 LAST_CLASS_LIGHT_R = -1
 LAST_TAILLIGHTS = false
@@ -247,7 +250,6 @@ function Update( time )
 	IsEndCar = GetControlValue( "IsEndCar" ) > 0
 	CarNum = GetControlValue( "CarNum" )
 	HandBrake = GetControlValue( "HandBrakeCommand" )
-	TrueHandBrake = GetControlValue( "HandBrake" )
 	BrakePressure = GetControlValue( "TrainBrakeCylinderPressureBAR" )
 	DestSign = GetControlValue( "DestinationSign" )
 	DoorsLeft = GetControlValue( "DoorsOpenCloseLeft" ) > 0
@@ -397,7 +399,7 @@ function Update( time )
 			Call( "*:ActivateNode", "doorlights_left", 0 )
 		end
 		
-		if TrainOn and ( BrakePressure >= 0.05 or TrueHandBrake > 0.5 ) then
+		if TrainOn and ( BrakePressure >= 0.05 or gParkingBrake ) then
 			Call( "*:ActivateNode", "brakelights", 1 )
 		else
 			Call( "*:ActivateNode", "brakelights", 0 )
@@ -567,11 +569,18 @@ function Update( time )
 		end
 	end
 	
+	local dynEffective = mapRange( trainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0, true )
+	HandBrake = GetControlValue( "DynamicBrake" ) * dynEffective
+	
+	if ( GetControlValue( "OnThirdRail" ) < 0.5 ) then
+		HandBrake = HandBrake + GetControlValue( "Regulator" ) / 2 -- Simulate going "off third rail" by applying equal brake to the tractive force
+	end
+	
 	if ( gParkingBrake ) then
 		HandBrake = 1
 	end
 	
-	SetControlValue( "HandBrake", HandBrake )
+	SetControlValue( "HandBrake", clamp( HandBrake, 0.0, 1.0 ) )
 	
 	-- Destination sign
 	
@@ -700,7 +709,7 @@ function OnConsistMessage ( msg, argument, direction )
 		end
 		
 		if ( msg == DYNAMIC_ID ) then
-			SetControlValue( "DynamicBrake", argument )
+			SetControlValue( "DynamicBrake", tonumber( argument ) )
 		end
 		
 		if ( msg == CARCOUNT_ID ) then -- Going down train counting cars

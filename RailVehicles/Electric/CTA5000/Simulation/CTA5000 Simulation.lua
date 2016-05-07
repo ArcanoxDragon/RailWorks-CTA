@@ -39,11 +39,11 @@ function Setup()
 	MAX_ACCELERATION = 1.0
 	MIN_ACCELERATION = 0.13
 	MAX_BRAKING = 1.0
-	MIN_BRAKING = 0.15
+	MIN_BRAKING = 0.08
 	JERK_LIMIT = 0.8
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.90
+	MAX_BRAKE_RELEASE = 0.855
 	MIN_BRAKE_RELEASE = 0.755
 	MAX_SERVICE_BRAKE = 0.875
 	--MIN_SERVICE_BRAKE = 0.275
@@ -216,7 +216,7 @@ function Update( interval )
 				
 				if not gATOCoasting then
 					-- Begin ATO coast-override subsystem ( Section 13.23 in 7000-series RFP )
-					local timeToSetSpeed = math.pow( ( ( restrictedSpeed + ATO_COAST_UPPER_LIMIT ) - TrainSpeed ) / math.max( math.abs( gAvgAccelCalculated ), 0.01 ), 2 )
+					local timeToSetSpeed = math.pow( math.max( ( restrictedSpeed + ATO_COAST_UPPER_LIMIT ) - TrainSpeed, 0.0 ) / math.max( math.abs( gAvgAccelCalculated ), 0.01 ), 2 )
 					--local timeOffset = ATO_COAST_TIME_OFFSET * ( math.max( realAccel, 0.0 ) / MAX_ACCELERATION_MPHPS )
 					
 					if ( timeToSetSpeed < ATO_COAST_TIME_OFFSET ) then
@@ -360,7 +360,7 @@ function Update( interval )
 					gSetReg = clamp( tAccel, 0.0, 1.0 )
 					gSetDynamic = clamp( -tAccel, 0.0, 1.0 )
 					
-					targetAmps = DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic
+					--targetAmps = DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic
 					--dynEffective = clamp( -gCurrent / math.max( targetAmps, 0.001 ), 0.05, 1.0 )
 					-- We used to calculate this based on current, but it was too inconsistent, so now we calculate it from the spec speed
 					dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0 )
@@ -378,7 +378,7 @@ function Update( interval )
 									gMaxBrakeRelease = GetRandomBrakeRelease( interval )
 								end
 								
-								gBrakeRelease = clamp( (2.0 - math.abs( TrainSpeed ) ) / 1.5, 0.0, 1.0 )
+								gBrakeRelease = clamp( (2.5 - math.abs( TrainSpeed ) ) / 1.5, 0.0, 1.0 )
 							else
 								gBrakeRelease = 0.0
 								gMaxBrakeRelease = -1.0
@@ -408,11 +408,12 @@ function Update( interval )
 				--finalRegulator = math.max( finalRegulator, 0.001 ) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
 			end
 			
-			finalRegulator = finalRegulator * ( NumCarsOnPower / NumCars )
+			--finalRegulator = finalRegulator * ( NumCarsOnPower / NumCars )
 			
 			Call( "*:SetControlValue", "TAccel", 0, tAccel )
 			if ( Active ) then Call( "*:SetControlValue", "Regulator", 0, finalRegulator ) end
-			Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 ) )
+			--Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 ) )
+			Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic )
 			Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
 			Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
 			

@@ -44,7 +44,18 @@ function reverseMsgDir(direction)
 	return 0
 end
 
-function mapRange(value, sourceMin, sourceMax, destMin, destMax)
-	local normalized = (value - sourceMin) / (sourceMax - sourceMin)
-	return normalized * (destMax - destMin) + destMin
+
+
+function mapRange( value, sourceMin, sourceMax, destMin, destMax, doClamp )
+	local c = doClamp and true or false -- Convert optional into boolean
+	local normalized = ( value - sourceMin ) / ( sourceMax - sourceMin )
+	
+	if c then
+		local clampMin = math.min( destMin, destMax )
+		local clampMax = math.max( destMin, destMax )
+	
+		return clamp( normalized * ( destMax - destMin ) + destMin, clampMin, clampMax )
+	else
+		return normalized * ( destMax - destMin ) + destMin
+	end
 end
