@@ -32,7 +32,7 @@ function Setup()
 	COAST_DELAY_TIME = 0.4
 	DYNAMIC_FADE_DELAY = 2.5
 	DYNAMIC_FADE_TIMEOUT = 3.0
-	MAX_SERVICE_BRAKE = 0.7
+	MAX_SERVICE_BRAKE = 0.825
 	MIN_SERVICE_BRAKE = 0.0
 	DYNAMIC_BRAKE_AMPS = 500.0
 	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 9.0
@@ -189,9 +189,9 @@ function Update( interval )
 			if ( tThrottle > 0.01 ) then
 				tTAccel = Round( tThrottle, 3 ) -- 3 points of power
 			elseif ( tThrottle < -0.01 ) then
-				if ( tThrottle <= -0.7 and tThrottle > -0.95 ) then
+				if ( tThrottle <= -0.715 and tThrottle > -0.95 ) then
 					tThrottle = -0.75
-				elseif ( tThrottle <= -0.375 and tThrottle > -0.07 ) then
+				elseif ( tThrottle <= -0.375 and tThrottle > -0.715 ) then
 					tThrottle = -0.5
 				end
 			
@@ -261,7 +261,7 @@ function Update( interval )
 			-- ATC took over braking due to control timeout
 			if ( ATCBrakeApplication > 0 ) then
 				tAccel = -0.75 -- Instant max braking
-				tThrottle = -0.75 -- Force 100% Service Braking throttle input
+				tThrottle = math.min( tThrottle, -0.75 ) -- Force 100% Service Braking throttle input
 				gSetReg = 0.0 -- Drop power instantly
 			end
 			
@@ -317,16 +317,18 @@ function Update( interval )
 						
 						if ( tThrottle < -0.901 ) then
 							dynEffective = 0.001 -- Force friction brakes to apply
-							gMaxServiceBrake = 0.8
+							Call( "*:SetControlValue", "HandBrakeCommand", 0, 1.0 )
+							gMaxServiceBrake = 1.0
 							if ( TrainSpeed < 2.0 ) then gDynamicFadeDelay = DYNAMIC_FADE_TIMEOUT end
 						end
 						
-						if ( TrainSpeed < 2.0 and tAccel < 0 ) then
+						if ( TrainSpeed < 2.75 and tAccel < 0 ) then
 							if ( gDynamicFadeDelay < DYNAMIC_FADE_TIMEOUT ) then
 								gDynamicFadeDelay = gDynamicFadeDelay + gTimeDelta
 								
 								gSetBrake = gTargetBrake * 0.2
 							else
+								gMaxServiceBrake = gMaxServiceBrake * 0.35
 								gSetBrake = mapRange( gTargetBrake * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, gMaxServiceBrake )
 							end
 						else
@@ -353,7 +355,8 @@ function Update( interval )
 				
 				Call( "*:SetControlValue", "TAccel", 0, tAccel )
 				if ( Active ) then Call( "*:SetControlValue", "Regulator", 0, finalRegulator ) end
-				Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 ) )
+				--Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 ) )
+				Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic )
 				Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
 				Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
 			
