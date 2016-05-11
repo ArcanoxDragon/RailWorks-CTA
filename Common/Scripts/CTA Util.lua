@@ -13,11 +13,35 @@ FALSE = 0
 PRIMARY_DIGITS = 0
 SECONDARY_DIGITS = 1
 
+intervals = {}
+
 function debugPrint(msg)
 	Print(msg)
 	debugFile:seek("end", 0)
 	debugFile:write(msg .. "\n")
 	debugFile:flush()
+end
+
+function carPrint( msg )
+	debugPrint( "[" .. Call( "*:GetRVNumber" ) .. "] " .. msg )
+end
+
+function checkInterval( name, interval, timeDelta )
+	if ( intervals[ name ] == nil ) then
+		local newInterval = {}
+		newInterval.time = 0.0
+		intervals[ name ] = newInterval
+	end
+	
+	local i = intervals[ name ]
+	
+	i.time = i.time + timeDelta
+	if ( i.time >= interval ) then
+		i.time = 0
+		return true
+	else
+		return false
+	end
 end
 
 function clamp(x, xMin, xMax)

@@ -120,7 +120,7 @@ function Update( interval )
 		Call( "*:SetControlValue", "ThirdRail", 0, 0 )
 	end
 
-	if true then --Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
+	if Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
 		CombinedLever = Call( "*:GetControlValue", "ThrottleAndBrake", 0 )
 		ReverserLever = Call( "*:GetControlValue", "Reverser", 0 )
 		TrackBrake = Call( "*:GetControlValue", "TrackBrake", 0 )
@@ -262,16 +262,6 @@ function Update( interval )
 			tAccel = math.max( tAccel, 0.0 )
 		end
 		
-		--[[JERK_DELTA = 0.95 * gTimeDelta
-		
-		tJerkLimit = JERK_LIMIT * clamp( math.abs( tAccel - tTAccel ) / 0.25, 0.0625, 1.0 )
-		tJerkLimit = tJerkLimit * sign( tTAccel - tAccel )
-		tJerkLimit = sign( tJerkLimit ) * math.min( math.abs( tJerkLimit ), math.abs( gLastJerkLimit ) + JERK_DELTA )
-		
-		tAccel = tAccel + ( tJerkLimit * gTimeDelta )
-		
-		gLastJerkLimit = tJerkLimit]]
-		
 		tJerkLimit = JERK_LIMIT * gTimeDelta
 		
 		if tAccel < tTAccel - tJerkLimit then
@@ -299,10 +289,10 @@ function Update( interval )
 			Call( "*:SetControlValue", "TrainBrakeControl", 0, 1.0 )
 			
 			--Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax * ( 1.0 - clamp( BrakeCylBAR / 2.75, 0.0, 1.0 ) ) )
-			Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax )
+			Call( "*:SetControlValue", "DynamicBrake", 0, 1.0 )
 			if ( TrackBrake > 0 ) then
 				Call( "*:SetControlValue", "Sander", 0, 1 )
-				Call( "*:SetControlValue", "HandBrakeCommand", 0, 0.5 )
+				Call( "*:SetControlValue", "HandBrakeCommand", 0, 1.0 )
 				tAccel = math.min( tAccel, 0.0 )
 			else
 				Call( "*:SetControlValue", "Sander", 0, 0 )
@@ -360,9 +350,6 @@ function Update( interval )
 					gSetReg = clamp( tAccel, 0.0, 1.0 )
 					gSetDynamic = clamp( -tAccel, 0.0, 1.0 )
 					
-					--targetAmps = DYNAMIC_BRAKE_AMPS * dynBrakeMax * gSetDynamic
-					--dynEffective = clamp( -gCurrent / math.max( targetAmps, 0.001 ), 0.05, 1.0 )
-					-- We used to calculate this based on current, but it was too inconsistent, so now we calculate it from the spec speed
 					dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0 )
 					dynEffective = clamp( dynEffective, 0.001, 1.0 )
 					if ( gSetDynamic < 0.001 ) then
@@ -404,25 +391,11 @@ function Update( interval )
 			
 			local finalRegulator = gSetReg
 			
-			if ( gSetDynamic < 0.001 and math.abs( TrainSpeed ) > 0.1 and tAccel >= 0.0 ) then
-				--finalRegulator = math.max( finalRegulator, 0.001 ) -- Make it so it doesn't reach 0. This way we know if we have power or not by the ammeter value
-			end
-			
-			--finalRegulator = finalRegulator * ( NumCarsOnPower / NumCars )
-			
 			Call( "*:SetControlValue", "TAccel", 0, tAccel )
 			if ( Active ) then Call( "*:SetControlValue", "Regulator", 0, finalRegulator ) end
-			--Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic * clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 ) )
 			Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic )
 			Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
 			Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
-			
-			--[[if ( not Active ) then
-				Call( "*:SetPowerProportion", CarNum, 0.0 )
-				Call( "*:SetControlValue", "HandBrake", 0, Regulator - finalRegulator )
-			else
-				Call( "*:SetPowerProportion", CarNum, 1.0 )
-			end]]
 		end
 
 		-- End propulsion system

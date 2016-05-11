@@ -244,7 +244,8 @@ sigDist = 0
 sigAspect = 0
 
 function Update( time )
-	trainSpeed = Call( "GetSpeed" ) * MPS_TO_MPH
+	trainSpeed = Call( "*:GetSpeed" ) * MPS_TO_MPH
+	absSpeed = math.abs( GetControlValue( "SpeedometerMPH" ) )
 	accel = Call( "GetAcceleration" ) * MPS_TO_MPH
 	reverser = GetControlValue( "Reverser" )
 	IsEndCar = GetControlValue( "IsEndCar" ) > 0
@@ -569,7 +570,10 @@ function Update( time )
 		end
 	end
 	
-	local dynEffective = mapRange( trainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0, true )
+	local dynEffective = mapRange( absSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0, true )
+	if ( checkInterval( "dbprint2", 0.25, time ) ) then
+		carPrint( "S: " .. tostring( absSpeed ) .. "; dE: " .. tostring( dynEffective ) .. "; dB: " .. tostring( GetControlValue( "DynamicBrake" ) ) )
+	end
 	HandBrake = GetControlValue( "DynamicBrake" ) * dynEffective
 	
 	if ( GetControlValue( "OnThirdRail" ) < 0.5 ) then
@@ -581,6 +585,10 @@ function Update( time )
 	end
 	
 	SetControlValue( "HandBrake", clamp( HandBrake, 0.0, 1.0 ) )
+	
+	if ( checkInterval( "dbprint1", 0.25, time ) ) then
+		carPrint( "Set value: " .. tostring( clamp( HandBrake, 0.0, 1.0 ) ) .. "; Handbrake value: " .. tostring( GetControlValue("HandBrake") ) )
+	end
 	
 	-- Destination sign
 	

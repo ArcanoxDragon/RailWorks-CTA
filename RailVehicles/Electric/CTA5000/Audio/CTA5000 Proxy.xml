@@ -7825,7 +7825,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>HandBrake</Value>
+													<Value>TrackBrake</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
@@ -7925,7 +7925,7 @@
 										<Attribute name="ControllerName">
 											<cDeltaString>
 												<Element>
-													<Value>HandBrake</Value>
+													<Value>TrackBrake</Value>
 												</Element>
 											</cDeltaString>
 										</Attribute>
