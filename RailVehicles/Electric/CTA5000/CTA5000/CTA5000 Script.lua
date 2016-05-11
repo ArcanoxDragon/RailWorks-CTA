@@ -540,11 +540,15 @@ function Update( time )
 		tiltMult = 0.0
 	end
 	
-	tBodyTilt = 1.0 + clamp( accelAvg * tiltMult, -1, 1 )
-	tBodyTilt = sign( tBodyTilt ) * math.max( 0.0, math.abs( tBodyTilt ) - 0.65 )
+	tBodyTilt = clamp( accelAvg * tiltMult, -1, 1 )
+	tBodyTilt = 1.0 + sign( tBodyTilt ) * math.max( 0.0, math.abs( tBodyTilt ) - 0.65 )
 	
 	dBodyTilt = 7.5 * clamp( math.abs( gBodyTilt - tBodyTilt ) / 0.45, 0.1, 1.0 )
 	dBodyTilt = dBodyTilt * time
+	
+	if ( gCamInside ) then
+		tBodyTilt = 1.0
+	end
 	
 	if ( gBodyTilt < tBodyTilt - dBodyTilt ) then
 		gBodyTilt = gBodyTilt + dBodyTilt
@@ -553,7 +557,7 @@ function Update( time )
 	else
 		gBodyTilt = tBodyTilt
 	end
-		
+	
 	Call( "*:SetTime", "body_tilt", gBodyTilt )
 	SetControlValue( "BodyTilt", gBodyTilt - 1.0 )
 	
