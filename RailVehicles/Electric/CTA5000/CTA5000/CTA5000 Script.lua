@@ -182,6 +182,7 @@ function Initialise()
 	gExpressLightsOn = false
 	gLastATCEnabled = true
 	gLeadCarReversed = 1
+	gLastStopped = false
 	
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 8.0 -- seconds.
@@ -283,6 +284,18 @@ function Update( time )
 		end
 		
 		gInit = true
+	end
+	
+	if ( absSpeed > 0.005 ) then
+		if ( gLastStopped ) then
+			Call( "*:LockControl", "Startup", 0, 1 )
+			gLastStopped = false
+		end
+	else
+		if ( not gLastStopped ) then
+			Call( "*:LockControl", "Startup", 0, 0 )
+			gLastStopped = true
+		end
 	end
 
 	--if ( Call( "*:GetIsPlayer" ) == 1 ) then

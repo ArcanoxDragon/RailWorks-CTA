@@ -25,6 +25,8 @@ function Setup()
 	gLastReverser = 0
 	gDestSignNext = false
 	gDestSignPrev = false
+	gLastTrackBrake = false
+	gPrevThrottle = 0.0
 	
 	THROTTLE_PICKUP_SPEED = 1.0 / 2.0
 	BRAKE_DELAY_TIME_COAST = 0.85
@@ -96,7 +98,7 @@ function Update( interval )
 		Call( "*:SetControlValue", "ThirdRail", 0, 0 )
 	end
 
-	if true then --Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
+	if Call( "*:GetControlValue", "Active", 0 ) == 1 then -- This is lead engine.
 
 		if Call( "IsExpertMode" ) == TRUE then -- Expert mode only.
 		
@@ -121,6 +123,24 @@ function Update( interval )
 			DestSignNext = Call( "*:GetControlValue", "DestSignNext", 0 ) > 0
 			DestSignPrev = Call( "*:GetControlValue", "DestSignPrev", 0 ) > 0
 			DestSign     = Call( "*:GetControlValue", "DestinationSign", 0 )
+			
+			if ( TrackBrake > 0 ) then
+				if ( not gLastTrackBrake ) then
+					gPrevThrottle = math.min( CombinedLever, 0.5 )
+					gLastTrackBrake = true
+				end
+				Call( "*:SetControlValue", "ThrottleAndBrake", 0, 0.0 )
+			else
+				if ( gLastTrackBrake ) then
+					Call( "*:SetControlValue", "ThrottleAndBrake", 0, gPrevThrottle )
+					gLastTrackBrake = false
+				end
+				
+				if ( CombinedLever < 0.05 ) then
+					Call( "*:SetControlValue", "ThrottleAndBrake", 0, 0.05 )
+					CombinedLever = 0.05
+				end
+			end
 			
 			-- Destination Sign
 			

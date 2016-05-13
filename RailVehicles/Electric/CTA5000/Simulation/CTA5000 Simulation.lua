@@ -45,7 +45,7 @@ function Setup()
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
 	MAX_BRAKE_RELEASE = 0.855
 	MIN_BRAKE_RELEASE = 0.755
-	MAX_SERVICE_BRAKE = 0.80
+	MAX_SERVICE_BRAKE = 0.7775
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
 	MAX_CORRECTION = 1.0 - MAX_BRAKE_RELEASE
@@ -350,8 +350,7 @@ function Update( interval )
 					gSetReg = clamp( tAccel, 0.0, 1.0 )
 					gSetDynamic = clamp( -tAccel, 0.0, 1.0 )
 					
-					dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0 )
-					dynEffective = clamp( dynEffective, 0.001, 1.0 )
+					dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.001, 1.0, true )
 					if ( gSetDynamic < 0.001 ) then
 						dynEffective = 1.0
 					end

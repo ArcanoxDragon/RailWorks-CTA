@@ -30,6 +30,10 @@ DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 9.0
 DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 14.0
 DYNAMIC_BRAKE_CURRENT			= -500
 
+local function getRandomTimeInterval()
+	return mapRange( math.random(), 0.0, 1.0, 30, 300 ) / 1000
+end
+
 LAST_CLASS_LIGHT_L = -1
 LAST_CLASS_LIGHT_R = -1
 LAST_TAILLIGHTS = false
@@ -183,6 +187,8 @@ function Initialise()
 	gExpressLightsOn = false
 	gLastATCEnabled = true
 	gLeadCarReversed = 1
+	gTimeInterval = getRandomTimeInterval()
+	gTimeSinceLastUpdate = 0.0
 	
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 8.0 -- seconds.
@@ -251,6 +257,9 @@ sigDist = 0
 sigAspect = 0
 
 function Update( time )
+	current = GetControlValue( "Ammeter" )
+	tAccel = GetControlValue( "TAccel" )
+	absSpeed = math.abs( GetControlValue( "SpeedometerMPH" ) )
 	trainSpeed = Call( "GetSpeed" ) * MPS_TO_MPH
 	accel = Call( "GetAcceleration" ) * MPS_TO_MPH
 	reverser = GetControlValue( "Reverser" )
@@ -264,7 +273,22 @@ function Update( time )
 	DoorsOpen = DoorsLeft or DoorsRight
 	TrainOn = GetControlValue( "Startup" ) > 0
 	ATCEnabled = GetControlValue( "ATCEnabled" ) > 0
-		
+
+	-- Check if player is driving this engine.
+
+		if ( Call( "GetIsEngineWithKey" ) == 1 ) then
+			if gDriven ~= 1 then
+				gDriven = 1
+				SetControlValue( "Active", 1 )
+			end
+		else
+			if gDriven ~= 0 then
+				gDriven = 0
+				SetControlValue( "Active", 0 )
+				SetControlValue( "ATOActive", 0 )
+			end
+		end
+	
 	-- Make script think doors are still open while the animation is finishing
 	if gLastDoorsOpen and not DoorsOpen then
 		gDoorsDelay = gDoorsDelay - time
@@ -294,35 +318,47 @@ function Update( time )
 		gInit = true
 	end
 
-	--if ( Call( "*:GetIsPlayer" ) == 1 ) then
-		if ( Call( "*:GetIsPlayer" ) >= 1 ) then
-			gTimeSinceCarCount = gTimeSinceCarCount + time
-			if ( gTimeSinceCarCount >= CAR_COUNT_TIME ) then
-				gTimeSinceCarCount = 0
-				CountCars()
-			end
+	if ( Call( "*:GetIsPlayer" ) >= 1 ) then
+		gTimeSinceCarCount = gTimeSinceCarCount + time
+		if ( gTimeSinceCarCount >= CAR_COUNT_TIME ) then
+			gTimeSinceCarCount = 0
+			CountCars()
 		end
-			
-		local whine = GetControlValue( "TractionWhine" )
-		local dynamic = GetControlValue( "DynamicBrake" )
-
-		if ( GetControlValue( "Active" ) == 1 ) then
-			if ( whine ~= gPrevWhine ) then
-				Call( "SendConsistMessage", WHINE_ID, whine, 1 )
-				Call( "SendConsistMessage", WHINE_ID, whine, 0 )
-			end
-			
-			if ( dynamic ~= gPrevDynamic ) then
-				Call( "SendConsistMessage", DYNAMIC_ID, dynamic, 1 )
-				Call( "SendConsistMessage", DYNAMIC_ID, dynamic, 0 )
-			end
-
-			gPrevWhine = whine
-			gPrevDynamic = dynamic
-		end
-	
-		-- Headlights/Interior Lights
+	end
 		
+	local whine = GetControlValue( "TractionWhine" )
+	local dynamic = GetControlValue( "DynamicBrake" )
+
+	if ( GetControlValue( "Active" ) == 1 ) then
+		if ( whine ~= gPrevWhine ) then
+			Call( "SendConsistMessage", WHINE_ID, whine, 1 )
+			Call( "SendConsistMessage", WHINE_ID, whine, 0 )
+		end
+		
+		if ( dynamic ~= gPrevDynamic ) then
+			Call( "SendConsistMessage", DYNAMIC_ID, dynamic, 1 )
+			Call( "SendConsistMessage", DYNAMIC_ID, dynamic, 0 )
+		end
+
+		gPrevWhine = whine
+		gPrevDynamic = dynamic
+	end
+	
+	-- Cab speed
+	
+	local cabSpeed = clamp( math.floor( math.abs( trainSpeed ) + 0.5 ), 0, 72 )
+	SetControlValue( "CabSpeedIndicator", cabSpeed )
+
+	if gInitialised == FALSE then
+		gInitialised = TRUE
+	end
+
+	-- BEGIN RANDOM-TIMED UPDATES
+	-- Headlights/Interior Lights
+	
+	gTimeSinceLastUpdate = gTimeSinceLastUpdate + time
+	
+	if ( gTimeSinceLastUpdate >= gTimeInterval ) then
 		if TrainOn then
 			Call( "IntLightFront:Activate" , 1 )
 			Call( "IntLightMiddle:Activate", 1 )
@@ -381,13 +417,13 @@ function Update( time )
 			
 			setClassLights( 0, 0, false ) -- Off, Off
 		end
-	
+
 		if HeadlightOn then
 			Call( "*:ActivateNode", "headlights", 1 )
 		else
 			Call( "*:ActivateNode", "headlights", 0 )
 		end
-	
+
 		if TaillightOn then
 			Call( "*:ActivateNode", "taillights", 1 )
 		else
@@ -415,30 +451,45 @@ function Update( time )
 			Call( "*:ActivateNode", "brakelights", 0 )
 		end
 		
-		-- Cab speed
-		
-		local cabSpeed = clamp( math.floor( math.abs( trainSpeed ) + 0.5 ), 0, 72 )
-		SetControlValue( "CabSpeedIndicator", cabSpeed )
-
-		if gInitialised == FALSE then
-			gInitialised = TRUE
-		end
-
-	-- Check if player is driving this engine.
-
-		if ( Call( "GetIsEngineWithKey" ) == 1 ) then
-			if gDriven ~= 1 then
-				gDriven = 1
-				SetControlValue( "Active", 1 )
-			end
+		if GetControlValue( "ThirdRail" ) < 0.5 then
+			SetControlValue( "OnThirdRail", 0 )
 		else
-			if gDriven ~= 0 then
-				gDriven = 0
-				SetControlValue( "Active", 0 )
-				SetControlValue( "ATOActive", 0 )
+			SetControlValue( "OnThirdRail", gOnThirdRail and 1 or 0 )
+		end
+		
+		-- Relay train brake command to this car's brakes and apply local handbrake as a parking brake
+		
+		gBrakeCheckTime = gBrakeCheckTime + gTimeSinceLastUpdate
+		lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
+		if ( gBrakeCheckTime > 0.5 + lRandom ) then
+			gBrakeCheckTime = 0
+			if ( math.abs( trainSpeed ) < 0.03 and BrakePressure >= 0.2 ) or DoorsOpen then
+				gParkingBrake = true
+			elseif ( BrakePressure <= 0.01 ) then
+				gParkingBrake = false
 			end
 		end
-	--end
+		
+		--local dynEffective = mapRange( trainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0, true )
+		--local setDynamic = GetControlValue( "DynamicBrake" )
+		local dynEffective = mapRange( current, DYNAMIC_BRAKE_CURRENT, 0, 1.0, 0.0, true ) -- Actual dynamic-brake force relative to maximum dynamic brake effort
+		HandBrake = HandBrake + dynEffective
+		
+		if ( GetControlValue( "OnThirdRail" ) < 0.5 ) then
+			HandBrake = HandBrake + GetControlValue( "Regulator" ) / 2 -- Simulate going "off third rail" by applying equal brake to the tractive force
+		end
+		
+		if ( gParkingBrake ) then
+			HandBrake = 1
+		end
+		
+		SetControlValue( "HandBrake", clamp( HandBrake, 0.0, 1.0 ) )
+		
+		gTimeSinceLastUpdate = 0.0
+		gTimeInterval = getRandomTimeInterval()
+	end
+	
+	-- END RANDOM TIMED UPDATES
 	
 	if ( Call( "*:GetIsPlayer" ) >= 1 ) then
 		-- Third rail signal
@@ -462,20 +513,12 @@ function Update( time )
 			end
 		end
 		gLastSignalDist = sigDist
-		
-		if GetControlValue( "ThirdRail" ) < 0.5 then
-			SetControlValue( "OnThirdRail", 0 )
-		else
-			SetControlValue( "OnThirdRail", gOnThirdRail and 1 or 0 )
-		end
 	end
 	
 	-- Inverter whine based on current
 	
 	local tWhine = 1.0
 	local dWhine = 1.2 * time
-	local current = GetControlValue( "Ammeter" )
-	local tAccel = GetControlValue( "TAccel" )
 	if ( GetControlValue( "OnThirdRail" ) < 0.5) then
 		tWhine = 0.0
 	end
@@ -569,34 +612,6 @@ function Update( time )
 		SetControlValue( "BodyTilt", gBodyTilt - 1.0 )
 	end
 	
-	-- Relay train brake command to this car's brakes and apply local handbrake as a parking brake
-	
-	gBrakeCheckTime = gBrakeCheckTime + time
-	lRandom = math.random() * 0.5 -- Add a bit of randomness, adds 'realism' and variety to simulation
-	if ( gBrakeCheckTime > 0.5 + lRandom ) then
-		gBrakeCheckTime = 0
-		if ( math.abs( trainSpeed ) < 0.03 and BrakePressure >= 0.2 ) or DoorsOpen then
-			gParkingBrake = true
-		elseif ( BrakePressure <= 0.01 ) then
-			gParkingBrake = false
-		end
-	end
-	
-	--local dynEffective = mapRange( trainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.0, 1.0, true )
-	--local setDynamic = GetControlValue( "DynamicBrake" )
-	local dynEffective = mapRange( current, DYNAMIC_BRAKE_CURRENT, 0, 1.0, 0.0, true ) -- Actual dynamic-brake force relative to maximum dynamic brake effort
-	HandBrake = HandBrake + dynEffective
-	
-	if ( GetControlValue( "OnThirdRail" ) < 0.5 ) then
-		HandBrake = HandBrake + GetControlValue( "Regulator" ) / 2 -- Simulate going "off third rail" by applying equal brake to the tractive force
-	end
-	
-	if ( gParkingBrake ) then
-		HandBrake = 1
-	end
-	
-	SetControlValue( "HandBrake", clamp( HandBrake, 0.0, 1.0 ) )
-	
 	-- Destination sign
 	
 	RVNumber = Call( "*:GetRVNumber" )
@@ -660,9 +675,9 @@ function Update( time )
 			Call( "SignLightFront:Activate", 0 )
 		end
 	else
-		if ( Call( "*:GetIsPlayer" ) == 0 ) then
+		--if ( Call( "*:GetIsPlayer" ) == 0 ) then
 			Call( "*:SetRVNumber", firstPart .. "a" )
-		end
+		--end
 		Call( "SignLightFront:Activate", 0 )
 		Call( "*:ActivateNode", "sign_off_front", 1 )
 		Call( "*:ActivateNode", "side_displays", 0 )
