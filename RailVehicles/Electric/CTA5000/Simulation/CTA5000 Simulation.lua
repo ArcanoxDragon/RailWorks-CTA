@@ -43,15 +43,15 @@ function Setup()
 	JERK_LIMIT = 0.8
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.855
-	MIN_BRAKE_RELEASE = 0.755
-	MAX_SERVICE_BRAKE = 0.7775
+	MAX_BRAKE_RELEASE = 0.825
+	MIN_BRAKE_RELEASE = 0.705
+	MAX_SERVICE_BRAKE = 0.685
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
 	MAX_CORRECTION = 1.0 - MAX_BRAKE_RELEASE
 	DYNAMIC_BRAKE_AMPS = 500.0
-	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 2.0
-	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 4.5
+	DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 1.0
+	DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 3.75
 	DYNBRAKE_MAXCARS = 8 -- Number of cars that the dynamic brake force is calibrated to ( WTF railworks, you can't do this yourself? )
 	ATO_COAST_TIME_OFFSET = 0.95
 	ATO_COAST_UPPER_LIMIT = 0.0 -- MPH above set speed that triggers coast command
@@ -347,16 +347,6 @@ function Update( interval )
 					gSetDynamic = 0.0
 					gSetBrake = 0.0
 				else
-					gSetReg = clamp( tAccel, 0.0, 1.0 )
-					gSetDynamic = clamp( -tAccel, 0.0, 1.0 )
-					
-					dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.001, 1.0, true )
-					if ( gSetDynamic < 0.001 ) then
-						dynEffective = 1.0
-					end
-					
-					gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
-					
 					if ( math.abs( TrainSpeed ) < 3.0 ) then
 						if ( tThrottle < -0.15 ) then
 							if ( gStoppingTime < MAX_STOPPING_TIME ) then
@@ -381,10 +371,17 @@ function Update( interval )
 						gBrakeRelease = 0.0
 						gMaxBrakeRelease = -1.0
 					end
+				
+					gSetReg = clamp( tAccel, 0.0, 1.0 )
+					gSetDynamic = clamp( -tAccel, 0.0, 1.0 )
+					gSetDynamic = gSetDynamic - ( gBrakeRelease * math.max( gMaxBrakeRelease, 0.0 ) * gSetDynamic )
 					
-					Call( "*:SetControlValue", "Misc1", 0, gMaxBrakeRelease )
+					dynEffective = mapRange( TrainSpeed, DYNAMIC_BRAKE_MIN_FALLOFF_SPEED, DYNAMIC_BRAKE_MAX_FALLOFF_SPEED, 0.001, 1.0, true )
+					if ( gSetDynamic < 0.001 ) then
+						dynEffective = 1.0
+					end
 					
-					gSetBrake = gSetBrake - ( gBrakeRelease * math.max( gMaxBrakeRelease, 0.0 ) * gSetBrake )
+					gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
 				end
 			end
 			
@@ -392,8 +389,15 @@ function Update( interval )
 			
 			Call( "*:SetControlValue", "TAccel", 0, tAccel )
 			if ( Active ) then Call( "*:SetControlValue", "Regulator", 0, finalRegulator ) end
+			
+			-- AUTOMATIC BRAKE BLENDING (100% electric brake til fade)
 			Call( "*:SetControlValue", "DynamicBrake", 0, gSetDynamic )
 			Call( "*:SetControlValue", "TrainBrakeControl", 0, gSetBrake )
+			
+			-- NO BRAKE BLENDING (100% friction brake)
+			--Call( "*:SetControlValue", "DynamicBrake", 0, 0 )
+			--Call( "*:SetControlValue", "TrainBrakeControl", 0, mapRange( gSetDynamic, 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE ) )
+			
 			Call( "*:SetControlValue", "TrueThrottle", 0, tThrottle )
 		end
 
