@@ -26,6 +26,11 @@ function carPrint( msg )
 	debugPrint( "[" .. Call( "*:GetRVNumber" ) .. "] " .. msg )
 end
 
+-- inclusive min, exclusive max
+function inRange( val, min, max )
+	return val >= min and val < max
+end
+
 function checkInterval( name, interval, timeDelta )
 	if ( intervals[ name ] == nil ) then
 		local newInterval = {}

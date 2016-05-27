@@ -1423,6 +1423,33 @@
 													</Value>
 												</Element>
 											</iAnimObjectRenderBlueprint-cAnimation>
+											<iAnimObjectRenderBlueprint-cAnimation>
+												<Element>
+													<Value>
+														<Attribute name="AnimationID">
+															<cDeltaString>
+																<Element>
+																	<Value>speed_indicator</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="AnimationName">
+															<cDeltaString>
+																<Element>
+																	<Value>RailVehicles\Electric\CTA5000\CabView\speed_indicator.IA</Value>
+																</Element>
+															</cDeltaString>
+														</Attribute>
+														<Attribute name="AnimateInEditor">
+															<eBoolean>
+																<Element>
+																	<Value>eFalse</Value>
+																</Element>
+															</eBoolean>
+														</Attribute>
+													</Value>
+												</Element>
+											</iAnimObjectRenderBlueprint-cAnimation>
 										</Value>
 									</Element>
 								</__Indexed__iAnimObjectRenderBlueprint-cAnimation>
@@ -1494,7 +1521,7 @@
 											<Attribute name="InteriorGeometryID">
 												<cDeltaString>
 													<Element>
-														<Value>RailVehicles\Electric\CTA5000\CabView\CTA5000 Cab</Value>
+														<Value />
 													</Element>
 												</cDeltaString>
 											</Attribute>
@@ -2334,7 +2361,7 @@
 																					<Attribute name="AnimationName">
 																						<cDeltaString>
 																							<Element>
-																								<Value>RailVehicles\Electric\CTA5000\CabView\speed_indicator</Value>
+																								<Value />
 																							</Element>
 																						</cDeltaString>
 																					</Attribute>

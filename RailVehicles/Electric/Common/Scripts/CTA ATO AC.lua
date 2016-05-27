@@ -100,8 +100,8 @@ function pid(pidName, tD, kP, kI, kD, target, real, minErr, maxErr, buffer, iTar
 	return p + i + d, p, i, d
 end
 
-local gLastATO = 0
-local gLastATC = 0
+local gLastATO = 1
+local gLastATC = 1
 local gLastATOThrottle = 0
 atoSigDirection = 0
 atoStopping = 0
