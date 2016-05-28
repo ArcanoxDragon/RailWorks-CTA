@@ -389,15 +389,15 @@ function Update( time )
 		end
 	
 		if HeadlightOn then
-			Call( "*:ActivateNode", "headlights", 1 )
+			Call( "*:ActivateNode", "headlights_on", 1 )
 		else
-			Call( "*:ActivateNode", "headlights", 0 )
+			Call( "*:ActivateNode", "headlights_on", 0 )
 		end
 	
 		if TaillightOn then
-			Call( "*:ActivateNode", "taillights", 1 )
+			Call( "*:ActivateNode", "taillights_on", 1 )
 		else
-			Call( "*:ActivateNode", "taillights", 0 )
+			Call( "*:ActivateNode", "taillights_on", 0 )
 		end
 		
 		-- Door light clusters

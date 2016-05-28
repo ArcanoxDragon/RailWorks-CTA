@@ -361,7 +361,7 @@ function Update( interval )
 							end
 						else
 							if ( gStoppingTime < MAX_STOPPING_TIME ) then
-								tAccel = 0.0 -- Prevents jerkiness when going brake -> coast -> brake quickly
+								--tAccel = 0.0 -- Prevents jerkiness when going brake -> coast -> brake quickly
 							end
 							
 							gStoppingTime = MAX_STOPPING_TIME
