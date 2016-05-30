@@ -360,8 +360,8 @@ function Update( interval )
 								gMaxBrakeRelease = -1.0
 							end
 						else
-							if ( gStoppingTime < MAX_STOPPING_TIME ) then
-								--tAccel = 0.0 -- Prevents jerkiness when going brake -> coast -> brake quickly
+							if ( gStoppingTime < MAX_STOPPING_TIME and tAccel < 0 ) then
+								tAccel = -( -tAccel - ( gBrakeRelease * math.max( gMaxBrakeRelease, 0.0 ) * -tAccel ) ) -- Prevents jerkiness when going brake -> coast -> brake quickly
 							end
 							
 							gStoppingTime = MAX_STOPPING_TIME
