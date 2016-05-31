@@ -288,7 +288,7 @@ function Update( time )
 		gInit = true
 	end
 	
-	if ( absSpeed > 0.005 ) then
+	if ( absSpeed > 0.009 ) then
 		if ( gLastStopped ) then
 			Call( "*:LockControl", "Startup", 0, 1 )
 			gLastStopped = false
