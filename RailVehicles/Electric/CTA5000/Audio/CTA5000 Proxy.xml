@@ -207,7 +207,7 @@
 														<Attribute name="Filename">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine</Value>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine_new</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -306,7 +306,7 @@
 														<Attribute name="Filename">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine_int</Value>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine_new_int</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -405,7 +405,7 @@
 														<Attribute name="Filename">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine2</Value>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine2_new</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -504,7 +504,7 @@
 														<Attribute name="Filename">
 															<cDeltaString>
 																<Element>
-																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine2_int</Value>
+																	<Value>RailVehicles\Electric\CTA5000\Audio\Samples\current_whine2_new_int</Value>
 																</Element>
 															</cDeltaString>
 														</Attribute>
@@ -3801,7 +3801,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>17.85</Value>
+																				<Value>19.85</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3821,7 +3821,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>18</Value>
+																				<Value>20</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3841,7 +3841,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>21</Value>
+																				<Value>26</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3861,7 +3861,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>25</Value>
+																				<Value>29</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -3881,7 +3881,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>35.5</Value>
+																				<Value>38.5</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4063,7 +4063,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>17.99999</Value>
+																				<Value>19.99999</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4083,7 +4083,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>18</Value>
+																				<Value>20</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
@@ -4103,7 +4103,7 @@
 																	<Attribute name="X">
 																		<sFloat32>
 																			<Element>
-																				<Value>32</Value>
+																				<Value>38</Value>
 																			</Element>
 																		</sFloat32>
 																	</Attribute>
