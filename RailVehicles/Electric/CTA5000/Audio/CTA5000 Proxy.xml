@@ -1730,7 +1730,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.4</Value>
+													<Value>0.2</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -1928,7 +1928,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.55</Value>
+													<Value>0.325</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -2126,7 +2126,7 @@
 										<Attribute name="BaseVolume">
 											<sFloat32>
 												<Element>
-													<Value>0.55</Value>
+													<Value>0.325</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -6226,7 +6226,7 @@
 										<Attribute name="MaximumNumberOfInstances">
 											<sUInt32>
 												<Element>
-													<Value>2</Value>
+													<Value>4</Value>
 												</Element>
 											</sUInt32>
 										</Attribute>
@@ -8054,7 +8054,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8147,7 +8147,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8240,7 +8240,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8333,7 +8333,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8426,7 +8426,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8519,7 +8519,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -8612,7 +8612,7 @@
 										<Attribute name="ValueIsChangingGateTime">
 											<sFloat32>
 												<Element>
-													<Value>0</Value>
+													<Value>0.125</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>

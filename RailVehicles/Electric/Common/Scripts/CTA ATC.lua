@@ -63,7 +63,7 @@ function getSpeedLimitBelow(speed)
 end
 
 function getClosestSpeedLimit( speed )
-	if ( speed > 35 and speed < 55 ) then
+	if ( speed > 35 and speed < 45 ) then
 		return getSpeedLimitBelow( speed )
 	else
 		return getSpeedLimitAbove( speed )

@@ -5,7 +5,7 @@
 			<Attribute name="Occlusion">
 				<sInt32>
 					<Element>
-						<Value>-4500</Value>
+						<Value>-3000</Value>
 					</Element>
 				</sInt32>
 			</Attribute>

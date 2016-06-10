@@ -25,9 +25,9 @@ function Setup()
 	gDestSignNext = false
 	gDestSignPrev = false
 	
-	gStoppingTime = 0
 	gTimeSinceWheelslip = 0.0
 	MAX_STOPPING_TIME = 4.0
+	gStoppingTime = MAX_STOPPING_TIME
 	tReg = 0
 	tBrake = 0
 	
@@ -43,8 +43,8 @@ function Setup()
 	JERK_LIMIT = 0.8
 	SMOOTH_STOP_ACCELERATION = 0.25
 	SMOOTH_STOP_CORRECTION = 1.0 / 16.0
-	MAX_BRAKE_RELEASE = 0.825
-	MIN_BRAKE_RELEASE = 0.705
+	MAX_BRAKE_RELEASE = 0.805
+	MIN_BRAKE_RELEASE = 0.68
 	MAX_SERVICE_BRAKE = 0.587
 	--MIN_SERVICE_BRAKE = 0.275
 	MIN_SERVICE_BRAKE = 0.0
@@ -381,7 +381,7 @@ function Update( interval )
 						dynEffective = 1.0
 					end
 					
-					gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE )
+					gSetBrake = mapRange( gSetDynamic * ( 1.0 - dynEffective ), 0.0, 1.0, MIN_SERVICE_BRAKE, MAX_SERVICE_BRAKE, true )
 				end
 			end
 			
