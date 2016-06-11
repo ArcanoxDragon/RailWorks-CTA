@@ -30,6 +30,8 @@ DYNAMIC_BRAKE_MIN_FALLOFF_SPEED = 9.0
 DYNAMIC_BRAKE_MAX_FALLOFF_SPEED = 14.0
 DYNAMIC_BRAKE_CURRENT			= -500
 
+SPEED_INDICATOR_ANIM_SCALE = ( 73 / 30 ) -- 30 fps, 73 frames total
+
 local function getRandomTimeInterval()
 	return mapRange( math.random(), 0.0, 1.0, 30, 300 ) / 1000
 end
@@ -345,9 +347,51 @@ function Update( time )
 	end
 	
 	-- Cab speed
-	
+		
 	local cabSpeed = clamp( math.floor( math.abs( trainSpeed ) + 0.5 ), 0, 72 )
 	SetControlValue( "CabSpeedIndicator", cabSpeed )
+	Call( "*:SetTime", "speed_indicator", ( cabSpeed / 72 ) * SPEED_INDICATOR_ANIM_SCALE )
+	
+	-- Interior cab visibility (these are exterior objects so the "interior visibility object" option does not work
+	
+	local cabAspect = GetControlValue( "ATCAspect" )
+	if inRange( cabAspect, 0, 1 ) then
+		Call( "*:ActivateNode", "aspect_green" , 1 )
+		Call( "*:ActivateNode", "aspect_yellow", 0 )
+		Call( "*:ActivateNode", "aspect_red"   , 0 )
+		Call( "*:ActivateNode", "aspect_lunar" , 0 )
+	elseif inRange( cabAspect, 1, 2 ) then
+		Call( "*:ActivateNode", "aspect_green" , 0 )
+		Call( "*:ActivateNode", "aspect_yellow", 1 )
+		Call( "*:ActivateNode", "aspect_red"   , 0 )
+		Call( "*:ActivateNode", "aspect_lunar" , 0 )
+	elseif inRange( cabAspect, 2, 3 ) then
+		Call( "*:ActivateNode", "aspect_green" , 0 )
+		Call( "*:ActivateNode", "aspect_yellow", 0 )
+		Call( "*:ActivateNode", "aspect_red"   , 1 )
+		Call( "*:ActivateNode", "aspect_lunar" , 0 )
+	elseif inRange( 3, 4 ) then
+		Call( "*:ActivateNode", "aspect_green" , 0 )
+		Call( "*:ActivateNode", "aspect_yellow", 0 )
+		Call( "*:ActivateNode", "aspect_red"   , 0 )
+		Call( "*:ActivateNode", "aspect_lunar" , 1 )
+	end
+	
+	local sp15, sp25, sp35, sp45, sp55, sp70 = 0, 0, 0, 0, 0, 0
+	local rSpeed = GetControlValue( "ATCRestrictedSpeed" )
+	if inRange( rSpeed,  6.01, 100 ) then sp15 = 1 end
+	if inRange( rSpeed, 15.01, 100 ) then sp25 = 1 end
+	if inRange( rSpeed, 25.01, 100 ) then sp35 = 1 end
+	if inRange( rSpeed, 35.01, 100 ) then sp45 = 1 end
+	if inRange( rSpeed, 45.01, 100 ) then sp55 = 1 end
+	if inRange( rSpeed, 55.01, 100 ) then sp70 = 1 end
+	
+	Call( "*:ActivateNode", "maxspeed_15", sp15 )
+	Call( "*:ActivateNode", "maxspeed_25", sp25 )
+	Call( "*:ActivateNode", "maxspeed_35", sp35 )
+	Call( "*:ActivateNode", "maxspeed_45", sp45 )
+	Call( "*:ActivateNode", "maxspeed_55", sp55 )
+	Call( "*:ActivateNode", "maxspeed_70", sp70 )
 
 	if gInitialised == FALSE then
 		gInitialised = TRUE
@@ -419,15 +463,15 @@ function Update( time )
 		end
 
 		if HeadlightOn then
-			Call( "*:ActivateNode", "headlights", 1 )
+			Call( "*:ActivateNode", "headlights_on", 1 )
 		else
-			Call( "*:ActivateNode", "headlights", 0 )
+			Call( "*:ActivateNode", "headlights_on", 0 )
 		end
 
 		if TaillightOn then
-			Call( "*:ActivateNode", "taillights", 1 )
+			Call( "*:ActivateNode", "taillights_on", 1 )
 		else
-			Call( "*:ActivateNode", "taillights", 0 )
+			Call( "*:ActivateNode", "taillights_on", 0 )
 		end
 		
 		-- Door light clusters
