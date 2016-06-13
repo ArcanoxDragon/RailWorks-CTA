@@ -183,6 +183,7 @@ function Initialise()
 	gIsBCar = 0 -- Is this an "A" car or a "B" car?
 	gInit = false
 	gOnThirdRail = true
+	gTrueThirdRail = true
 	gBrakeCheckTime = 0.0
 	gParkingBrake = false
 	gExpressLightTimer = 0.0
@@ -191,6 +192,7 @@ function Initialise()
 	gLeadCarReversed = 1
 	gTimeInterval = getRandomTimeInterval()
 	gTimeSinceLastUpdate = 0.0
+	
 	
 -- For controlling delayed doors interlocks.
 	DOORDELAYTIME = 8.0 -- seconds.
@@ -497,9 +499,13 @@ function Update( time )
 		
 		if GetControlValue( "ThirdRail" ) < 0.5 then
 			SetControlValue( "OnThirdRail", 0 )
+			gTrueThirdRail = false
 		else
 			SetControlValue( "OnThirdRail", gOnThirdRail and 1 or 0 )
+			gTrueThirdRail = true
 		end
+		
+		
 		
 		-- Relay train brake command to this car's brakes and apply local handbrake as a parking brake
 		
