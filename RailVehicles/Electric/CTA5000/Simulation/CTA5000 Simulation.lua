@@ -1,6 +1,7 @@
+--include=..\..\..\..\Common\Scripts\CTA Util.lua
+--include=..\..\..\..\Common\Scripts\PID.lua
 --include=..\..\Common\Scripts\CTA ATC.lua
 --include=..\..\Common\Scripts\CTA ATO AC.lua
---include=..\..\..\..\Common\Scripts\CTA Util.lua
 
 ------------------------------------------------------------
 -- Simulation file for the Bombardier CTA 5000-series EMU
