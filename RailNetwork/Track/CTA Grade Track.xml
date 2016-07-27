@@ -115,7 +115,7 @@
 							<Attribute name="CrossSectionWidth">
 								<sFloat32>
 									<Element>
-										<Value>0</Value>
+										<Value>0.25</Value>
 									</Element>
 								</sFloat32>
 							</Attribute>
