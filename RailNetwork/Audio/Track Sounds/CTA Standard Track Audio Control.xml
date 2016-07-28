@@ -450,7 +450,7 @@
 										<Attribute name="ActiveRangeStartValue">
 											<sFloat32>
 												<Element>
-													<Value>0.049</Value>
+													<Value>990.049</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
@@ -550,7 +550,7 @@
 										<Attribute name="ActiveRangeStartValue">
 											<sFloat32>
 												<Element>
-													<Value>0.049</Value>
+													<Value>990.049</Value>
 												</Element>
 											</sFloat32>
 										</Attribute>
