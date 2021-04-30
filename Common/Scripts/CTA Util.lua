@@ -1,8 +1,8 @@
 local debugFile = io.open("lua_debug.log", "w+")
+
 MPS_TO_MPH = 2.23694 -- Meters/Second to Miles/Hour
 MPH_TO_MPS = 1.0 / MPS_TO_MPH
 MPH_TO_MiPS = 0.000277777778 -- Miles/Hour to Miles/Second
-pi = 3.14159265
 
 -- Why RailWorks defined these, I have no clue, but I'm keeping them defined anyways...
 TRUE = 1
@@ -15,11 +15,23 @@ SECONDARY_DIGITS = 1
 
 intervals = {}
 
-function debugPrint(msg)
-	Print(msg)
+function debugPrintInner(message)
+	local formattedMessage = string.format("[%s] %s", os.date("%X"), message)
+	
+	Print(formattedMessage)
 	debugFile:seek("end", 0)
-	debugFile:write(msg .. "\n")
+	debugFile:write(formattedMessage .. "\n")
 	debugFile:flush()
+end
+
+function debugPrint(message)
+	local success, err = pcall(function() debugPrintInner(message) end)
+	
+	if not success then
+		debugFile:seek("end", 0)
+		debugFile:write("Error calling debugPrint: " .. err .. "\n")
+		debugFile:flush()
+	end
 end
 
 function carPrint( msg )
@@ -73,7 +85,13 @@ function reverseMsgDir(direction)
 	return 0
 end
 
+function getBrakingDistance(vF, vI, a)
+	return ((vF * vF) - (vI * vI)) / (2 * a)
+end
 
+function getStoppingSpeed(vI, a, d)
+	return math.sqrt(math.max((vI * vI) + (2 * a * d), 0.0))
+end
 
 function mapRange( value, sourceMin, sourceMax, destMin, destMax, doClamp )
 	local c = doClamp and true or false -- Convert optional into boolean

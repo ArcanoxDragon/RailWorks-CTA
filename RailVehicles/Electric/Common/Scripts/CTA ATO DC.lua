@@ -33,14 +33,6 @@ local function logStop(startingSpeed, speedLimit, distance, totalStopTime, berth
 	stopsFile:flush()
 end
 
-function getBrakingDistance(vF, vI, a)
-	return ((vF * vF) - (vI * vI)) / (2 * a)
-end
-
-function getStoppingSpeed(vI, a, d)
-	return math.sqrt(math.max((vI * vI) + (2 * a * d), 0.0))
-end
-
 local gErrorSums = { }
 local gLastErrors = { }
 local gSettled = { }
@@ -143,11 +135,11 @@ function UpdateATO(interval)
 		trainSpeed = Call("*:GetSpeed")
 		trainSpeedMPH = trainSpeed * MPS_TO_MPH
 		distBuffer = 2.0 + ( clamp( ( trainSpeedMPH - 8.0 ) * 0.5, 0.0, 20.0 ) )
-		doors = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
+		doorsOpen = Call("*:GetControlValue", "DoorsOpen", 0) > 0.1
 		tThrottle = Call("*:GetControlValue", "TrueThrottle", 0)
 		
-		ATCRestrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
-		targetSpeed = ATCRestrictedSpeed * MPH_TO_MPS
+		atcRestrictedSpeed = Call("*:GetControlValue", "ATCRestrictedSpeed", 0)
+		targetSpeed = atcRestrictedSpeed * MPH_TO_MPS
 		
 		spdBuffer = math.max(getBrakingDistance(0.0, targetSpeed, -ATO_TARGET_DECELERATION), 0) + distBuffer
 		
@@ -203,7 +195,7 @@ function UpdateATO(interval)
 		end
 		
 		if (atoStopping > 0) then
-			targetSpeed = math.min(ATCRestrictedSpeed * MPH_TO_MPS, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - sigDist), 1.0 * MPH_TO_MPS))
+			targetSpeed = math.min(atcRestrictedSpeed * MPH_TO_MPS, math.max(getStoppingSpeed(targetSpeed, -ATO_TARGET_DECELERATION, spdBuffer - sigDist), 1.0 * MPH_TO_MPS))
 				
 			statStopTime = statStopTime + interval
 			
@@ -215,12 +207,12 @@ function UpdateATO(interval)
 						atoIsStopped = 0.5
 					end
 					
-					if (doors) then
+					if (doorsOpen) then
 						atoIsStopped = 1
 					end
 					
 					if (atoIsStopped > 0.75) then
-						if (not doors) then
+						if (not doorsOpen) then
 							atoTimeStopped = atoTimeStopped + interval
 							if (atoTimeStopped >= 2.0) then
 								--Call("*:SetControlValue", "LoadCargo", 0, 0)

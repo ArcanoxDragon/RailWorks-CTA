@@ -1,4 +1,5 @@
 --include=..\..\..\..\Common\Scripts\CTA Util.lua
+--include=..\..\..\..\Common\Scripts\MovingAverage.lua
 --include=..\..\..\..\Common\Scripts\PID.lua
 --include=..\..\Common\Scripts\CTA ATC.lua
 --include=..\..\Common\Scripts\CTA ATO AC.lua
@@ -109,8 +110,6 @@ function Update( interval )
 		gRandSeeded = true
 	end
 
-	local rInterval = round( interval, 5 )
-	--gTimeDelta = gTimeDelta + rInterval
 	gTimeDelta = interval
 			
 	-- Headlights
@@ -218,7 +217,6 @@ function Update( interval )
 				if not gATOCoasting then
 					-- Begin ATO coast-override subsystem ( Section 13.23 in 7000-series RFP )
 					local timeToSetSpeed = math.pow( math.max( ( restrictedSpeed + ATO_COAST_UPPER_LIMIT ) - TrainSpeed, 0.0 ) / math.max( math.abs( gAvgAccelCalculated ), 0.01 ), 2 )
-					--local timeOffset = ATO_COAST_TIME_OFFSET * ( math.max( realAccel, 0.0 ) / MAX_ACCELERATION_MPHPS )
 					
 					if ( timeToSetSpeed < ATO_COAST_TIME_OFFSET ) then
 						gATOCoasting = true
@@ -281,15 +279,11 @@ function Update( interval )
 			gThrottleTime = 100 -- Override "propulsion adjustment" period
 		end
 		
-		-- Max application of dynamic brake based on #cars in consist
-		local dynBrakeMax = clamp( NumCars / DYNBRAKE_MAXCARS, 0.0, 1.0 )
-		
 		-- Parked or track brake engaged
 		if ( math.abs( ReverserLever ) < 0.9 or TrackBrake > 0 ) then
 			Call( "*:SetControlValue", "Regulator", 0, 0.0 )
 			Call( "*:SetControlValue", "TrainBrakeControl", 0, 1.0 )
 			
-			--Call( "*:SetControlValue", "DynamicBrake", 0, dynBrakeMax * ( 1.0 - clamp( BrakeCylBAR / 2.75, 0.0, 1.0 ) ) )
 			Call( "*:SetControlValue", "DynamicBrake", 0, 1.0 )
 			if ( TrackBrake > 0 ) then
 				Call( "*:SetControlValue", "Sander", 0, 1 )
@@ -304,7 +298,7 @@ function Update( interval )
 			gSetBrake = 0.0
 			brkAdjust = MAX_CORRECTION
 			gStoppingTime = MAX_STOPPING_TIME
-			if ( math.abs( ReverserLever ) < 0.9 ) then
+			if CombinedLever >= 0 or math.abs( ReverserLever ) < 0.9 then
 				Call( "*:SetControlValue", "ThrottleAndBrake", 0, -1.0 )
 			end
 		else
@@ -348,11 +342,11 @@ function Update( interval )
 					gSetDynamic = 0.0
 					gSetBrake = 0.0
 				else
-					if ( math.abs( TrainSpeed ) < 3.0 ) then
+					if math.abs( TrainSpeed ) < 3.0 and not ATOEnabled then
 						if ( tThrottle < -0.15 ) then
 							if ( gStoppingTime < MAX_STOPPING_TIME ) then
 								if ( gMaxBrakeRelease < 0.0 ) then
-									gMaxBrakeRelease = GetRandomBrakeRelease( interval )
+									gMaxBrakeRelease = GetRandomBrakeRelease()
 								end
 								
 								gBrakeRelease = clamp( (2.5 - math.abs( TrainSpeed ) ) / 1.5, 0.0, 1.0 )
@@ -407,7 +401,7 @@ function Update( interval )
 		if Call( "*:GetControlValue", "Startup", 0 ) < 0 then -- Shutdown...reset everything
 			Call( "*:SetControlValue", "Reverser", 0, 0 )
 			Call( "*:SetControlValue", "ThrottleAndBrake", 0, 0 )
-			Call( "*:SetControlValue", "ATOEnabled", 0, 0 )
+			Call( "*:SetControlValue", "ATOEnabled", 0, -1 )
 			Call( "*:SetControlValue", "DestinationSign", 0, 0 )
 			
 			Call( "*:SetControlValue", "TrainBrakeControl", 1.0 )
@@ -428,7 +422,11 @@ function Update( interval )
 			end
 			
 			if UpdateATO then
-				UpdateATO( gTimeDelta )
+				local success, err = pcall(function() UpdateATO( gTimeDelta ) end)
+				
+				if not success then
+					debugPrint("Error running ATO: " .. err)
+				end
 			end
 		end
 		

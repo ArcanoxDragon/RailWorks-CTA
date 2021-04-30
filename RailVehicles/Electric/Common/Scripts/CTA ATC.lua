@@ -19,9 +19,9 @@ ATC_WARN_INTERMITTENT = 2.0
 DISPLAY_SPEEDS = { 0, 15, 25, 35, 55, 70 }
 NUM_DISPLAY_SPEEDS = 6
 EST_REACTION_TIME = 3 -- Estimated reaction time of the driver for speed drops
-SIGNAL_DISTANCE_BUFFER = 3.00
+SIGNAL_DISTANCE_BUFFER = 8.00
 ACCEL_TIME = 2.5 -- The amount of time it takes to go from full power to full brake (with jerk limit)
-ACCEL_PER_SECOND = 1.0 -- Units of acceleration per second (jerk limit, used for extra buffers)
+ACCEL_PER_SECOND = 0.8 -- Units of acceleration per second (jerk limit, used for extra buffers)
 
 atcSigDirection = 0.0
 gLastSigDist = 0.0
@@ -31,14 +31,6 @@ gBrakeTime = 0.0
 gAlertAcknowledged = true
 gTimeSinceSpeedIncrease = 0.0
 gLastSpeedLimit = 0.0
-
-function getBrakingDistance(vF, vI, a)
-	return ((vF * vF) - (vI * vI)) / (2 * a)
-end
-
-function getStoppingSpeed(vI, a, d)
-	return math.sqrt(math.max((vI * vI) + (2 * a * d), 0.0))
-end
 
 function SetATCWarnMode(mode)
 	Call("*:SetControlValue", "ATCWarnMode", 0, mode)

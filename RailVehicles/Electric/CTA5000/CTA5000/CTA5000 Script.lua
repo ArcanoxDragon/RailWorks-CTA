@@ -5,6 +5,7 @@
 -- (c) Railsimulator.com 2012
 --
 
+--include=..\..\..\..\Common\Scripts\MovingAverage.lua
 --include=..\..\..\..\Common\Scripts\CTA Util.lua
 
 WHINE_ID = 1715
@@ -192,10 +193,7 @@ function Initialise()
 	gLastDoorsOpen = false
 	
 -- Moving average for acceleration
-	gMovingAvgSize = 20
-	gMovingAvgList = { }
-	gMovingAvgIndex = 0 -- 0 - 19
-	gMovingAvg = 0
+	movingAvgAcceleration = MovingAverage.create(20)
 	
 -- Misc. signal stuff
 	gLastSignalDist = 0
@@ -219,18 +217,6 @@ end
 function SetControlValue( name, value )
 	Call( "*:SetControlValue", name, 0, value )
 	gControlCache[name] = value
-end
-
-function UpdateMovingAverage( value ) -- Updates the moving average for acceleration
-	local i = gMovingAvgIndex + 1
-	gMovingAvg = gMovingAvg - ( gMovingAvgList[i] or 0 )
-	gMovingAvgList[i] = value
-	gMovingAvg = gMovingAvg + value
-	gMovingAvgIndex = mod( gMovingAvgIndex + 1, gMovingAvgSize )
-end
-
-function GetMovingAverage()
-	return gMovingAvg / gMovingAvgSize
 end
 
 function OnCameraEnter( camEnd, carriageCam )
@@ -581,9 +567,7 @@ function Update( time )
 	
 	-- Acceleration tilt
 	
-	UpdateMovingAverage( accel ) -- MPH/s
-	
-	local accelAvg = GetMovingAverage() -- Smooth out acceleration
+	local accelAvg = movingAvgAcceleration:get(accel) -- Smooth out acceleration
 	SetControlValue( "Accel2", accelAvg )
 	accelAvg = accelAvg / 5.25 -- Max accel for animation is 5.25 MPH/s ( full emergency braking )
 	accelAvg = accelAvg * gLastDir

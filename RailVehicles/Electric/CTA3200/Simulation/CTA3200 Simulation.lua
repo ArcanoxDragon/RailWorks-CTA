@@ -393,7 +393,7 @@ function Update( interval )
 			if Call( "*:GetControlValue", "Startup", 0 ) < 0 then -- Shutdown...reset everything
 				Call( "*:SetControlValue", "Reverser", 0, 0 )
 				Call( "*:SetControlValue", "ThrottleAndBrake", 0, 0 )
-				Call( "*:SetControlValue", "ATOEnabled", 0, 0 )
+				Call( "*:SetControlValue", "ATOEnabled", 0, -1 )
 				Call( "*:SetControlValue", "DestinationSign", 0, 0 )
 				
 				Call( "*:SetControlValue", "TrainBrakeControl", 1.0 )
